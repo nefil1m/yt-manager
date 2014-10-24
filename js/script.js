@@ -1,4 +1,4 @@
-var playlistId, nextPageToken, prevPageToken;
+var playlistId, videoId, nextPageToken, prevPageToken;
 
 function requestUserPlaylists() {
   var request = gapi.client.youtube.channels.list({
@@ -29,7 +29,6 @@ function requestUserPlaylists() {
 
 function requestVideos(playlistId, pageToken) {
   $('#video-container').html('');
-
 
   var requestOptions = {
     playlistId: playlistId,
@@ -81,6 +80,15 @@ function previousPage() {
 $('#playlists-list').on('click', 'a', function(){
   playlistId = $(this).data('id');
   requestVideos(playlistId);
+});
+
+$('#video-container').on('click', 'a', function(){
+  videoId = $(this).data('id');
+  player.loadVideoById({
+    videoId: videoId,
+    startSeconds: 0,
+    endSeconds: 9999
+  });
 });
 
 $('#login-link').click(function(){
