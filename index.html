@@ -3,6 +3,7 @@
     <head>
         <title>Menadżer Playlist</title>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/styles.css" type="text/css">
     </head>
     <body>
@@ -11,12 +12,16 @@
           This application requires access to your YouTube account.
           Please <a href="#" id="login-link">authorize</a> to continue.
         </div>
-        <ul id="playlists-list"></ul>
-        <ul id="video-container"></ul>
-        <div class="button-container">
-          <button id="prev-button" class="paging-button" onclick="previousPage();">Previous Page</button>
-          <button id="next-button" class="paging-button" onclick="nextPage();">Next Page</button>
+
+        <div class="col-md-3"><ul id="playlists-list"></ul></div>
+        <div class="col-md-3">
+            <ul id="video-container"></ul>
+            <div class="button-container">
+              <button id="prev-button" class="paging-button" onclick="previousPage();">Previous Page</button>
+              <button id="next-button" class="paging-button" onclick="nextPage();">Next Page</button>
+            </div>
         </div>
+
 
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>

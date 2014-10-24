@@ -57,20 +57,19 @@ function requestVideos(playlistId, pageToken) {
         displayVideos(item.snippet);
       });
     } else {
-      $('#video-container').html('Sorry you have no playlists');
+      $('#video-container').html('Sorry you have no videos in this playlist');
     }
   });
 }
 
 function displayVideos(videoSnippet) {
-  console.log(videoSnippet);
   var title = videoSnippet.title;
   var videoId = videoSnippet.resourceId.videoId;
-  $('#video-container').append('<li><a href="#!" data-id="' + videoSnippet.resourceId.videoId + '">' + title + ' - ' + videoId + '</li>');
+  $('#video-container').append('<li><a href="#!" data-id="' + videoSnippet.resourceId.videoId + '"><img src="' + videoSnippet.thumbnails.default.url + '">' + title + '</a></li>');
 }
 
 function nextPage() {
-  requestVideos (playlistId, nextPageToken);
+  requestVideos(playlistId, nextPageToken);
 }
 
 function previousPage() {
@@ -80,8 +79,8 @@ function previousPage() {
 // onclicks
 
 $('#playlists-list').on('click', 'a', function(){
-  var target = $(this).data('id');
-  requestVideos(target);
+  playlistId = $(this).data('id');
+  requestVideos(playlistId);
 });
 
 $('#login-link').click(function(){
