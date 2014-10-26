@@ -1,36 +1,187 @@
 <!DOCTYPE html>
 <html lang="pl">
     <head>
-        <title>Menadżer Playlist</title>
+        <title>YouTube Playlist Manager</title>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/styles.css" type="text/css">
+
     </head>
     <body>
+        <div class="mainContainer">
 
-        <div id="login-container" class="pre-auth">
-          This application requires access to your YouTube account.
-          Please <a href="#" id="login-link">authorize</a> to continue.
-        </div>
+            <header class="row">
+                <div class="container">
+                    <div class="col-sm-4 col-md-3 col-lg-3">
+                        <h1>YT<span>PlaylistManager</span></h1>
+                    </div>
+                    <div class="col-sm-8 col-md-9 col-lg-9 status">
+                        <div class="player-buttons pull-right">
+                            <a href="#!" class="prev">
+                                <i class="glyphicon glyphicon-fast-backward"></i>
+                            </a>
+                            <a class="play" href="#!">
+                                <i class="glyphicon glyphicon-play"></i>
+                            </a>
+                            <a class="pause" href="#!">
+                                <i class="glyphicon glyphicon-pause"></i>
+                            </a>
+                            <a href="#!" class="stop active">
+                                <i class="glyphicon glyphicon-stop"></i>
+                            </a>
+                            <a href="#!" class="next">
+                                <i class="glyphicon glyphicon-fast-forward"></i>
+                            </a>
+                        </div>
+                        <ul>
+                            <li class="play-status">Play status: <span class="play-state">Stopped</span></li>
+                            <li>Current playlist: <span class="current-playlist">Playlist</span></li>
+                            <li>Current song: <span class="current-song">Song</span></li>
+                            <li>Authorization status: <span><a href="#!" id="login-link">Authorize</a></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
 
-        <div class="col-md-3"><ul id="playlists-list"></ul></div>
-        <div class="col-md-3">
-            <ul id="video-container"></ul>
-            <div class="button-container">
-              <button id="prev-button" class="paging-button" onclick="previousPage();">Previous Page</button>
-              <button id="next-button" class="paging-button" onclick="nextPage();">Next Page</button>
+            <div id="main-content" class="row">
+
+                <div class="col-xs-4" style="background: url('img/footer_lodyas.png')">
+                    <h3><a data-toggle="collapse" data-target="#playlists" href="#!">Your Playlists</a></h3>
+                    <div id="playlists" class="collapse in">
+                        <ul id="playlists-list" class="videos-container dark">
+                            <!-- playlists appends here -->
+                            <li class="row item">
+                                <a href="#!">
+                                    <div class="col-xs-12">
+                                        <div class="pull-left th">
+                                            <img src="https://i.ytimg.com/vi/qDxtsPseia8/mqdefault.jpg">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default add" title="Add current video to this playlist">
+                                                    <i class="glyphicon glyphicon-plus"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-default listen" title="Play this playlist">
+                                                    <i class="glyphicon glyphicon-play"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-default edit" title="Edit playlist">
+                                                    <i class="glyphicon glyphicon-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-default delete" title="Delete playlist">
+                                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <h4 class="title">Lorem ipsum - dolor sit amet</h4>
+                                        <p class="author">Author: <span>autor</span></p>
+                                        <p class="excerpt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet quidem, dignissimos. Sed fuga odit ipsum reiciendis esse animi unde molestiae, est culpa aut, totam eligendi dolorum corporis, tempore, velit voluptate!</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <h3><a href="#!" class="collapsed" data-toggle="collapse" data-target="#active-playlist">Active Playlist</a></h3>
+
+                    <div id="active-playlist" class="collapse videos-container dark">
+                        <!-- active playlist goes here -->
+                        <p>Nothing to show</p>
+                    </div>
+
+                    <h3><a href="#!" class="collapsed" data-target="#playlist-videos" data-toggle="collapse">Videos in <span class="current-playlist">Playlist</span></a></h3>
+
+                    <ul id="playlist-videos" class="videos-container dark collapse">
+                        <!-- videos appends here -->
+                        <li>Nothing to show</li>
+                    </ul>
+                    <div class="button-container">
+                        <button class="prev-button paging-button" onclick="previousPage();">Previous Page</button>
+                        <button class="next-button paging-button" onclick="nextPage();">Next Page</button>
+                    </div>
+
+                </div>
+
+
+                <div class="col-xs-8">
+                    <div class="player-container">
+                        <div id="player">
+
+                        </div>
+                    </div>
+                    <div id="main-buttons" class="btn-group">
+                        <button class="btn btn-default add" type="button" title="Add this video to active playlist">
+                            <i class="glyphicon glyphicon-plus"></i> Add
+                        </button>
+                        <button class="btn btn-default remove" type="button" title="Remove this video from active playlist">
+                            <i class="glyphicon glyphicon-minus"></i> Remove
+                        </button>
+                        <!-- <button class="btn btn-default share-fb" type="button" title="Add this video to active playlist">
+                            <img src="img/glyphicons_social_30_facebook.png" style="width: 15px;"> Share
+                        </button> -->
+                        <button class="btn btn-default like" type="button" title="Like">
+                            <i class="glyphicon glyphicon-thumbs-up"></i> Like
+                        </button>
+                        <button class="btn btn-default dislike" type="button" title="Dislike">
+                            <i class="glyphicon glyphicon-thumbs-down"></i> Dislike
+                        </button>
+                    </div>
+                    <div id="video-info" class="row">
+                        <div class="col-xs-4">
+                            <p class="author">Author: <span></span></p>
+                            <p class="views">Views: <span></span></p>
+                            <p class="likes">Likes: <span></span></p>
+                            <p class="dislikes">Dislikes: <span></span></p>
+                        </div>
+                        <div class="col xs-8">
+                            <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos, ullam dolorem facilis enim, ea aliquam nam, quam incidunt exercitationem voluptate quisquam repellat ipsam perspiciatis vero quaerat. Aspernatur adipisci quis recusandae.</p>
+                        </div>
+                    </div>
+                    <div id="search" class="row">
+                        <div class="col-xs-12">
+                            <label for="search">Search Videos</label>
+                            <input type="text" name="search">
+                        </div>
+                        <div class="col-xs-12 search-result">
+                            <h3>Search result:</h3>
+                            <div class="videos-container light"></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-        <div id="player" class="col-md-6">
 
+            <footer class="row">
+                <div class="container">
+                    <p>Created by <a href="http://patrykgurgul.pl/">Patryk Gurgul</a> &copy; 2014 || View this project on <a href="https://github.com/patryk-g/yt-manager">Github</a></p>
+                </div>
+            </footer>
+
+        </div> <!-- /.mainContainer -->
+
+        <!-- authorization modal -->
+
+        <div id="authorizationModal" class="modal false" aria-hidden="false" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Authorization</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="login-container" class="pre-auth">
+                            <p>This application requires access to your YouTube account. Please <a href="#" id="login-link" data-dismiss="modal">authorize</a> to continue.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
         <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
         <script type="text/javascript" src="js/oauth.js"></script>
-        <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
         <script type="text/javascript" src="js/player.js"></script>
+        <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
         <script type="text/javascript" src="js/script.js"></script>
     </body>
 </html>

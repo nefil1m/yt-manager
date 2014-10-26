@@ -1,8 +1,8 @@
 var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
-    height: '390',
-    width: '640',
+    height: '450',
+    width: '800',
     videoId: '',
     events: {
       'onReady': onPlayerReady,
@@ -21,6 +21,7 @@ function onPlayerStateChange(event) {
     done = true;
   }
 }
+
 function stopVideo() {
   player.stopVideo();
 }

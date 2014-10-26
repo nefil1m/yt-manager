@@ -1,3 +1,259 @@
-.paging-button {
-    visibility: hidden;
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,100,700);
+
+@mainColor: #333;
+@secondaryColor: #ccc;
+@headerHeight: 120px;
+
+* {
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+body {
+    font-family: "Raleway", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.mainContainer {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+a:hover, a:focus, a:visited, a:active {
+    outline: none;
+}
+
+header, footer {
+    background: @mainColor;
+    color: #fff;
+
+    a, a:link {
+        color: #000;
+        text-decoration: underline;
+    }
+
+    a:hover, a:focus, a:visited, a:active {
+        color: @secondaryColor;
+    }
+}
+
+header {
+    border-bottom: 5px solid darken(@mainColor, 10%);
+
+    h1 {
+        font-weight: 700;
+        padding-top: 50px;
+
+        span {
+            font-size: 18px;
+            font-weight: 100;
+        }
+    }
+
+    .status {
+        right: 0; top: 0;
+        position: fixed;
+        background: @mainColor;
+        width: 250px;
+        padding: 20px;
+
+        .player-buttons {
+            a {
+                color: @secondaryColor;
+                font-size: 18px;
+                margin: 5px;
+                text-decoration: none;
+                opacity: .7;
+
+                &.active {
+                    color: #eee;
+                    opacity: 1;
+                }
+
+                &:hover, &:active, &:focus {
+                    color: #fff;
+                    text-decoration: none;
+                    outline: none;
+                }
+            }
+        }
+
+        ul {
+            list-style-type: none;
+            padding-top: 30px;
+            text-align: right;
+            color: @secondaryColor;
+
+            span {
+                font-weight: 700;
+                color: #fff;
+            }
+        }
+    }
+
+
+}
+
+footer {
+    text-align: center;
+    border-top: 5px solid darken(@mainColor, 10%);
+
+    p {
+        line-height: 50px;
+        margin-bottom: 0;
+    }
+}
+
+#main-content {
+    width: 100%;
+
+    > div {
+        padding: 50px;
+    }
+
+
+    h3 {
+        margin: 25px 0;
+        border-bottom: 1px solid darken(@secondaryColor, 50%);
+
+        a {
+            color: #fff;
+
+            &:after {
+                font-family: 'Glyphicons Halflings';
+                font-size: 10px;
+                color: @secondaryColor;
+                content: ' \e113';
+            }
+
+            &.collapsed:after {
+                content: ' \e114';
+            }
+        }
+    }
+
+    .player-container {
+        width: 100%;
+    }
+
+    .prev-button, .next-button {
+        padding: 5px 20px;
+        visibility: hidden;
+    }
+
+    #video-info {
+        width: 800px;
+        margin-top: 20px;
+
+        p {
+            font-weight: 700;
+
+            span {
+                font-weight: 300;
+            }
+        }
+    }
+
+    #search {
+        margin-top: 20px;
+        width: 800px;
+
+        input {
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+    }
+}
+
+.videos-container {
+    list-style-type: none;
+
+    &.light {
+        a {
+            color: #333;
+        }
+    }
+
+    &.dark {
+        a {
+            color: #fff;
+        }
+    }
+
+
+    .item {
+        border-bottom: 1px solid darken(@secondaryColor, 50%);
+
+        &:last-child {
+            border-bottom: 0 none;
+        }
+
+        h4 {
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        p {
+            font-size: 12px;
+            margin: 0;
+        }
+    }
+
+
+
+    .col-xs-12 {
+        padding-bottom: 20px;
+
+        h4.title {
+            margin-bottom: 0;
+        }
+
+        .th {
+            width: 120px;
+            height: 80px;
+            overflow: hidden;
+            margin-right: 20px;
+
+
+            &:hover {
+                .btn-group {
+                    top: -24px;
+                }
+            }
+
+            img {
+                width: 120px;
+                height: 80px;
+                margin-right: 15px;
+            }
+
+            .btn-group {
+                position: relative;
+                top: 0;
+                transition: top .2s;
+
+                .btn {
+                    font-size: 10px;
+                    padding: 4px 9px;
+                    width: 30px;
+                }
+
+
+                button:first-child, button:last-child {
+                    border-radius: 0;
+                }
+
+                .add {
+                    color: green;
+                }
+
+                .delete {
+                    color: red;
+                }
+            }
+        }
+    }
 }
