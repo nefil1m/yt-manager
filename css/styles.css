@@ -47,7 +47,7 @@ header {
 }
 header h1 {
   font-weight: 700;
-  padding-top: 50px;
+  padding-top: 85px;
 }
 header h1 span {
   font-size: 18px;
@@ -56,10 +56,12 @@ header h1 span {
 header .status {
   right: 0;
   top: 0;
+  z-index: 100;
   position: fixed;
   background: #333333;
   width: 250px;
   padding: 20px;
+  font-size: 10px;
 }
 header .status .player-buttons a {
   color: #cccccc;
@@ -125,7 +127,6 @@ footer p {
 #main-content .prev-button,
 #main-content .next-button {
   padding: 5px 20px;
-  visibility: hidden;
 }
 #main-content #video-info {
   width: 800px;

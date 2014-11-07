@@ -13,7 +13,7 @@
 body {
     font-family: "Raleway", sans-serif;
     -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .mainContainer {
@@ -45,7 +45,7 @@ header {
 
     h1 {
         font-weight: 700;
-        padding-top: 50px;
+        padding-top: 85px;
 
         span {
             font-size: 18px;
@@ -55,10 +55,12 @@ header {
 
     .status {
         right: 0; top: 0;
+        z-index: 100;
         position: fixed;
         background: @mainColor;
         width: 250px;
         padding: 20px;
+        font-size: 10px;
 
         .player-buttons {
             a {
@@ -141,7 +143,7 @@ footer {
 
     .prev-button, .next-button {
         padding: 5px 20px;
-        visibility: hidden;
+        // visibility: hidden;
     }
 
     #video-info {

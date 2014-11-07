@@ -1,45 +1,60 @@
-var OAUTH2_CLIENT_ID = '877549163404-chjiknp3ffeiatmb2mcb8dfp23u7sm8q.apps.googleusercontent.com',
-    OAUTH2_SCOPES = [
-  'https://www.googleapis.com/auth/youtube'
-],
+var CLIENT_ID = '877549163404-chjiknp3ffeiatmb2mcb8dfp23u7sm8q.apps.googleusercontent.com',
+    SCOPES = [
+      'https://www.googleapis.com/auth/youtube'
+    ],
     apiKey = 'AIzaSyDJIOlGzyjPFEQ5j-Q2qEJVbOJtgqmby_Y';
 
-googleApiClientReady = function() {
-  gapi.auth.init(function() {
-    window.setTimeout(checkAuth, 1000);
-  });
-};
+    var auth = function(){
+        gapi.client.setApiKey = apiKey;
+        window.setTimeout(checkAuth, 1);
+    };
 
-function checkAuth() {
-  gapi.auth.authorize({
-    client_id: OAUTH2_CLIENT_ID,
-    scope: OAUTH2_SCOPES,
-    immediate: true
-  }, handleAuthResult);
-}
+    var checkAuth = function() {
+        gapi.auth.authorize({
+            client_id: CLIENT_ID,
+            scope: SCOPES,
+            immediate: false
+        }, makeApiCall);
+    };
 
-function handleAuthResult(authResult) {
-  if (authResult && !authResult.error) {
-    $('.pre-auth').hide();
-    $('.post-auth').show();
-    loadAPIClientInterfaces();
-  } else {
-    $('#login-link').click(function() {
-      gapi.auth.authorize({
-        client_id: OAUTH2_CLIENT_ID,
-        scope: OAUTH2_SCOPES,
-        immediate: false
-        }, handleAuthResult);
-    });
-  }
-}
+    // var handleAuthResult = function(authResult) {
+        // if (authResult && !authResult.error) {
+        //     makeApiCall();
+        // } else {
+        //     $('#login-link').click(function(){
+                // handleAuthClick();
+        //     });
+        // }
+    //     makeApiCall();
+    // };
 
-function loadAPIClientInterfaces() {
-  gapi.client.load('youtube', 'v3', function() {
-    handleAPILoaded();
-  });
-}
+    // var handleAuthClick = function(event) {
+    //     gapi.auth.authorize({
+    //         client_id: CLIENT_ID,
+    //         scope: SCOPES,
+    //         immediate: false
+    //     }, handleAuthResult);
+    // };
 
-function handleAPILoaded() {
-  requestUserPlaylists();
-}
+    var makeApiCall = function() {
+        gapi.client.load('youtube', 'v3', function() {
+            var request = gapi.client.youtube.channels.list({
+                mine: true,
+                part: 'id,contentDetails,snippet'
+            });
+
+            request.execute(function(response) {
+                var res = response.result.items[0];
+                var playlists = res.contentDetails.relatedPlaylists.watchLater;
+
+                channelId = res.id;
+
+                $('.status').find('.authorization-btn').html('ok');
+                $('.status').find('.channel').html(res.snippet.title);
+
+                console.log(response);
+                requestWatchLaterPlaylist(playlists);
+                requestUserPlaylists(channelId);
+            });
+        });
+    };

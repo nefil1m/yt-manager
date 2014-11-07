@@ -1,47 +1,103 @@
-var playlistId, videoId, nextPageToken, prevPageToken, activePlaylistId, activePlaylistName, activePlaylistThumbnail;
+var playlistId,
+    nextPageToken,
+    prevPageToken,
+    activePlaylistId,
+    activePlaylistName,
+    activePlaylistThumbnail,
+    activeVideo,
+    prevVideo,
+    nextVideo;
 
-function requestUserPlaylists() {
-  var request = gapi.client.youtube.channels.list({
-    mine: true,
-    part: 'id,contentDetails'
+var requestUserPlaylists = function(channelId) {
+  $('#playlists-list').html('');
+  var request = gapi.client.youtube.playlists.list({
+    channelId: channelId,
+    part: 'id,snippet',
+    maxResults: 50
   });
 
   request.execute(function(response) {
-    var html = "";
-    console.log(response);
+    var res = response.result.items;
+    var i = res.length - 1;
 
-    var playlists = response.result.items[0].contentDetails.relatedPlaylists;
+    for( ; i >= 0; i-- ) {
+      var item = {};
 
-    for( var i in playlists ) {
-
-      var request = gapi.client.youtube.playlists.list({
-        id: playlists[i],
-        part: 'snippet'
-      });
-
-      request.execute(function(response) {
-        var playlist = response.result.items[0];
-
-        if( playlist.snippet.title != 'Liked videos' &&
-            playlist.snippet.title.slice(0,7) != 'Uploads' &&
-            playlist.snippet.title != 'History' ) {
-
-          console.log(playlist.snippet.title);
-          html += '<li class="row item"><a href="#!" data-id="' +
-          playlist.id +
-          '"><div class="col-xs-12"><div class="pull-left th"><img src="' +
-          playlist.snippet.thumbnails.medium.url +
-          '"><div class="btn-group"><button type="button" class="btn btn-default add" title="Add current video to this playlist"><i class="glyphicon glyphicon-plus"></i></button><button type="button" class="btn btn-default listen" title="Play this playlist"><i class="glyphicon glyphicon-play"></i></button><button type="button" class="btn btn-default delete" title="Delete playlist"><i class="glyphicon glyphicon-ban-circle"></i></button></div></div><h4 class="title">' +
-          playlist.snippet.title +
-          '</h4></div></a></li>';
-          $('#playlists-list').html(html);
-        }
-      });
+      item.id = res[i].id;
+      item.thumbnail = res[i].snippet.thumbnails.medium.url;
+      item.title = res[i].snippet.title;
+      item.description = res[i].snippet.description;
+      console.log(item);
+      appendPlaylist(item);
     }
   });
 }
 
-function requestVideos(playlistId, pageToken) {
+var requestWatchLaterPlaylist = function(playlist) {
+  var request = gapi.client.youtube.playlists.list({
+    id: playlist,
+    part: 'snippet,id',
+    maxResults: 50
+  });
+
+  request.execute(function(response) {
+    var res = response.result.items[0];
+
+      var item = {};
+
+      item.id = res.id;
+      item.title = res.snippet.title;
+      item.thumbnail = res.snippet.thumbnails.medium.url;
+      item.description = res.snippet.description;
+
+      appendPlaylist(item);
+
+  });
+}
+
+var appendPlaylist = function(item, active) {
+
+  if( active ) {
+    var container = $('#active-playlist');
+    var html = '';
+  } else {
+    var container = $('#playlists-list');
+    var html = $('#playlists-list').html();
+  }
+
+  html += '<li class="row item"><a href="#!" data-id="' +
+          item.id +
+          '" title="' +
+          item.description +
+          '"><div class="col-xs-12"><div class="pull-left th"><img src="' +
+          item.thumbnail +
+          '"><div class="btn-group"><button type="button" class="btn btn-default add" title="Add current video to this playlist"><i class="glyphicon glyphicon-plus"></i></button><button type="button" class="btn btn-default listen" title="Play this playlist"><i class="glyphicon glyphicon-play"></i></button><button type="button" class="btn btn-default delete" title="Delete playlist"><i class="glyphicon glyphicon-ban-circle"></i></button></div></div><h4 class="title">' +
+          item.title +
+          '</h4>' +
+          makeExcerpt(item.description) +
+          '</div></a></li>';
+
+  container.html(html);
+}
+
+var appendVideos = function(videoSnippet) {
+  // console.log(videoSnippet);
+  $('#playlist-videos').append(
+    '<li class="row item"><a href="#!" data-id="' +
+    videoSnippet.resourceId.videoId +
+    '"><div class="col-xs-12"><div class="pull-left th"><img src="' +
+    videoSnippet.thumbnails.medium.url +
+    '"><div class="btn-group"><button type="button" class="btn btn-default add" title="Add current video to active playlist"><i class="glyphicon glyphicon-plus"></i></button><button type="button" class="btn btn-default listen" title="Play this video"><i class="glyphicon glyphicon-play"></i></button><button type="button" class="btn btn-default play-from-here" title="Plat this playlist starting from this video"><i class="glyphicon glyphicon-circle-arrow-right"></i></button><button type="button" class="btn btn-default delete" title="Delete video from playlist"><i class="glyphicon glyphicon-ban-circle"></i></button></div></div><h4 class="title">' +
+    videoSnippet.title +
+    '</h4><p class="author">' +
+    videoSnippet.author +
+    '<p class="excerpt">' +
+    makeExcerpt(videoSnippet.description) +
+    '</p></div></a></li>'
+    );
+}
+
+var requestVideos = function(playlistId, pageToken) {
   $('#video-container').html('');
 
   var requestOptions = {
@@ -58,16 +114,11 @@ function requestVideos(playlistId, pageToken) {
   request.execute(function(response) {
 
     nextPageToken = response.result.nextPageToken;
-    var nextVis = nextPageToken ? 'visible' : 'hidden';
-    $('#next-button').css('visibility', nextVis);
-    prevPageToken = response.result.prevPageToken;
-    var prevVis = prevPageToken ? 'visible' : 'hidden';
-    $('#prev-button').css('visibility', prevVis);
 
     var playlistItems = response.result.items;
     if (playlistItems) {
       $.each(playlistItems, function(index, item) {
-        displayVideos(item.snippet);
+        appendVideos(item.snippet);
       });
     } else {
       $('#video-container').html('Sorry you have no videos in this playlist');
@@ -75,55 +126,33 @@ function requestVideos(playlistId, pageToken) {
   });
 }
 
-function displayVideos(videoSnippet) {
-  console.log(videoSnippet);
-  $('#playlist-videos').append(
-    '<li class="row item"><a href="#!" data-id="' +
-    videoSnippet.resourceId.videoId +
-    '"><div class="col-xs-12"><div class="pull-left th"><img src="' +
-    videoSnippet.thumbnails.medium.url +
-    '"><div class="btn-group"><button type="button" class="btn btn-default add" title="Add current video to active playlist"><i class="glyphicon glyphicon-plus"></i></button><button type="button" class="btn btn-default listen" title="Play this video"><i class="glyphicon glyphicon-play"></i></button><button type="button" class="btn btn-default play-from-here" title="Plat this playlist starting from this video"><i class="glyphicon glyphicon-circle-arrow-right"></i></button><button type="button" class="btn btn-default delete" title="Delete video from playlist"><i class="glyphicon glyphicon-ban-circle"></i></button></div></div><h4 class="title">' +
-    videoSnippet.title +
-    '</h4><p class="author">' +
-    videoSnippet.author +
-    '<p class="excerpt">' +
-    makeExcerpt(videoSnippet.description) +
-    '</p></div></a></li>'
-    );
-}
 
-function nextPage() {
+
+var nextPage = function() {
   requestVideos(playlistId, nextPageToken);
 }
 
-function previousPage() {
+var previousPage = function() {
   requestVideos(playlistId, prevPageToken);
 }
 
-function makeExcerpt(string) {
-  return string.slice(0,120) + "...";
+var makeExcerpt = function(string) {
+  if( string.length >= 119 ) {
+    return string.slice(0,120) + "...";
+  } else if( string.length <= 0 ) {
+    return "...";
+  } else {
+    return string;
+  }
 }
 
-function playVideo(title) {
+var playVideo = function(title) {
   player.loadVideoById({
-    videoId: videoId,
+    videoId: activeVideo,
     startSeconds: 0,
     endSeconds: 9999
   });
-}
-
-function appendActivePlaylist(id, name, thumbnail) {
-  $('#active-playlist').html(
-    '<li class="row item"><a href="#!" data-id="' +
-    id +
-    '"><div class="col-xs-12"><div class="pull-left th"><img src="' +
-    thumbnail +
-    '"><div class="btn-group"><button type="button" class="btn btn-default add" title="Add current video to this playlist"><i class="glyphicon glyphicon-plus"></i></button><button type="button" class="btn btn-default listen" title="Play this playlist"><i class="glyphicon glyphicon-play"></i></button><button type="button" class="btn btn-default delete" title="Delete playlist"><i class="glyphicon glyphicon-ban-circle"></i></button></div></div><h4 class="title">' +
-    name +
-    '</h4></div></a></li>'
-    );
-
-  $('.current-playlist').text(name);
+  changeStatus('play');
 }
 
 // onclicks
@@ -132,13 +161,16 @@ function appendActivePlaylist(id, name, thumbnail) {
 $('#playlists-list').on('click', 'a', function(){
   playlistId = $(this).data('id');
 
+  var item = {};
+  item.id = playlistId;
+  item.thumbnail = $(this).find('img').attr('src');
+  item.title = $(this).find('.title').text();
+  item.description = $(this).find('.description').text();
+
   $('#playlists').removeClass('in');
   $('#playlist-videos, #active-playlist').addClass('in');
 
-  activePlaylistName = $(this).find('.title').text();
-  activePlaylistThumbnail = $(this).find('img').attr('src');
-
-  appendActivePlaylist(playlistId, activePlaylistName, activePlaylistThumbnail);
+  appendPlaylist(item, true);
   requestVideos(playlistId);
 });
 
@@ -152,5 +184,6 @@ $('#playlist-videos').on('click', 'a', function(){
 $('#login-link').click(function(){
   checkAuth();
 });
+
 
 $('#authorizationModal').modal();
