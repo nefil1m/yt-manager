@@ -3,9 +3,6 @@ var playlistId,
     channelId,
     nextPageToken,
     prevPageToken,
-    activePlaylistId,
-    activePlaylistName,
-    activePlaylistThumbnail,
     activeVideo,
     prevVideo,
     nextVideo;
@@ -66,35 +63,45 @@ var appendPlaylist = function(item, active) {
     var html = $('#playlists-list').html();
   }
 
-  html += '<li class="row item"><a href="#!" data-id="' +
+  html += '<li class="row item" id="' +
+          item.id +
+          '"><a href="#!" data-id="' +
           item.id +
           '" title="' +
           item.description +
           '"><div class="col-xs-12"><div class="pull-left th"><img src="' +
           item.thumbnail +
-          '"><div class="btn-group"><button type="button" class="btn btn-default add" title="Add current video to this playlist"><i class="glyphicon glyphicon-plus"></i></button><button type="button" class="btn btn-default listen" title="Play this playlist"><i class="glyphicon glyphicon-play"></i></button><button type="button" class="btn btn-default delete" title="Delete playlist"><i class="glyphicon glyphicon-ban-circle"></i></button></div></div><h4 class="title">' +
+          '"></div><h4 class="title">' +
           item.title +
-          '</h4>' +
+          '</h4><p class="excerpt">' +
           makeExcerpt(item.description) +
-          '</div></a></li>';
+          '</p></div></a><div class="btn-group"><a class="btn btn-default add" title="Add current video to this playlist"><i class="glyphicon glyphicon-plus"></i></a><a class="btn btn-default listen" title="Play this playlist"><i class="glyphicon glyphicon-play"></i></a><a class="btn btn-default edit" title="Edit playlist"><i class="glyphicon glyphicon-edit"></i></a><a class="btn btn-default delete" title="Delete playlist"><i class="glyphicon glyphicon-ban-circle"></i></a></div></li>';
 
   container.html(html);
 }
 
-var appendVideos = function(videoSnippet) {
+var appendVideos = function(item) {
 
   $('#playlist-videos').append(
-    '<li class="row item"><a href="#!" data-id="' +
-    videoSnippet.resourceId.videoId +
+    '<li class="row item"><div class="info"><div class="row"><div class="col-xs-6 likes"><p class="count">' +
+    item.likes +
+    '</p></div><div class="col-xs-6 dislikes"><p class="count">' +
+    item.dislikes +
+    '</p></div></div><p class="duration">' +
+    translateDuration(item.duration) +
+    '</p></div><a href="#!" data-id="' +
+    item.id +
+    '" data-publishedAt="' +
+    item.publishedAt +
     '"><div class="col-xs-12"><div class="pull-left th"><img src="' +
-    videoSnippet.thumbnails.medium.url +
-    '"><div class="btn-group"><button type="button" class="btn btn-default add" title="Add current video to active playlist"><i class="glyphicon glyphicon-plus"></i></button><button type="button" class="btn btn-default listen" title="Play this video"><i class="glyphicon glyphicon-play"></i></button><button type="button" class="btn btn-default play-from-here" title="Plat this playlist starting from this video"><i class="glyphicon glyphicon-circle-arrow-right"></i></button><button type="button" class="btn btn-default delete" title="Delete video from playlist"><i class="glyphicon glyphicon-ban-circle"></i></button></div></div><h4 class="title">' +
-    videoSnippet.title +
+    item.thumbnail +
+    '"></div><h4 class="title">' +
+    item.title +
     '</h4><p class="author">' +
-    videoSnippet.author +
+    item.author +
     '<p class="excerpt">' +
-    makeExcerpt(videoSnippet.description) +
-    '</p></div></a></li>'
+    makeExcerpt(item.description) +
+    '</p></div></a><div class="btn-group"><a class="btn btn-default add" title="Add this video to another playlist"><i class="glyphicon glyphicon-plus"></i></a><a class="btn btn-default listen" title="Play this video"><i class="glyphicon glyphicon-play"></i></a><a class="btn btn-default delete" title="Delete video from playlist"><i class="glyphicon glyphicon-ban-circle"></i></a></div></li>'
     );
 }
 
@@ -103,7 +110,7 @@ var requestVideos = function(playlistId, pageToken) {
 
   var requestOptions = {
     playlistId: playlistId,
-    part: 'snippet',
+    part: 'snippet,contentDetails',
     maxResults: 10
   };
 
@@ -116,10 +123,32 @@ var requestVideos = function(playlistId, pageToken) {
 
     nextPageToken = response.result.nextPageToken;
 
-    var playlistItems = response.result.items;
-    if (playlistItems) {
-      $.each(playlistItems, function(index, item) {
-        appendVideos(item.snippet);
+    var res = response.result.items;
+
+    if (res) {
+      $.each(res, function(i, items) {
+        var data = res[i].snippet;
+        var item = {};
+        item.id = data.resourceId.videoId;
+        item.title = data.title;
+        item.description = data.description;
+        item.author = data.channelTitle;
+        item.thumbnail = data.thumbnails.medium.url;
+        item.publishedAt = data.publishedAt;
+
+        var request = gapi.client.youtube.videos.list({
+          id: item.id,
+          part: 'statistics,contentDetails'
+        });
+
+        request.execute(function(response) {
+          var res = response.result.items[0].statistics;
+          item.likes = res.likeCount;
+          item.dislikes = res.dislikeCount;
+          item.views = res.viewCount;
+          item.duration = response.result.items[0].contentDetails.duration;
+          appendVideos(item);
+        });
       });
     } else {
       $('#video-container').html('Sorry you have no videos in this playlist');
@@ -156,7 +185,7 @@ var addNewPlaylist = function() {
 
       request.execute(function(response) {
         var res = response.result;
-
+        console.lo(res);
         if( res ) {
           var item = {};
           item.id = res.id;
@@ -173,6 +202,10 @@ var addNewPlaylist = function() {
   } else {
     $('#authorizationModal').modal('show');
   }
+}
+
+var removePlaylist = function(id) {
+
 }
 
 var nextPage = function() {
@@ -193,6 +226,26 @@ var makeExcerpt = function(string) {
   }
 }
 
+var translateDuration = function(dur) {
+  var l = dur.length;
+  dur = dur.slice(2, l);
+  var tempS = dur.indexOf('S');
+  var s = tempS ? dur.slice(tempS - 2, tempS) : '';
+  var tempM = dur.indexOf('M');
+  var m = tempM ? dur.slice(tempM - 2, tempM) : '';
+  var tempH = dur.indexOf('H');
+  var h;
+
+  if( tempH == 1 ) {
+    h = dur.slice(0, 1);
+  } else if( tempH == 2 ) {
+    h = dur.slice(0, 2);
+  } else {
+    h = '';
+  }
+  console.log(dur,tempH,h,m,s);
+}
+
 var playVideo = function() {
   player.loadVideoById({
     videoId: activeVideo,
@@ -205,7 +258,14 @@ var playVideo = function() {
 // onclicks
 
 //on playlist
-$('#playlists-list').on('click', 'a', function(){
+
+$('#playlist-list').on('click', 'button.delete', function() {
+  var id = $(this).parents('.item').attr('id');
+
+  console.log(id);
+})
+
+$('#playlists-list').on('click', 'a', function() {
   playlistId = $(this).data('id');
 
   var item = {};
@@ -221,18 +281,18 @@ $('#playlists-list').on('click', 'a', function(){
   requestVideos(playlistId);
 });
 
-$('.add-new-playlist').on('click', 'a', function(){
+$('.add-new-playlist').on('click', 'a', function() {
   addNewPlaylist();
 });
 
 //on video
-$('#playlist-videos').on('click', 'a', function(){
+$('#playlist-videos').on('click', 'a', function() {
   var title = $(this).find('.title').text();
   activeVideo = $(this).data('id');
   playVideo();
 });
 
-$('#login-link').click(function(){
+$('#login-link').click(function() {
   checkAuth();
 });
 

@@ -37,7 +37,7 @@
                         </div>
                         <ul>
                             <li class="play-status">Play status: <span class="play-state">Stopped</span></li>
-                            <li>Current playlist: <span class="current-playlist"></span></li>
+                            <li>Active playlist: <span class="current-playlist"></span></li>
                             <li>Current song: <span class="current-video"></span></li>
                             <li>Authorization status: <span class="authorization-btn"><a href="#!" data-toggle="modal" data-target="#authorizationModal">Authorize</a></span></li>
                             <li>Channel: <span class="channel"></span></li>
@@ -53,33 +53,42 @@
                     <div id="playlists" class="collapse in">
                         <ul id="playlists-list" class="videos-container dark">
                             <!-- playlists appends here (template below) -->
-                            <!-- <li class="row item">
-                                <a href="#!">
+                            <li class="row item" id="#">
+                                <div class="info">
+                                    <div class="row">
+                                        <div class="col-xs-6 likes">
+                                            <p class="count">123456</p>
+                                        </div>
+                                        <div class="col-xs-6 dislikes">
+                                            <p class="count">156412</p>
+                                        </div>
+                                    </div>
+                                    <p class="duration">3:15</p>
+                                </div>
+                                <a href="#!" data-id="" title="">
                                     <div class="col-xs-12">
                                         <div class="pull-left th">
                                             <img src="https://i.ytimg.com/vi/qDxtsPseia8/mqdefault.jpg">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default add" title="Add current video to this playlist">
-                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-default listen" title="Play this playlist">
-                                                    <i class="glyphicon glyphicon-play"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-default edit" title="Edit playlist">
-                                                    <i class="glyphicon glyphicon-edit"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-default delete" title="Delete playlist">
-                                                    <i class="glyphicon glyphicon-ban-circle"></i>
-                                                </button>
-                                            </div>
                                         </div>
                                         <h4 class="title">Lorem ipsum - dolor sit amet</h4>
-                                        <p class="author">Author: <span>autor</span></p>
                                         <p class="excerpt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet quidem, dignissimos. Sed fuga odit ipsum reiciendis esse animi unde molestiae, est culpa aut, totam eligendi dolorum corporis, tempore, velit voluptate!</p>
                                     </div>
                                 </a>
-                            </li> -->
-
+                                <div class="btn-group">
+                                    <a class="btn btn-default add" title="Add current video to this playlist">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                    </a>
+                                    <a class="btn btn-default listen" title="Play this playlist">
+                                        <i class="glyphicon glyphicon-play"></i>
+                                    </a>
+                                    <a class="btn btn-default edit" title="Edit playlist">
+                                        <i class="glyphicon glyphicon-edit"></i>
+                                    </a>
+                                    <a class="btn btn-default delete" title="Delete playlist">
+                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                    </a>
+                                </div>
+                            </li>
                         </ul>
                         <div class="row add-new-playlist">
                             <a href="#!">
@@ -140,13 +149,14 @@
                     </div>
                     <div id="video-info" class="row">
                         <div class="col-xs-4">
-                            <p class="author">Author: <span></span></p>
-                            <p class="views">Views: <span></span></p>
-                            <p class="likes">Likes: <span></span></p>
-                            <p class="dislikes">Dislikes: <span></span></p>
+                            <p>Author: <span class="author"></span></p>
+                            <p>Views: <span class="views"></span></p>
+                            <p>Likes: <span class="likes"></span></p>
+                            <p>Dislikes: <span class="dislikes"></span></p>
+                            <p>Published at: <span class="published"></span></p>
                         </div>
                         <div class="col xs-8">
-                            <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos, ullam dolorem facilis enim, ea aliquam nam, quam incidunt exercitationem voluptate quisquam repellat ipsam perspiciatis vero quaerat. Aspernatur adipisci quis recusandae.</p>
+                            <p class="description"></p>
                         </div>
                     </div>
                     <div id="search" class="row">

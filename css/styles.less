@@ -171,6 +171,8 @@ footer {
 }
 
 .add-new-playlist {
+    border-top: 1px solid darken(@secondaryColor, 50%);
+
     a {
         color: #fff;
     }
@@ -199,23 +201,27 @@ footer {
     list-style-type: none;
 
     &.light {
-        a {
+        a, p {
             color: #333;
         }
     }
 
     &.dark {
-        a {
+        a, p {
             color: #fff;
         }
     }
 
 
     .item {
-        border-bottom: 1px solid darken(@secondaryColor, 50%);
+        border-top: 1px solid darken(@secondaryColor, 50%);
+        height: 100px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        padding-top: 20px;
 
-        &:last-child {
-            border-bottom: 0 none;
+        &:first-child {
+            border-top: 0 none;
         }
 
         h4 {
@@ -226,14 +232,101 @@ footer {
         p {
             font-size: 12px;
             margin: 0;
+
+            &.excerpt {
+                font-size: 10px;
+            }
+        }
+
+        img {
+            transition: opacity .2s;
+            opacity: 1;
+        }
+
+        &:hover {
+            img {
+                opacity: .2;
+            }
+
+            .info {
+                opacity: 1;
+            }
+
+            .btn-group {
+                top: -24px;
+            }
+        }
+
+        .btn-group {
+            position: relative;
+            top: 0px; left: 15px;
+            transition: top .2s;
+            width: 120px;
+            padding: 0;
+
+            .btn {
+                font-size: 10px;
+                padding: 3px 5px;
+                width: 30px;
+                display: block;
+                color: #333;
+                border-radius: 0;
+                margin-left: 0;
+            }
+
+            .add {
+                color: green;
+            }
+
+            .delete {
+                color: red;
+            }
+        }
+    }
+
+    .info {
+        position: absolute;
+        z-index: 10;
+        width: 120px;
+        margin-left: 20px;
+        padding-top: 3px;
+        text-align: center;
+        opacity: 0;
+        transition: opacity .2s;
+
+        .row {
+            max-width: 120px;
+        }
+
+        .likes {
+            p:before {
+                content: '\e125';
+                color: green;
+            }
+        }
+
+        .dislikes {
+            p:before {
+                content: '\e126';
+                color: red;
+            }
+        }
+
+        .dislikes, .likes {
+            p:before {
+                font-family: 'Glyphicons Halflings' ;
+                margin: 3px;
+            }
+        }
+
+        .duration {
+            font-size: 22px;
+            font-weight: 700;
         }
     }
 
 
-
     .col-xs-12 {
-        padding-bottom: 20px;
-
         h4.title {
             margin-bottom: 0;
         }
@@ -244,42 +337,10 @@ footer {
             overflow: hidden;
             margin-right: 20px;
 
-
-            &:hover {
-                .btn-group {
-                    top: -24px;
-                }
-            }
-
             img {
                 width: 120px;
                 height: 80px;
                 margin-right: 15px;
-            }
-
-            .btn-group {
-                position: relative;
-                top: 0;
-                transition: top .2s;
-
-                .btn {
-                    font-size: 10px;
-                    padding: 4px 9px;
-                    width: 30px;
-                }
-
-
-                button:first-child, button:last-child {
-                    border-radius: 0;
-                }
-
-                .add {
-                    color: green;
-                }
-
-                .delete {
-                    color: red;
-                }
             }
         }
     }
