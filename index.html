@@ -81,6 +81,17 @@
                             </li> -->
 
                         </ul>
+                        <div class="row add-new-playlist">
+                            <a href="#!">
+                                <div class="col-xs-12">
+                                    <div class="pull-left th">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                    </div>
+                                    <h4 class="title">Add New Playlist</h4>
+                                    <p class="excerpt"></p>
+                                </div>
+                            </a>
+                        </div>
                     </div>
 
                     <h3><a href="#!" class="collapsed" data-toggle="collapse" data-target="#active-playlist">Active Playlist</a></h3>
@@ -164,10 +175,11 @@
 
         <!-- authorization modal -->
 
-        <div id="authorizationModal" class="modal false" aria-hidden="false" role="dialog">
+        <div id="authorizationModal" class="modal fade" aria-hidden="false" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <h4>Authorization</h4>
                     </div>
                     <div class="modal-body">
@@ -176,6 +188,49 @@
                             <p style="color: red;">Notice that it will make changes to your account! Author doesn't take responsibility for your actions.</p>
 
                             <p>Please <a href="#" id="login-link" data-dismiss="modal" onclick="auth();">authorize</a> to continue.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="newPlaylistModal" class="modal fade" aria-hidden="true" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4>Add New Playlist</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="playlistName" class="control-label col-xs-3">Name</label>
+                                <div class="col-xs-9">
+                                    <input type="text" id="playlistName" class="form-control" required placeholder="Playlist Title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="playlistDescription" class="control-label col-xs-3">Description</label>
+                                <div class="col-xs-9">
+                                    <textarea id="playlistDescription" cols="30" rows="10" class="form-control" placeholder="Playlist Description"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="playlistPrivate" class="control-label col-xs-3">
+                                    Private
+                                </label>
+                                <div class="col-xs-9 check">
+                                    <input type="checkbox">
+                                    <i class="glyphicon glyphicon-lock"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="playlistTags" class="control-label col-xs-3">Tags</label>
+                                <div class="col-xs-9">
+                                    <input type="text" id="playlistTags" class="form-control" placeholder="Space separated values">
+                                </div>
+                            </div>
+                            <a href="#!" class="btn btn-warning pull-right" id="newPlaylistSubmit" data-toggle="modal">Submit</a>
                         </div>
                     </div>
                 </div>

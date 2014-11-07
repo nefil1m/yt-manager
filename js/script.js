@@ -1,4 +1,6 @@
 var playlistId,
+    videoId,
+    channelId,
     nextPageToken,
     prevPageToken,
     activePlaylistId,
@@ -27,7 +29,7 @@ var requestUserPlaylists = function(channelId) {
       item.thumbnail = res[i].snippet.thumbnails.medium.url;
       item.title = res[i].snippet.title;
       item.description = res[i].snippet.description;
-      console.log(item);
+
       appendPlaylist(item);
     }
   });
@@ -51,7 +53,6 @@ var requestWatchLaterPlaylist = function(playlist) {
       item.description = res.snippet.description;
 
       appendPlaylist(item);
-
   });
 }
 
@@ -81,7 +82,7 @@ var appendPlaylist = function(item, active) {
 }
 
 var appendVideos = function(videoSnippet) {
-  // console.log(videoSnippet);
+
   $('#playlist-videos').append(
     '<li class="row item"><a href="#!" data-id="' +
     videoSnippet.resourceId.videoId +
@@ -126,7 +127,53 @@ var requestVideos = function(playlistId, pageToken) {
   });
 }
 
+var addNewPlaylist = function() {
+  if( typeof channelId != 'undefined' ) {
+    $('#newPlaylistModal').modal('show');
 
+    $('#newPlaylistSubmit').on('click', function(){
+      var title = $('#playlistName').val(),
+          description = $('#playlistDescription').val(),
+          tags = $('#playlistTags').val().split(' '),
+          status = 'public';
+
+      if( $('#playlistStatus').is(':checked') ) {
+        status = 'private';
+      }
+
+      var request = gapi.client.youtube.playlists.insert({
+        part: 'snippet,status',
+        resource: {
+          snippet: {
+            title: title,
+            description: description
+          },
+          status: {
+            privacyStatus: status
+          }
+        }
+      });
+
+      request.execute(function(response) {
+        var res = response.result;
+
+        if( res ) {
+          var item = {};
+          item.id = res.id;
+          item.title = title;
+          item.description = description;
+          item.thumbnail = res.snippet.thumbnails.medium.url;
+
+          appendPlaylist(item);
+        } else {
+          alert('Something went wrong. Try again later');
+        }
+      });
+    });
+  } else {
+    $('#authorizationModal').modal('show');
+  }
+}
 
 var nextPage = function() {
   requestVideos(playlistId, nextPageToken);
@@ -146,7 +193,7 @@ var makeExcerpt = function(string) {
   }
 }
 
-var playVideo = function(title) {
+var playVideo = function() {
   player.loadVideoById({
     videoId: activeVideo,
     startSeconds: 0,
@@ -174,11 +221,15 @@ $('#playlists-list').on('click', 'a', function(){
   requestVideos(playlistId);
 });
 
+$('.add-new-playlist').on('click', 'a', function(){
+  addNewPlaylist();
+});
+
 //on video
 $('#playlist-videos').on('click', 'a', function(){
   var title = $(this).find('.title').text();
-  videoId = $(this).data('id');
-  playVideo(title);
+  activeVideo = $(this).data('id');
+  playVideo();
 });
 
 $('#login-link').click(function(){

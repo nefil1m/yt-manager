@@ -25,7 +25,7 @@ function onPlayerStateChange(event) {
 
 function stopVideo() {
   player.stopVideo();
-  changeState('stop');
+  changeStatus('stop');
 }
 
 var changeStatus = function(status) {

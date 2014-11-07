@@ -52,7 +52,6 @@ var CLIENT_ID = '877549163404-chjiknp3ffeiatmb2mcb8dfp23u7sm8q.apps.googleuserco
                 $('.status').find('.authorization-btn').html('ok');
                 $('.status').find('.channel').html(res.snippet.title);
 
-                console.log(response);
                 requestWatchLaterPlaylist(playlists);
                 requestUserPlaylists(channelId);
             });

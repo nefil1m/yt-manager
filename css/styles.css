@@ -146,6 +146,25 @@ footer p {
   border: 1px solid #ccc;
   width: 100%;
 }
+.add-new-playlist a {
+  color: #fff;
+}
+.add-new-playlist h4 {
+  font-size: 12px;
+  font-weight: 700;
+}
+.add-new-playlist .th {
+  width: 120px;
+  background: #ddd;
+  text-align: center;
+  margin-right: 10px;
+}
+.add-new-playlist .th i {
+  line-height: 80px;
+  color: green;
+  font-size: 25px;
+  opacity: .5;
+}
 .videos-container {
   list-style-type: none;
 }
@@ -208,4 +227,11 @@ footer p {
 }
 .videos-container .col-xs-12 .th .btn-group .delete {
   color: red;
+}
+.modal .check {
+  padding-top: 5px;
+}
+.modal .btn,
+.modal .form-control {
+  border-radius: 0 !important;
 }
