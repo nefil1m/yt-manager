@@ -166,7 +166,9 @@ var addNewPlaylist = function() {
   if( typeof channelId != 'undefined' ) {
     $('#newPlaylistModal').modal('show');
 
-    $('#newPlaylistSubmit').on('click', function(){
+    $('#newPlaylistSubmit').not(':disabled').on('click', function(){
+      $('#newPlaylistModal').modal('hide');
+
       var title = $('#playlistName').val(),
           description = $('#playlistDescription').val(),
           tags = $('#playlistTags').val().split(' '),
@@ -198,6 +200,7 @@ var addNewPlaylist = function() {
           item.title = title;
           item.description = description;
           item.thumbnail = res.snippet.thumbnails.medium.url;
+          item.status = status;
 
           appendPlaylist(item);
         } else {
@@ -302,6 +305,8 @@ var playVideo = function() {
 
 //on playlist
 
+// delete playlist
+
 $('#playlists-list').on('click', '.delete', function() {
   var id = $(this).parents('.item').attr('id'),
       playlistName = $(this).parents('.item').find('.title').text(),
@@ -312,6 +317,8 @@ $('#playlists-list').on('click', '.delete', function() {
   }
 });
 
+// append playlist
+
 $('#playlists-list, #active-playlist').on('click', '.item > a', function() {
   playlistId = $(this).data('id');
 
@@ -320,6 +327,7 @@ $('#playlists-list, #active-playlist').on('click', '.item > a', function() {
   item.thumbnail = $(this).find('img').attr('src');
   item.title = $(this).find('.title').text();
   item.description = $(this).find('.description').text();
+  item.status = $(this).parents('.item').find('.privacy-status').data('status');
 
   $('#playlists').removeClass('in');
   $('#playlist-videos, #active-playlist').addClass('in');
@@ -328,9 +336,11 @@ $('#playlists-list, #active-playlist').on('click', '.item > a', function() {
   requestVideos(playlistId);
 });
 
+// add new playlist
 $('.add-new-playlist').on('click', 'a', function(e) {
   e.preventDefault();
   $('#newPlaylistModal').find('input, textarea').val('');
+  $('#newPlaylistModal').find('input[type=checkbox]').attr('checked', false);
   addNewPlaylist();
 });
 
@@ -345,5 +355,12 @@ $('#login-link').click(function() {
   checkAuth();
 });
 
+$('#newPlaylistModal').find('#playlistName').on('keyup', function() {
+  if( $(this).val() == '' ) {
+    $('#newPlaylistSubmit').attr('disabled', 'disabled').addClass('btn-danger').removeClass('btn-success');
+  } else {
+    $('#newPlaylistSubmit').removeAttr('disabled').addClass('btn-success').removeClass('btn-danger');
+  }
+});
 
 $('#authorizationModal').modal();
