@@ -168,7 +168,7 @@ var addNewPlaylist = function() {
           tags = $('#playlistTags').val().split(' '),
           status = 'public';
 
-      if( $('#playlistStatus').is(':checked') ) {
+      if( $('#playlistPrivate').is(':checked') ) {
         status = 'private';
       }
 
@@ -300,7 +300,7 @@ $('#playlists-list').on('click', '.delete', function() {
   }
 });
 
-$('#playlists-list').on('click', '.item > a', function() {
+$('#playlists-list, #active-playlist').on('click', '.item > a', function() {
   playlistId = $(this).data('id');
 
   var item = {};
@@ -318,6 +318,7 @@ $('#playlists-list').on('click', '.item > a', function() {
 
 $('.add-new-playlist').on('click', 'a', function(e) {
   e.preventDefault();
+  $('#newPlaylistModal').find('input, textarea').val('');
   addNewPlaylist();
 });
 
