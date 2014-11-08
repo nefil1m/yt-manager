@@ -11,7 +11,7 @@ var requestUserPlaylists = function(channelId) {
   $('#playlists-list').html('');
   var request = gapi.client.youtube.playlists.list({
     channelId: channelId,
-    part: 'id,snippet',
+    part: 'id,snippet,status',
     maxResults: 50
   });
 
@@ -26,6 +26,7 @@ var requestUserPlaylists = function(channelId) {
       item.thumbnail = res[i].snippet.thumbnails.medium.url;
       item.title = res[i].snippet.title;
       item.description = res[i].snippet.description;
+      item.status = res[i].status.privacyStatus;
 
       appendPlaylist(item);
     }
@@ -48,6 +49,7 @@ var requestWatchLaterPlaylist = function(playlist) {
       item.title = res.snippet.title;
       item.thumbnail = res.snippet.thumbnails.medium.url;
       item.description = res.snippet.description;
+      item.status = 'public';
 
       appendPlaylist(item);
   });
@@ -65,7 +67,9 @@ var appendPlaylist = function(item, active) {
 
   html += '<li class="row item" id="' +
           item.id +
-          '"><a href="#!" data-id="' +
+          '">' +
+          checkStatus(item.status) +
+          '<a href="#!" data-id="' +
           item.id +
           '" title="' +
           item.description +
@@ -237,6 +241,14 @@ var makeExcerpt = function(string) {
     return "...";
   } else {
     return string;
+  }
+}
+
+var checkStatus = function(status) {
+  if( status === 'public') {
+    return '';
+  } else if( status === 'private' ) {
+    return  '<div class="privacy-status" data-status="' + status + '"><i class="glyphicon glyphicon-lock"></i></div>'
   }
 }
 

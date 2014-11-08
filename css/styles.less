@@ -227,7 +227,6 @@ footer {
         border-top: 1px solid darken(@secondaryColor, 50%);
         height: 125px;
         overflow: hidden;
-        // margin-bottom: 10px;
         padding: 10px 0;
 
         &:hover {
@@ -283,6 +282,17 @@ footer {
             .delete {
                 color: red;
             }
+        }
+    }
+
+    .privacy-status {
+        position: absolute;
+        z-index: 10;
+        margin-left: 18px;
+        font-size: 25px;
+
+        i {
+            color: #fff;
         }
     }
 
@@ -349,6 +359,11 @@ footer {
 }
 
 .modal {
+
+    .modal-content {
+        box-shadow: 0 0 0;
+        border-radius: 0;
+    }
 
     .check {
         padding-top: 5px;
