@@ -193,6 +193,9 @@ footer p {
 .videos-container .item:hover img {
   opacity: .5;
 }
+.videos-container .item:hover .info {
+  opacity: 1;
+}
 .videos-container .item:first-child {
   border-top: 0 none;
 }
@@ -216,7 +219,6 @@ footer p {
   top: 0px;
   left: 15px;
   transition: top .2s;
-  width: 120px;
   padding: 0;
 }
 .videos-container .item .btn-group .btn {

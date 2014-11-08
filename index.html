@@ -94,6 +94,12 @@
                                     <a class="btn btn-default delete" title="Delete playlist">
                                         <i class="glyphicon glyphicon-ban-circle"></i>
                                     </a>
+                                    <a class="btn btn-default move-up" title="Move up">
+                                        <i class="glyphicon glyphicon-arrow-up"></i>
+                                    </a>
+                                    <a class="btn btn-default move-down" title="Move down">
+                                        <i class="glyphicon glyphicon-arrow-down"></i>
+                                    </a>
                                 </div>
                             </li> -->
                         </ul>
@@ -114,14 +120,12 @@
 
                     <div id="active-playlist" class="collapse videos-container dark">
                         <!-- active playlist goes here -->
-                        <p>Nothing to show</p>
                     </div>
 
-                    <h3><a href="#!" class="collapsed" data-target="#playlist-videos" data-toggle="collapse">Videos in <span class="current-playlist">Playlist</span></a></h3>
+                    <h3><a href="#!" class="collapsed" data-target="#playlist-videos" data-toggle="collapse">Videos in "<span class="current-playlist">Playlist</span>"</a></h3>
 
                     <ul id="playlist-videos" class="videos-container dark collapse">
                         <!-- videos appends here -->
-                        <li>Nothing to show</li>
                     </ul>
                     <div class="button-container">
                         <button class="prev-button paging-button" onclick="previousPage();">&#171; Previous Page</button>
@@ -204,7 +208,8 @@
                             <p>This application requires access to your YouTube account.</p>
                             <p style="color: red;">Notice that it will make changes to your account! Author doesn't take responsibility for your actions.</p>
 
-                            <p>Please <a href="#" id="login-link" data-dismiss="modal">authorize</a> to continue.</p>
+                            <p>Please authorize to continue.</p>
+                            <a href="#" id="login-link" data-dismiss="modal" class="btn btn-success">Authorize</a>
                         </div>
                     </div>
                 </div>
@@ -253,6 +258,8 @@
                 </div>
             </div>
         </div>
+
+        <div id="editPlaylistModal"></div>
 
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>

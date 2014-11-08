@@ -86,7 +86,9 @@ var appendPlaylist = function(item, active) {
 
 var appendVideos = function(item) {
 
-  $('#playlist-videos').append(
+  var html = $('#playlist-videos').html();
+
+  html +=
     '<li class="row item" id="' +
     item.id +
     '"><div class="info"><div class="row"><div class="col-xs-6 likes"><p class="count">' +
@@ -107,8 +109,9 @@ var appendVideos = function(item) {
     item.author +
     '<p class="excerpt">' +
     makeExcerpt(item.description) +
-    '</p></div></a><div class="btn-group"><a class="btn btn-default add" title="Add this video to another playlist"><i class="glyphicon glyphicon-plus"></i></a><a class="btn btn-default listen" title="Play this video"><i class="glyphicon glyphicon-play"></i></a><a class="btn btn-default delete" title="Delete video from playlist"><i class="glyphicon glyphicon-ban-circle"></i></a></div></li>'
-    );
+    '</p></div></a><div class="btn-group"><a class="btn btn-default add" title="Add this video to another playlist"><i class="glyphicon glyphicon-plus"></i></a><a class="btn btn-default listen" title="Play this video"><i class="glyphicon glyphicon-play"></i></a><a class="btn btn-default delete" title="Delete video from playlist"><i class="glyphicon glyphicon-ban-circle"></i></a><a class="btn btn-default move-up" title="Move up"><i class="glyphicon glyphicon-arrow-up"></i></a><a class="btn btn-default move-down" title="Move down"><i class="glyphicon glyphicon-arrow-down"></i></a></div></li>'
+
+  $('#playlist-videos').html(html);
 }
 
 var requestVideos = function(playlistId, pageToken) {
@@ -248,10 +251,10 @@ var makeExcerpt = function(string) {
 }
 
 var checkStatus = function(status) {
-  if( status === 'public') {
-    return '';
-  } else if( status === 'private' ) {
+  if( status == 'private' ) {
     return  '<div class="privacy-status" data-status="' + status + '"><i class="glyphicon glyphicon-lock"></i></div>'
+  } else {
+    return  '<div class="privacy-status" data-status="' + status + '"></div>'
   }
 }
 
@@ -333,6 +336,8 @@ $('#playlists-list, #active-playlist').on('click', '.item > a', function() {
   $('#playlist-videos, #active-playlist').addClass('in');
 
   appendPlaylist(item, true);
+  $('#playlist-videos').html('');
+  $('.current-playlist').text(item.title);
   requestVideos(playlistId);
 });
 
