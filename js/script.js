@@ -83,7 +83,9 @@ var appendPlaylist = function(item, active) {
 var appendVideos = function(item) {
 
   $('#playlist-videos').append(
-    '<li class="row item"><div class="info"><div class="row"><div class="col-xs-6 likes"><p class="count">' +
+    '<li class="row item" id="' +
+    item.id +
+    '"><div class="info"><div class="row"><div class="col-xs-6 likes"><p class="count">' +
     item.likes +
     '</p></div><div class="col-xs-6 dislikes"><p class="count">' +
     item.dislikes +
@@ -142,7 +144,6 @@ var requestVideos = function(playlistId, pageToken) {
 
         request.execute(function(response) {
           var res = response.result.items[0].statistics;
-          console.log(response);
           item.author = response.result.items[0].snippet.channelTitle;
           item.likes = res.likeCount;
           item.dislikes = res.dislikeCount;
@@ -205,8 +206,20 @@ var addNewPlaylist = function() {
   }
 }
 
-var removePlaylist = function(id) {
+var removeItemFromList = function(id) {
+  $("#" + id).remove();
+}
 
+var removePlaylist = function(id) {
+    var request = gapi.client.youtube.playlists.delete({
+      id: id
+    });
+
+    request.execute(function(response) {
+      if( !!response ) {
+        removeItemFromList(id);
+      }
+    });
 }
 
 var nextPage = function() {
@@ -277,13 +290,17 @@ var playVideo = function() {
 
 //on playlist
 
-$('#playlist-list').on('click', 'button.delete', function() {
-  var id = $(this).parents('.item').attr('id');
+$('#playlists-list').on('click', '.delete', function() {
+  var id = $(this).parents('.item').attr('id'),
+      playlistName = $(this).parents('.item').find('.title').text(),
+      answer = confirm("Are you sure you want to delete playlist " + playlistName + "? This process is PERMANENT and you can not undo it.");
 
-  console.log(id);
-})
+  if( answer ) {
+    removePlaylist(id);
+  }
+});
 
-$('#playlists-list').on('click', 'a', function() {
+$('#playlists-list').on('click', '.item > a', function() {
   playlistId = $(this).data('id');
 
   var item = {};
@@ -299,7 +316,8 @@ $('#playlists-list').on('click', 'a', function() {
   requestVideos(playlistId);
 });
 
-$('.add-new-playlist').on('click', 'a', function() {
+$('.add-new-playlist').on('click', 'a', function(e) {
+  e.preventDefault();
   addNewPlaylist();
 });
 

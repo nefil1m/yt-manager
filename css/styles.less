@@ -172,6 +172,7 @@ footer {
 
 .add-new-playlist {
     border-top: 1px solid darken(@secondaryColor, 50%);
+    padding-top: 10px;
 
     a {
         color: #fff;
@@ -193,6 +194,15 @@ footer {
             color: green;
             font-size: 25px;
             opacity: .5;
+            transition: opacity .2s;
+        }
+    }
+
+    &:hover {
+        .th {
+            i {
+                opacity: 1;
+            }
         }
     }
 }
@@ -215,10 +225,16 @@ footer {
 
     .item {
         border-top: 1px solid darken(@secondaryColor, 50%);
-        height: 100px;
+        height: 125px;
         overflow: hidden;
-        margin-bottom: 20px;
-        padding-top: 20px;
+        // margin-bottom: 10px;
+        padding: 10px 0;
+
+        &:hover {
+            img {
+                opacity: .5;
+            }
+        }
 
         &:first-child {
             border-top: 0 none;
@@ -241,20 +257,6 @@ footer {
         img {
             transition: opacity .2s;
             opacity: 1;
-        }
-
-        &:hover {
-            img {
-                opacity: .2;
-            }
-
-            .info {
-                opacity: 1;
-            }
-
-            .btn-group {
-                top: -24px;
-            }
         }
 
         .btn-group {

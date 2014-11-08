@@ -148,6 +148,7 @@ footer p {
 }
 .add-new-playlist {
   border-top: 1px solid #4d4d4d;
+  padding-top: 10px;
 }
 .add-new-playlist a {
   color: #fff;
@@ -167,6 +168,10 @@ footer p {
   color: green;
   font-size: 25px;
   opacity: .5;
+  transition: opacity .2s;
+}
+.add-new-playlist:hover .th i {
+  opacity: 1;
 }
 .videos-container {
   list-style-type: none;
@@ -181,10 +186,12 @@ footer p {
 }
 .videos-container .item {
   border-top: 1px solid #4d4d4d;
-  height: 100px;
+  height: 125px;
   overflow: hidden;
-  margin-bottom: 20px;
-  padding-top: 20px;
+  padding: 10px 0;
+}
+.videos-container .item:hover img {
+  opacity: .5;
 }
 .videos-container .item:first-child {
   border-top: 0 none;
@@ -203,15 +210,6 @@ footer p {
 .videos-container .item img {
   transition: opacity .2s;
   opacity: 1;
-}
-.videos-container .item:hover img {
-  opacity: .2;
-}
-.videos-container .item:hover .info {
-  opacity: 1;
-}
-.videos-container .item:hover .btn-group {
-  top: -24px;
 }
 .videos-container .item .btn-group {
   position: relative;
