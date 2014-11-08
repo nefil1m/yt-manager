@@ -132,17 +132,18 @@ var requestVideos = function(playlistId, pageToken) {
         item.id = data.resourceId.videoId;
         item.title = data.title;
         item.description = data.description;
-        item.author = data.channelTitle;
         item.thumbnail = data.thumbnails.medium.url;
         item.publishedAt = data.publishedAt;
 
         var request = gapi.client.youtube.videos.list({
           id: item.id,
-          part: 'statistics,contentDetails'
+          part: 'statistics,contentDetails,snippet'
         });
 
         request.execute(function(response) {
           var res = response.result.items[0].statistics;
+          console.log(response);
+          item.author = response.result.items[0].snippet.channelTitle;
           item.likes = res.likeCount;
           item.dislikes = res.dislikeCount;
           item.views = res.viewCount;
@@ -228,22 +229,39 @@ var makeExcerpt = function(string) {
 
 var translateDuration = function(dur) {
   var l = dur.length;
-  dur = dur.slice(2, l);
-  var tempS = dur.indexOf('S');
-  var s = tempS ? dur.slice(tempS - 2, tempS) : '';
-  var tempM = dur.indexOf('M');
-  var m = tempM ? dur.slice(tempM - 2, tempM) : '';
-  var tempH = dur.indexOf('H');
-  var h;
-
-  if( tempH == 1 ) {
-    h = dur.slice(0, 1);
-  } else if( tempH == 2 ) {
-    h = dur.slice(0, 2);
+  var indexT = dur.indexOf('T');
+  if( indexT != -1 ) {
+    dur = dur.slice(indexT + 1, l);
   } else {
-    h = '';
+    dur = dur.slice(2, l);
   }
-  console.log(dur,tempH,h,m,s);
+
+  var indexH = dur.indexOf('H'),
+      h = indexH != -1 ? dur.slice(0, indexH) : '',
+      indexM = dur.indexOf('M'),
+      m = indexM != -1 ? dur.slice(indexH + 1, indexM) : '0',
+      indexS = dur.indexOf('S'),
+      s = indexS != -1 ? dur.slice(indexM + 1, indexS) : '';
+
+  var output = '';
+
+  if( h != '' ) {
+    output += h + ':';
+    if( m.length == 1 ) {
+      m = '0' + m;
+    }
+  }
+  if( m != '' ) {
+    output += m + ':';
+    if( s.length == 1 ) {
+      s = '0' + s;
+    }
+  }
+  if( s != '' ) {
+    output += s;
+  }
+
+  return output;
 }
 
 var playVideo = function() {
