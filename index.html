@@ -88,7 +88,7 @@
                                     <a class="btn btn-default listen" title="Play this playlist">
                                         <i class="glyphicon glyphicon-play"></i>
                                     </a>
-                                    <a class="btn btn-default edit" title="Edit playlist">
+                                    <a class="btn btn-default edit" title="Edit playlist" data-target="#editPlaylistModal" data-toggle="modal">
                                         <i class="glyphicon glyphicon-edit"></i>
                                     </a>
                                     <a class="btn btn-default delete" title="Delete playlist">
@@ -259,7 +259,48 @@
             </div>
         </div>
 
-        <div id="editPlaylistModal"></div>
+        <div id="editPlaylistModal" class="modal fade" aria-hidden="true" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4>Edit "<span class="current-playlist"></span>" playlist</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="editPlaylistName" class="control-label col-xs-3">Name</label>
+                                <div class="col-xs-9">
+                                    <input type="text" class="form-control" id="editPlaylistName" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="editPlaylistDescription" class="control-label col-xs-3">Description</label>
+                                <div class="col-xs-9">
+                                    <textarea id="editPlaylistDescription" cols="30" rows="10" class="form-control" placeholder="Playlist Description"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="editPlaylistPrivate" class="control-label col-xs-3">
+                                    Private
+                                </label>
+                                <div class="col-xs-9 check">
+                                    <input type="checkbox" id="editPlaylistPrivate">
+                                    <i class="glyphicon glyphicon-lock"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="editPlaylistTags" class="control-label col-xs-3">Tags</label>
+                                <div class="col-xs-9">
+                                    <input type="text" id="editPlaylistTags" class="form-control" placeholder="Space separated values">
+                                </div>
+                            </div>
+                            <button href="" class="btn btn-danger pull-right" id="editPlaylistSubmit" disabled>Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>

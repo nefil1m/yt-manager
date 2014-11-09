@@ -79,7 +79,7 @@ var appendPlaylist = function(item, active) {
           item.title +
           '</h4><p class="excerpt">' +
           makeExcerpt(item.description) +
-          '</p></div></a><div class="btn-group"><a class="btn btn-default add" title="Add current video to this playlist"><i class="glyphicon glyphicon-plus"></i></a><a class="btn btn-default listen" title="Play this playlist"><i class="glyphicon glyphicon-play"></i></a><a class="btn btn-default edit" title="Edit playlist"><i class="glyphicon glyphicon-edit"></i></a><a class="btn btn-default delete" title="Delete playlist"><i class="glyphicon glyphicon-ban-circle"></i></a></div></li>';
+          '</p></div></a><div class="btn-group"><a class="btn btn-default add" title="Add current video to this playlist"><i class="glyphicon glyphicon-plus"></i></a><a class="btn btn-default listen" title="Play this playlist"><i class="glyphicon glyphicon-play"></i></a><a class="btn btn-default edit" title="Edit playlist" data-target="#editPlaylistModal" data-toggle="modal"><i class="glyphicon glyphicon-edit"></i></a><a class="btn btn-default delete" title="Delete playlist"><i class="glyphicon glyphicon-ban-circle"></i></a></div></li>';
 
   container.html(html);
 }
@@ -169,7 +169,7 @@ var addNewPlaylist = function() {
   if( typeof channelId != 'undefined' ) {
     $('#newPlaylistModal').modal('show');
 
-    $('#newPlaylistSubmit').not(':disabled').on('click', function(){
+    $('#newPlaylistSubmit').on('click', function(){
       $('#newPlaylistModal').modal('hide');
 
       var title = $('#playlistName').val(),
@@ -186,7 +186,8 @@ var addNewPlaylist = function() {
         resource: {
           snippet: {
             title: title,
-            description: description
+            description: description,
+            tags: tags
           },
           status: {
             privacyStatus: status
@@ -196,7 +197,6 @@ var addNewPlaylist = function() {
 
       request.execute(function(response) {
         var res = response.result;
-        console.lo(res);
         if( res ) {
           var item = {};
           item.id = res.id;
@@ -304,13 +304,40 @@ var playVideo = function() {
   changeStatus('play');
 }
 
+var getPlaylistData = function(id) {
+  var request = gapi.client.youtube.playlists.list({
+    id: id,
+    part: 'snippet,status'
+  });
+
+  request.execute(function(response) {
+    var res = response.result.items[0];
+    var tags = typeof res.snippet.tags != 'undefined' ? res.snippet.tags.toString() : '';
+
+    tags = tags.replace(/,/g, " ");
+
+    console.log(res);
+
+    $('#editPlaylistModal').find('.current-playlist').text(res.snippet.title);
+    $('#editPlaylistName').val(res.snippet.title);
+    $('#editPlaylistDescription').val(res.snippet.description);
+    $('#editPlaylistTags').val(tags);
+
+    if( res.status.privacyStatus == 'private' ) {
+      $('#editPlaylistPrivate').prop('checked', true);
+    } else {
+      $('#editPlaylistPrivate').prop('checked', false);
+    }
+  });
+}
+
 // onclicks
 
-//on playlist
+// on playlist
 
 // delete playlist
 
-$('#playlists-list').on('click', '.delete', function() {
+$('#playlists-list, #active-playlist').on('click', '.delete', function() {
   var id = $(this).parents('.item').attr('id'),
       playlistName = $(this).parents('.item').find('.title').text(),
       answer = confirm("Are you sure you want to delete playlist " + playlistName + "? This process is PERMANENT and you can not undo it.");
@@ -318,6 +345,15 @@ $('#playlists-list').on('click', '.delete', function() {
   if( answer ) {
     removePlaylist(id);
   }
+});
+
+// edit playlist
+
+$('#playlists-list, #active-playlist').on('click', '.edit', function() {
+  var id = $(this).parents('.item').attr('id');
+  console.log(id);
+
+  getPlaylistData(id);
 });
 
 // append playlist
