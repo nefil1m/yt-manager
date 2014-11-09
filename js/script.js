@@ -31,7 +31,7 @@ var requestUserPlaylists = function(channelId) {
       appendPlaylist(item);
     }
   });
-}
+};
 
 var requestWatchLaterPlaylist = function(playlist) {
   var request = gapi.client.youtube.playlists.list({
@@ -53,7 +53,7 @@ var requestWatchLaterPlaylist = function(playlist) {
 
       appendPlaylist(item);
   });
-}
+};
 
 var appendPlaylist = function(item, active) {
 
@@ -82,7 +82,7 @@ var appendPlaylist = function(item, active) {
           '</p></div></a><div class="btn-group"><a class="btn btn-default add" title="Add current video to this playlist"><i class="glyphicon glyphicon-plus"></i></a><a class="btn btn-default listen" title="Play this playlist"><i class="glyphicon glyphicon-play"></i></a><a class="btn btn-default edit" title="Edit playlist" data-target="#editPlaylistModal" data-toggle="modal"><i class="glyphicon glyphicon-edit"></i></a><a class="btn btn-default delete" title="Delete playlist"><i class="glyphicon glyphicon-ban-circle"></i></a></div></li>';
 
   container.html(html);
-}
+};
 
 var appendVideos = function(item) {
 
@@ -112,7 +112,7 @@ var appendVideos = function(item) {
     '</p></div></a><div class="btn-group"><a class="btn btn-default add" title="Add this video to another playlist"><i class="glyphicon glyphicon-plus"></i></a><a class="btn btn-default listen" title="Play this video"><i class="glyphicon glyphicon-play"></i></a><a class="btn btn-default delete" title="Delete video from playlist"><i class="glyphicon glyphicon-ban-circle"></i></a><a class="btn btn-default move-up" title="Move up"><i class="glyphicon glyphicon-arrow-up"></i></a><a class="btn btn-default move-down" title="Move down"><i class="glyphicon glyphicon-arrow-down"></i></a></div></li>'
 
   $('#playlist-videos').html(html);
-}
+};
 
 var requestVideos = function(playlistId, pageToken) {
   $('#video-container').html('');
@@ -163,7 +163,7 @@ var requestVideos = function(playlistId, pageToken) {
       $('#video-container').html('Sorry you have no videos in this playlist');
     }
   });
-}
+};
 
 var addNewPlaylist = function() {
   if( typeof channelId != 'undefined' ) {
@@ -214,11 +214,11 @@ var addNewPlaylist = function() {
   } else {
     $('#authorizationModal').modal('show');
   }
-}
+};
 
 var removeItemFromList = function(id) {
   $("#" + id).remove();
-}
+};
 
 var removePlaylist = function(id) {
     var request = gapi.client.youtube.playlists.delete({
@@ -230,15 +230,15 @@ var removePlaylist = function(id) {
         removeItemFromList(id);
       }
     });
-}
+};
 
 var nextPage = function() {
   requestVideos(playlistId, nextPageToken);
-}
+};
 
 var previousPage = function() {
   requestVideos(playlistId, prevPageToken);
-}
+};
 
 var makeExcerpt = function(string) {
   if( string.length >= 119 ) {
@@ -248,7 +248,7 @@ var makeExcerpt = function(string) {
   } else {
     return string;
   }
-}
+};
 
 var checkStatus = function(status) {
   if( status == 'private' ) {
@@ -256,7 +256,7 @@ var checkStatus = function(status) {
   } else {
     return  '<div class="privacy-status" data-status="' + status + '"></div>'
   }
-}
+};
 
 var translateDuration = function(dur) {
   var l = dur.length;
@@ -293,7 +293,7 @@ var translateDuration = function(dur) {
   }
 
   return output;
-}
+};
 
 var playVideo = function() {
   player.loadVideoById({
@@ -302,7 +302,7 @@ var playVideo = function() {
     endSeconds: 9999
   });
   changeStatus('play');
-}
+};
 
 var getPlaylistData = function(id) {
   var request = gapi.client.youtube.playlists.list({
@@ -316,9 +316,8 @@ var getPlaylistData = function(id) {
 
     tags = tags.replace(/,/g, " ");
 
-    console.log(res);
-
     $('#editPlaylistModal').find('.current-playlist').text(res.snippet.title);
+    $('#editPlaylistModal').find('.id').text(id);
     $('#editPlaylistName').val(res.snippet.title);
     $('#editPlaylistDescription').val(res.snippet.description);
     $('#editPlaylistTags').val(tags);
@@ -329,7 +328,36 @@ var getPlaylistData = function(id) {
       $('#editPlaylistPrivate').prop('checked', false);
     }
   });
-}
+};
+
+var updatePlaylistData = function(id) {
+  var title = $('#editPlaylistName').val(),
+      description = $('#editPlaylistDescription').val(),
+      status = $('#editPlaylistPrivate').is(':checked') ? 'private' : 'public',
+      tags = $('#editPlaylistTags').val().split(' ');
+
+  var request = gapi.client.youtube.playlists.update({
+      id: id,
+      part: 'snippet,status',
+      snippet: {
+        title: title,
+        description: description,
+        tags: tags
+      },
+      status: {
+        privacyStatus: status
+      }
+    });
+
+    request.execute(function(response) {
+      if( typeof response.error != 'undefined' ) {
+        alert(response.error.message);
+        console.error(response.error.code, response.error.message);
+      } else {
+        $('#editPlaylistModal').modal('hide');
+      }
+    });
+  };
 
 // onclicks
 
@@ -351,9 +379,11 @@ $('#playlists-list, #active-playlist').on('click', '.delete', function() {
 
 $('#playlists-list, #active-playlist').on('click', '.edit', function() {
   var id = $(this).parents('.item').attr('id');
-  console.log(id);
 
   getPlaylistData(id);
+  $('#editPlaylistSubmit').on('click', function(){
+    updatePlaylistData(id);
+  });
 });
 
 // append playlist
@@ -401,6 +431,14 @@ $('#newPlaylistModal').find('#playlistName').on('keyup', function() {
     $('#newPlaylistSubmit').attr('disabled', 'disabled').addClass('btn-danger').removeClass('btn-success');
   } else {
     $('#newPlaylistSubmit').removeAttr('disabled').addClass('btn-success').removeClass('btn-danger');
+  }
+});
+
+$('#editPlaylistModal').find('#editPlaylistName').on('keyup', function() {
+  if( $(this).val() == '' ) {
+    $('#editPlaylistSubmit').attr('disabled', 'disabled').addClass('btn-danger').removeClass('btn-success');
+  } else {
+    $('#editPlaylistSubmit').removeAttr('disabled').addClass('btn-success').removeClass('btn-danger');
   }
 });
 
