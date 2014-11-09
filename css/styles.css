@@ -190,7 +190,7 @@ footer p {
   overflow: hidden;
   padding: 10px 0;
 }
-.videos-container .item:hover img {
+.videos-container .item:hover .thumbnail {
   opacity: .5;
 }
 .videos-container .item:hover .info {
@@ -210,9 +210,13 @@ footer p {
 .videos-container .item p.excerpt {
   font-size: 10px;
 }
-.videos-container .item img {
+.videos-container .item .thumbnail {
   transition: opacity .2s;
   opacity: 1;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
 }
 .videos-container .item .btn-group {
   position: relative;
@@ -239,11 +243,11 @@ footer p {
 .videos-container .privacy-status {
   position: absolute;
   z-index: 10;
-  margin-left: 18px;
-  font-size: 25px;
 }
-.videos-container .privacy-status i {
-  color: #fff;
+.videos-container .privacy-status img {
+  height: 25px;
+  vertical-align: top;
+  cursor: pointer;
 }
 .videos-container .info {
   position: absolute;

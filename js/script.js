@@ -65,7 +65,7 @@ var appendPlaylist = function(item, active) {
     var html = $('#playlists-list').html();
   }
 
-  html += '<li class="row item" id="' +
+  html += '<li class="row item" data-id="' +
           item.id +
           '">' +
           checkStatus(item.status) +
@@ -73,7 +73,7 @@ var appendPlaylist = function(item, active) {
           item.id +
           '" title="' +
           item.description +
-          '"><div class="col-xs-12"><div class="pull-left th"><img src="' +
+          '"><div class="col-xs-12"><div class="pull-left th"><img class="thumbnail" src="' +
           item.thumbnail +
           '"></div><h4 class="title">' +
           item.title +
@@ -89,7 +89,7 @@ var appendVideos = function(item) {
   var html = $('#playlist-videos').html();
 
   html +=
-    '<li class="row item" id="' +
+    '<li class="row item" data-id="' +
     item.id +
     '"><div class="info"><div class="row"><div class="col-xs-6 likes"><p class="count">' +
     item.likes +
@@ -101,7 +101,7 @@ var appendVideos = function(item) {
     item.id +
     '" data-publishedAt="' +
     item.publishedAt +
-    '"><div class="col-xs-12"><div class="pull-left th"><img src="' +
+    '"><div class="col-xs-12"><div class="pull-left th"><img class="thumbnail" src="' +
     item.thumbnail +
     '"></div><h4 class="title">' +
     item.title +
@@ -217,7 +217,7 @@ var addNewPlaylist = function() {
 };
 
 var removeItemFromList = function(id) {
-  $("#" + id).remove();
+  $("[data-id=" + id + ']').remove();
 };
 
 var removePlaylist = function(id) {
@@ -252,9 +252,9 @@ var makeExcerpt = function(string) {
 
 var checkStatus = function(status) {
   if( status == 'private' ) {
-    return  '<div class="privacy-status" data-status="' + status + '"><i class="glyphicon glyphicon-lock"></i></div>'
+    return  '<div class="privacy-status" data-status="' + status + '"><img src="img/locked55.png"></div>'
   } else {
-    return  '<div class="privacy-status" data-status="' + status + '"></div>'
+    return  '<div class="privacy-status" data-status="' + status + '"><img src="img/open99.png"></div>'
   }
 };
 
@@ -355,6 +355,11 @@ var updatePlaylistData = function(id) {
         console.error(response.error.code, response.error.message);
       } else {
         $('#editPlaylistModal').modal('hide');
+
+        var container = $('#' + id);
+        container.find('.title').text(title);
+        container.find('.description').text(description);
+        // add lock update here
       }
     });
   };
@@ -366,9 +371,13 @@ var updatePlaylistData = function(id) {
 // delete playlist
 
 $('#playlists-list, #active-playlist').on('click', '.delete', function() {
-  var id = $(this).parents('.item').attr('id'),
+  var id = $(this).parents('.item').data('id'),
       playlistName = $(this).parents('.item').find('.title').text(),
       answer = confirm("Are you sure you want to delete playlist " + playlistName + "? This process is PERMANENT and you can not undo it.");
+
+  if( playlistId == id ) {
+    playlistId = '';
+  }
 
   if( answer ) {
     removePlaylist(id);
