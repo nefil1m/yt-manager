@@ -20,6 +20,12 @@ a:visited,
 a:active {
   outline: none;
 }
+.input-group,
+.input-group-addon,
+.form-control,
+.input-group-sm {
+  border-radius: 0 !important;
+}
 header,
 footer {
   background: #333333;

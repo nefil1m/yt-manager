@@ -31,6 +31,7 @@ app.controller('loginCtrl', function($scope, channelData) {
                 $('.status').find('.authorization-btn').html('ok');
                 channelData.id = res.id;
                 channelData.title = res.snippet.title;
+                $scope.$emit('logged');
             });
         });
     };
