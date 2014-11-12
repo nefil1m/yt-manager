@@ -1,4 +1,5 @@
-var CLIENT_ID = '877549163404-chjiknp3ffeiatmb2mcb8dfp23u7sm8q.apps.googleusercontent.com',
+app.controller('loginCtrl', function($scope, channelData) {
+    var CLIENT_ID = '877549163404-chjiknp3ffeiatmb2mcb8dfp23u7sm8q.apps.googleusercontent.com',
     SCOPES = [
       'https://www.googleapis.com/auth/youtube'
     ],
@@ -17,43 +18,24 @@ var CLIENT_ID = '877549163404-chjiknp3ffeiatmb2mcb8dfp23u7sm8q.apps.googleuserco
         }, makeApiCall);
     };
 
-    // var handleAuthResult = function(authResult) {
-        // if (authResult && !authResult.error) {
-        //     makeApiCall();
-        // } else {
-        //     $('#login-link').click(function(){
-                // handleAuthClick();
-        //     });
-        // }
-    //     makeApiCall();
-    // };
-
-    // var handleAuthClick = function(event) {
-    //     gapi.auth.authorize({
-    //         client_id: CLIENT_ID,
-    //         scope: SCOPES,
-    //         immediate: false
-    //     }, handleAuthResult);
-    // };
-
     var makeApiCall = function() {
         gapi.client.load('youtube', 'v3', function() {
             var request = gapi.client.youtube.channels.list({
                 mine: true,
-                part: 'id,contentDetails,snippet'
+                part: 'id,snippet'
             });
 
             request.execute(function(response) {
                 var res = response.result.items[0];
-                var playlists = res.contentDetails.relatedPlaylists.watchLater;
-
-                channelId = res.id;
 
                 $('.status').find('.authorization-btn').html('ok');
-                $('.status').find('.channel').html(res.snippet.title);
-
-                requestWatchLaterPlaylist(playlists);
-                requestUserPlaylists(channelId);
+                channelData.id = res.id;
+                channelData.title = res.snippet.title;
             });
         });
     };
+
+    $('#login-link').click(function() {
+      checkAuth();
+    });
+});

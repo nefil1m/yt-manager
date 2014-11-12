@@ -250,14 +250,6 @@ var makeExcerpt = function(string) {
   }
 };
 
-var checkStatus = function(status) {
-  if( status == 'private' ) {
-    return  '<div class="privacy-status" data-status="' + status + '"><img src="img/locked55.png"></div>'
-  } else {
-    return  '<div class="privacy-status" data-status="' + status + '"><img src="img/open99.png"></div>'
-  }
-};
-
 var translateDuration = function(dur) {
   var l = dur.length;
   var indexT = dur.indexOf('T');
@@ -293,6 +285,14 @@ var translateDuration = function(dur) {
   }
 
   return output;
+};
+
+var checkStatus = function(status) {
+  if( status == 'private' ) {
+    return  '<div class="privacy-status" data-status="' + status + '"><img src="img/locked55.png"></div>'
+  } else {
+    return  '<div class="privacy-status" data-status="' + status + '"><img src="img/open99.png"></div>'
+  }
 };
 
 var playVideo = function() {
@@ -349,20 +349,55 @@ var updatePlaylistData = function(id) {
       }
     });
 
-    request.execute(function(response) {
-      if( typeof response.error != 'undefined' ) {
-        alert(response.error.message);
-        console.error(response.error.code, response.error.message);
-      } else {
-        $('#editPlaylistModal').modal('hide');
+  request.execute(function(response) {
+    if( typeof response.error != 'undefined' ) {
+      alert(response.error.message);
+      console.error(response.error.code, response.error.message);
+    } else {
+      $('#editPlaylistModal').modal('hide');
 
-        var container = $('#' + id);
-        container.find('.title').text(title);
-        container.find('.description').text(description);
-        // add lock update here
+      var container = $('[data-id=' + id + ']');
+      container.find('.title').text(title);
+      container.find('.description').text(description);
+      changePrivacyStatus(id, status);
+    }
+  });
+};
+
+var changePrivacyStatus = function(id, status) {
+  var container = $('[data-id=' + id + ']'),
+      privacyContainer = container.find('.privacy-status'),
+      padlock = privacyContainer.find('img'),
+      status = privacyContainer.data('status');
+      title = container.find('.title').text();
+
+  console.log(id);
+
+  var request = gapi.client.youtube.playlists.update({
+    id: id,
+    part: 'snippet,status',
+    snippet: {
+      title: title
+    },
+    status: {
+      privacyStatus: status
+    }
+  });
+
+  request.execute(function(response) {
+    if( typeof response.error != 'undefined' ) {
+      alert(response.error.message);
+      console.error(response.error.code, response.error.message);
+    } else {
+      privacyContainer.data('status', status);
+      if( status == 'private' ) {
+        padlock.attr('src', 'img/locked55.png');
+      } else {
+        padlock.attr('src', 'img/open99.png');
       }
-    });
-  };
+    }
+  });
+}
 
 // onclicks
 
@@ -395,6 +430,21 @@ $('#playlists-list, #active-playlist').on('click', '.edit', function() {
   });
 });
 
+// privacy status
+
+$('#playlists-list, #active-playlist').on('click', '.privacy-status', function() {
+  var id = $(this).parents('.item').data('id'),
+      status = $(this).data('status');;
+
+  if( status == 'private' ) {
+    status = 'public';
+  } else {
+    status = 'private';
+  }
+
+  changePrivacyStatus(id, status);
+});
+
 // append playlist
 
 $('#playlists-list, #active-playlist').on('click', '.item > a', function() {
@@ -424,16 +474,20 @@ $('.add-new-playlist').on('click', 'a', function(e) {
   addNewPlaylist();
 });
 
-//on video
+// on video
 $('#playlist-videos').on('click', 'a', function() {
   var title = $(this).find('.title').text();
   activeVideo = $(this).data('id');
   playVideo();
 });
 
+// login link
+
 $('#login-link').click(function() {
   checkAuth();
 });
+
+// check forms
 
 $('#newPlaylistModal').find('#playlistName').on('keyup', function() {
   if( $(this).val() == '' ) {

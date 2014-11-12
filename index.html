@@ -1,5 +1,5 @@
     <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" ng-app="playlistManager">
     <head>
         <title>YouTube Playlist Manager</title>
         <meta charset="UTF-8">
@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="css/styles.css" type="text/css">
 
     </head>
-    <body>
+    <body ng-controller="playlistCtrl">
         <div class="mainContainer">
 
             <header class="row">
@@ -36,11 +36,11 @@
                             </a>
                         </div>
                         <ul>
-                            <li class="play-status">Play status: <span class="play-state">Stopped</span></li>
-                            <li>Active playlist: <span class="current-playlist"></span></li>
-                            <li>Current song: <span class="current-video"></span></li>
+                            <li class="play-status">Play status: <span class="play-state">{{ playStatus }}</span></li>
+                            <li>Active playlist: <span class="current-playlist">{{  }}</span></li>
+                            <li>Current song: <span class="current-video">{{  }}</span></li>
                             <li>Authorization status: <span class="authorization-btn"><a href="#!" data-toggle="modal" data-target="#authorizationModal">Authorize</a></span></li>
-                            <li>Channel: <span class="channel"></span></li>
+                            <li>Channel: <span class="channel">{{ title }}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -51,9 +51,10 @@
                 <div class="col-xs-4" style="background: url('img/footer_lodyas.png')">
                     <h3><a data-toggle="collapse" data-target="#playlists" href="#!">Your Playlists</a></h3>
                     <div id="playlists" class="collapse in">
+                        <a href="#!" ng-click="getPlaylists();">Get Playlists</a>
                         <ul id="playlists-list" class="videos-container dark">
-                            <!-- playlists appends here (template below) -->
-                            <!-- <li class="row item" id="#"> -->
+
+                            <li class="row item" ng-repeat="playlist in playlists" data-id="{{ playlist.id }}">
                                 <!-- videos only -->
                                 <!-- <div class="info">
                                     <div class="row">
@@ -66,51 +67,44 @@
                                     </div>
                                     <p class="duration">3:15</p>
                                 </div> -->
-
-                                <!-- playlists only -->
-
-                                <!-- <div class="privacy-status">
-                                    <i class="glyphicon glyphicon-lock"></i>
+                                <div class="privacy-status">
+                                    <img ng-if="playlist.status == 'private'" src="img/locked55.png" ng-click="changeStatus(playlist.status);">
+                                    <img ng-if="playlist.status != 'private'" src="img/open99.png" ng-click="changeStatus(playlist.status);">
                                 </div>
-                                <a href="#!" data-id="" title="">
+                                <a href="#!" title="{{ playlist.description }}" ng-click="getVideos(playlist.id);">
                                     <div class="col-xs-12">
                                         <div class="pull-left th">
-                                            <img src="https://i.ytimg.com/vi/qDxtsPseia8/mqdefault.jpg">
+                                            <img src="{{ playlist.thumbnail }}">
                                         </div>
-                                        <h4 class="title">Lorem ipsum - dolor sit amet</h4>
-                                        <p class="excerpt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet quidem, dignissimos. Sed fuga odit ipsum reiciendis esse animi unde molestiae, est culpa aut, totam eligendi dolorum corporis, tempore, velit voluptate!</p>
+                                        <h4 class="title">{{ playlist.title }}</h4>
+                                        <p class="excerpt">{{ playlist.description }}</p>
                                     </div>
                                 </a>
                                 <div class="btn-group">
-                                    <a class="btn btn-default add" title="Add current video to this playlist">
+                                    <a class="btn btn-default add" title="Add current video to this playlist" ng-click="addVideo();">
                                         <i class="glyphicon glyphicon-plus"></i>
                                     </a>
-                                    <a class="btn btn-default listen" title="Play this playlist">
+                                    <a class="btn btn-default listen" title="Play this playlist" ng-click="playPlaylist(id);">
                                         <i class="glyphicon glyphicon-play"></i>
                                     </a>
                                     <a class="btn btn-default edit" title="Edit playlist" data-target="#editPlaylistModal" data-toggle="modal">
                                         <i class="glyphicon glyphicon-edit"></i>
                                     </a>
-                                    <a class="btn btn-default delete" title="Delete playlist">
+                                    <a class="btn btn-default delete" title="Delete playlist" ng-click="deletePlaylist(playlist.id);">
                                         <i class="glyphicon glyphicon-ban-circle"></i>
                                     </a>
-                                    <a class="btn btn-default move-up" title="Move up">
-                                        <i class="glyphicon glyphicon-arrow-up"></i>
-                                    </a>
-                                    <a class="btn btn-default move-down" title="Move down">
-                                        <i class="glyphicon glyphicon-arrow-down"></i>
-                                    </a>
                                 </div>
-                            </li> -->
+                            </li>
+
                         </ul>
                         <div class="row add-new-playlist">
-                            <a href="#!">
+                            <a href="#!" data-target="#newPlaylistModal" data-toggle="modal">
                                 <div class="col-xs-12">
                                     <div class="pull-left th">
                                         <i class="glyphicon glyphicon-plus"></i>
                                     </div>
                                     <h4 class="title">Add New Playlist</h4>
-                                    <p class="excerpt"></p>
+                                    <p class="excerpt">This button will create new playlist.</p>
                                 </div>
                             </a>
                         </div>
@@ -197,12 +191,12 @@
 
         <!-- authorization modal -->
 
-        <div id="authorizationModal" class="modal fade" aria-hidden="false" role="dialog">
+        <div id="authorizationModal" class="modal fade" aria-hidden="false" role="dialog" ng-controller="loginCtrl">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4>Authorization</h4>
+                        <h4>Authorization {{ title }}</h4>
                     </div>
                     <div class="modal-body">
                         <div id="login-container" class="pre-auth">
@@ -253,7 +247,7 @@
                                     <input type="text" id="playlistTags" class="form-control" placeholder="Space separated values">
                                 </div>
                             </div>
-                            <button href="" class="btn btn-danger pull-right" id="newPlaylistSubmit" disabled>Submit</button>
+                            <button ng-click="addNewPlaylist();" class="btn btn-danger pull-right" id="newPlaylistSubmit">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -307,9 +301,14 @@
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+        <script type="text/javascript" src="js/angular.min.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/channelData.js"></script>
         <script type="text/javascript" src="js/oauth.js"></script>
+        <script type="text/javascript" src="js/playlistCtrl.js"></script>
         <script type="text/javascript" src="js/player.js"></script>
+
         <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
-        <script type="text/javascript" src="js/script.js"></script>
+        <!-- <script type="text/javascript" src="js/script.js"></script> -->
     </body>
 </html>
