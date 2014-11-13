@@ -23,8 +23,9 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
                     thumbnail: res[i].snippet.thumbnails.medium.url,
                     title: res[i].snippet.title,
                     description: res[i].snippet.description,
-                    status: res[i].status.privacyStatus
-            };
+                    status: res[i].status.privacyStatus,
+                    tags: res[i].snippet.tags
+                };
 
                 $scope.$apply(function(){
                     $scope.playlists[$scope.playlists.length] = newPlaylist;
@@ -46,8 +47,10 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
         if( typeof channelData.id != 'undefined' ) {
             var title = $('#playlistName').val(),
                 description = $('#playlistDescription').val(),
-                tags = $('#playlistTags').val().split(' '),
+                tags = $('#playlistTags').val().replace(/,\s/g, ',').split(','),
                 status = 'public';
+
+            console.log(tags);
 
             if( $('#playlistPrivate').is(':checked') ) {
                 status = 'private';
@@ -68,7 +71,7 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
             });
 
             request.execute(function(response) {
-                if( typeof response.error == 'undefined' ) {
+                if( angular.isUndefined(response.error) ) {
                     var res = response.result;
                     $('#newPlaylistModal').modal('hide');
 
@@ -85,24 +88,39 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
                     });
                 } else {
                     console.error(response.code, response.error.message);
+                    $('#errorModal').modal('show');
                 }
             });
         }
     };
 
-    $scope.deletePlaylist = function(id, index) {
-        var request = gapi.client.youtube.playlists.delete({
-            id: id
-        });
+    $scope.deletePlaylist = function(index) {
+        $scope.playlistToDelete = {
+            id: $scope.playlists[index].id,
+            title: $scope.playlists[index].title
+        };
 
-        request.execute(function(response) {
-            console.log(response);
-            if( typeof response.error == 'undefined' ) {
-                $scope.$apply(function() {
-                    $scope.playlists.splice(index, 1);
+        $('#confirmPlaylistDeleteModal').modal('show');
+
+        $('#confirmPlaylistDeleteModal').on('click', 'button', function() {
+            if( $(this).attr('id') == 'deletePlaylistYes' ) {
+                var request = gapi.client.youtube.playlists.delete({
+                    id: $scope.playlistToDelete.id
+                });
+
+                request.execute(function(response) {
+                    console.log(response);
+                    if( angular.isUndefined(response.error) ) {
+                        $scope.$apply(function() {
+                            $scope.playlists.splice(index, 1);
+                        });
+                        $('#confirmPlaylistDeleteModal').modal('hide');
+                    } else {
+                        console.error(response.code, response.error.message);
+                    }
                 });
             } else {
-                console.error(response.code, response.error.message);
+                $('#confirmPlaylistDeleteModal').modal('hide');
             }
         });
     };
@@ -110,16 +128,45 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
     $scope.editPlaylist = function(index) {
         var pl = $scope.playlists[index];
 
-        $scope.editPlaylist = {
+         $scope.playlistToEdit = {
             id: pl.id,
             title: pl.title,
             status: pl.status,
             description: pl.description,
-            tags: pl.tags
-        }
-        console.log($scope.editPlaylist);
+            tags: angular.isUndefined(pl.tags) ? '' : pl.tags.toString()
+        };
 
         $('#editPlaylistModal').modal('show');
+
+        $('#editPlaylistModal').on('click', '#editPlaylistSubmit', function() {
+            var request = gapi.client.youtube.playlists.update({
+                id: $scope.playlistToEdit.id,
+                part: 'snippet,status',
+                snippet: {
+                    title: $scope.playlistToEdit.title,
+                    description: $scope.playlistToEdit.description,
+                    tags: angular.isUndefined($scope.playlistToEdit.tags) ? '' : $scope.playlistToEdit.tags.replace(/,\s/g, ",").split(',')
+                },
+                status: {
+                    privacyStatus: $scope.playlistToEdit.status
+                }
+            });
+
+            request.execute(function(response) {
+                if( angular.isUndefined(response.error) ) {
+                    $('#editPlaylistModal').modal('hide');
+                    $scope.$apply(function() {
+                        $scope.playlists[index].title = $scope.playlistToEdit.title;
+                        $scope.playlists[index].description = $scope.playlistToEdit.description;
+                        $scope.playlists[index].tags = angular.isUndefined($scope.playlistToEdit.tags) ? '' : $scope.playlistToEdit.tags;
+                        $scope.playlists[index].status = $scope.playlistToEdit.status;
+                    });
+                } else {
+                    console.error(response.code, response.error.message);
+                    $('#errorModal').modal('show');
+                }
+            });
+        });
     }
 
     $scope.getVideos = function(id) {
@@ -129,8 +176,6 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
     $scope.changePrivacy = function(index) {
         var item = $scope.playlists[index],
             privacy = item.status;
-
-        console.log(privacy);
 
         if( privacy == 'private' ) {
             privacy = 'public';
@@ -142,7 +187,9 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
             id: item.id,
             part: 'snippet,status',
             snippet: {
-                title: item.title
+                title: item.title,
+                description: item.description,
+                tags: item.tags
             },
             status: {
                 privacyStatus: privacy
@@ -150,12 +197,13 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
         });
 
         request.execute(function(response) {
-            if( typeof response.error == 'undefined' ) {
+            if( angular.isUndefined(response.error) ) {
                 $scope.$apply(function() {
                     $scope.playlists[index].status = privacy;
                 });
             } else {
                 console.error(response.code, response.error.message);
+                $('#errorModal').modal('show');
             }
         });
     };
