@@ -29,7 +29,6 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
 
                 $scope.$apply(function(){
                     $scope.playlists[$scope.playlists.length] = newPlaylist;
-                    // $scope.title = channelData.title; // so goddamn ugly;
                 });
             });
         });
@@ -49,8 +48,6 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
                 description = $('#playlistDescription').val(),
                 tags = $('#playlistTags').val().replace(/,\s/g, ',').split(','),
                 status = 'public';
-
-            console.log(tags);
 
             if( $('#playlistPrivate').is(':checked') ) {
                 status = 'private';
@@ -109,7 +106,6 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
                 });
 
                 request.execute(function(response) {
-                    console.log(response);
                     if( angular.isUndefined(response.error) ) {
                         $scope.$apply(function() {
                             $scope.playlists.splice(index, 1);
