@@ -124,7 +124,7 @@
                             </div>
                             <ul class="videos">
                             <!-- videos appends here -->
-                                <li class="row item" ng-repeat="video in activePlaylist.videos | filter: playlistVideosSearch" data-id="{{ video.id }}">
+                                <li class="row item" ng-repeat="video in activePlaylist.videos | filter: playlistVideosSearch" data-id="{{ video.id }}" ng-class=" video.selected ? 'active' : ''; ">
                                     <!-- videos only -->
                                     <div class="info">
                                         <div class="row">
@@ -137,7 +137,7 @@
                                         </div>
                                         <p class="duration">{{ video.duration }}</p>
                                     </div>
-                                    <a href="#!" title="{{ video.description }}" ng-click="playVideo($index);">
+                                    <a href="#!" title="{{ video.description }}" ng-click="makeActive($index);">
                                         <div class="col-xs-12">
                                             <div class="pull-left th">
                                                 <img src="{{ video.thumbnail }}">
@@ -147,17 +147,26 @@
                                         </div>
                                     </a>
                                     <div class="btn-group">
-                                        <a class="btn btn-default add" title="Add current video to this playlist" ng-click="addVideo();">
-                                            <i class="glyphicon glyphicon-plus"></i>
-                                        </a>
-                                        <a class="btn btn-default listen" title="Play this playlist" ng-click="playPlaylist($index);">
+                                        <a class="btn btn-default listen" title="Play playlist from this video" ng-click="playPlaylist($index);">
                                             <i class="glyphicon glyphicon-play"></i>
                                         </a>
-                                        <a class="btn btn-default edit" title="Edit playlist" ng-click="editPlaylist($index);">
-                                            <i class="glyphicon glyphicon-edit"></i>
+                                        <a class="btn btn-default listen" title="Play only this video" ng-click="playVideo($index);">
+                                            <i class="glyphicon glyphicon-play-circle"></i>
                                         </a>
-                                        <a class="btn btn-default delete" title="Delete playlist" ng-click="deletePlaylist($index);">
+                                        <a class="btn btn-default delete" title="Delete video from playlist" ng-click="deleteVideo($index);">
                                             <i class="glyphicon glyphicon-ban-circle"></i>
+                                        </a>
+                                        <a class="btn btn-default move-top" title="Make first" ng-click="moveToTop($index);">
+                                            <i class=" glyphicon glyphicon-cloud-upload"></i>
+                                        </a>
+                                        <a class="btn btn-default move-up" title="Move up" ng-click="moveUp($index);">
+                                            <i class="glyphicon glyphicon-arrow-up"></i>
+                                        </a>
+                                        <a class="btn btn-default move-down" title="Move down" ng-click="moveDown($index);">
+                                            <i class="glyphicon glyphicon-arrow-down"></i>
+                                        </a>
+                                        <a class="btn btn-default move-bottom" title="Move to end" ng-click="moveToBottom($index);">
+                                            <i class="glyphicon glyphicon-cloud-download"></i>
                                         </a>
                                     </div>
                                 </li>
@@ -170,7 +179,7 @@
                     </div>
                 </div>
 
-                <div class="col-xs-8">
+                <div class="col-xs-8" ng-controller="playerCtrl" ng-init="init();">
                     <div class="player-container">
                         <div id="player">
                             <!-- player goes here -->
@@ -381,12 +390,9 @@
         <script type="text/javascript" src="js/app.js"></script>
         <script type="text/javascript" src="js/channelData.js"></script>
         <script type="text/javascript" src="js/statusCtrl.js"></script>
-        <script type="text/javascript" src="js/oauth.js"></script>
+        <script type="text/javascript" src="js/loginCtrl.js"></script>
         <script type="text/javascript" src="js/playlistCtrl.js"></script>
         <script type="text/javascript" src="js/videoCtrl.js"></script>
-        <script type="text/javascript" src="js/player.js"></script>
-
-        <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
-        <!-- <script type="text/javascript" src="js/script.js"></script> -->
+        <script type="text/javascript" src="js/playerCtrl.js"></script>
     </body>
 </html>

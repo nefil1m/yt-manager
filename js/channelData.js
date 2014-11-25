@@ -44,9 +44,10 @@ app.factory('channelData', function($rootScope) {
         },
         activeVideo: {
             title: 'Touch and go - Tango in Harlem'
-        }
+        },
         // prevVideo: '',
-        // nextVideo: ''
+        // nextVideo: '',
+        playState: false
     };
 
     return this.channel;

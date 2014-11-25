@@ -236,7 +236,7 @@ footer p {
 }
 .videos-container .item .btn-group {
   position: relative;
-  top: 0px;
+  top: -1px;
   left: 15px;
   transition: top .2s;
   padding: 0;
