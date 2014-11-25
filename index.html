@@ -36,8 +36,8 @@
                             </a>
                         </div>
                         <ul>
-                            <li>Active playlist: <span class="current-playlist">{{ data.activePlaylist }}</span></li>
-                            <li>Current song: <span class="current-video">{{ data.activeSong }}</span></li>
+                            <li>Active playlist: <span class="current-playlist">{{ data.activePlaylist.title }}</span></li>
+                            <li>Current song: <span class="current-video">{{ data.activeVideo.title }}</span></li>
                             <li>Authorization status:
                                 <span class="authorization-btn"><a href="#!" data-toggle="modal" data-target="#authorizationModal" ng-if="!angular.isUndefined(data.id);">Authorize</a></span>
                                 <span ng-if="angular.isUndefined(data.id);">ok</span>
@@ -51,84 +51,124 @@
             <div id="main-content" class="row">
 
                 <div class="col-xs-4" style="background: url('img/footer_lodyas.png')">
-                    <h3><a data-toggle="collapse" data-target="#playlists" href="#!">Your Playlists</a></h3>
-                    <div id="playlists" class="collapse in">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-addon">
-                                <i class="glyphicon glyphicon-search"></i>
-                            </span>
-                            <input type="text" class="form-control" placeholder="Search in playlists" ng-model="playlistSearch">
-                        </div>
-                        <ul id="playlists-list" class="videos-container dark">
+                    <div >
+                        <h3><a data-toggle="collapse" data-target="#playlists" href="#!">Your Playlists</a></h3>
+                        <div id="playlists" class="collapse in">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Search in playlists" ng-model="playlistSearch">
+                            </div>
+                            <ul id="playlists-list" class="videos-container dark">
 
-                            <li class="row item" ng-repeat="playlist in playlists | filter: playlistSearch" data-id="{{ playlist.id }}">
-                                <!-- videos only -->
-                                <!-- <div class="info">
-                                    <div class="row">
-                                        <div class="col-xs-6 likes">
-                                            <p class="count">123456</p>
-                                        </div>
-                                        <div class="col-xs-6 dislikes">
-                                            <p class="count">156412</p>
-                                        </div>
+                                <li class="row item" ng-class="playlist.selected ? 'active' : ''" ng-repeat="playlist in playlists | filter: playlistSearch" data-id="{{ playlist.id }}">
+                                    <!-- videos only -->
+                                    <div class="privacy-status">
+                                        <img ng-src="img/{{ playlist.status }}.png" ng-click="changePrivacy($index);">
                                     </div>
-                                    <p class="duration">3:15</p>
-                                </div> -->
-                                <div class="privacy-status">
-                                    <img ng-src="img/{{ playlist.status }}.png" ng-click="changePrivacy($index);">
-                                </div>
-                                <a href="#!" title="{{ playlist.description }}" ng-click="getVideos(playlist.id);">
+                                    <a href="#!" title="{{ playlist.description }}" ng-click="makeActive($index);">
+                                        <div class="col-xs-12">
+                                            <div class="pull-left th">
+                                                <img src="{{ playlist.thumbnail }}">
+                                            </div>
+                                            <h4 class="title">{{ playlist.title }}</h4>
+                                            <p class="excerpt" title="{{ playlist.description }}">{{ playlist.excerpt }}</p>
+                                        </div>
+                                    </a>
+                                    <div class="btn-group">
+                                        <a class="btn btn-default add" title="Add current video to this playlist" ng-click="addVideo();">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                        </a>
+                                        <a class="btn btn-default listen" title="Play this playlist" ng-click="playPlaylist($index);">
+                                            <i class="glyphicon glyphicon-play"></i>
+                                        </a>
+                                        <a class="btn btn-default edit" title="Edit playlist" ng-click="editPlaylist($index);">
+                                            <i class="glyphicon glyphicon-edit"></i>
+                                        </a>
+                                        <a class="btn btn-default delete" title="Delete playlist" ng-click="deletePlaylist($index);">
+                                            <i class="glyphicon glyphicon-ban-circle"></i>
+                                        </a>
+                                    </div>
+                                </li>
+
+                            </ul>
+                            <div class="button-container">
+                                <!-- <button class="prev-button paging-button">&#171; Previous Page</button> -->
+                                <button class="next-button paging-button" ng-click="getPlaylists();">Next Page &#187;</button>
+                            </div>
+                            <div class="row add-new-playlist">
+                                <a href="#!" data-target="#newPlaylistModal" data-toggle="modal">
                                     <div class="col-xs-12">
                                         <div class="pull-left th">
-                                            <img src="{{ playlist.thumbnail }}">
+                                            <i class="glyphicon glyphicon-plus"></i>
                                         </div>
-                                        <h4 class="title">{{ playlist.title }}</h4>
-                                        <p class="excerpt">{{ playlist.description }}</p>
+                                        <h4 class="title">Add New Playlist</h4>
+                                        <p class="excerpt">This button will create new playlist.</p>
                                     </div>
                                 </a>
-                                <div class="btn-group">
-                                    <a class="btn btn-default add" title="Add current video to this playlist" ng-click="addVideo();">
-                                        <i class="glyphicon glyphicon-plus"></i>
-                                    </a>
-                                    <a class="btn btn-default listen" title="Play this playlist" ng-click="playPlaylist($index);">
-                                        <i class="glyphicon glyphicon-play"></i>
-                                    </a>
-                                    <a class="btn btn-default edit" title="Edit playlist" ng-click="editPlaylist($index);">
-                                        <i class="glyphicon glyphicon-edit"></i>
-                                    </a>
-                                    <a class="btn btn-default delete" title="Delete playlist" ng-click="deletePlaylist($index);">
-                                        <i class="glyphicon glyphicon-ban-circle"></i>
-                                    </a>
-                                </div>
-                            </li>
+                            </div>
 
-                        </ul>
-                        <div class="row add-new-playlist">
-                            <a href="#!" data-target="#newPlaylistModal" data-toggle="modal">
-                                <div class="col-xs-12">
-                                    <div class="pull-left th">
-                                        <i class="glyphicon glyphicon-plus"></i>
-                                    </div>
-                                    <h4 class="title">Add New Playlist</h4>
-                                    <p class="excerpt">This button will create new playlist.</p>
-                                </div>
-                            </a>
+
                         </div>
-
                     </div>
+                    <div ng-controller="videoCtrl">
+                        <h3><a href="#!" class="collapsed" data-target="#playlist-videos" data-toggle="collapse">Videos in "<span class="current-playlist">{{ activePlaylist.title }}</span>"</a></h3>
 
-                    <h3><a href="#!" class="collapsed" data-target="#playlist-videos" data-toggle="collapse">Videos in "<span class="current-playlist">Playlist</span>"</a></h3>
-
-                    <ul id="playlist-videos" class="videos-container dark collapse">
-                        <!-- videos appends here -->
-                    </ul>
-                    <div class="button-container">
-                        <button class="prev-button paging-button" onclick="previousPage();">&#171; Previous Page</button>
-                        <button class="next-button paging-button" onclick="nextPage();">Next Page &#187;</button>
+                        <div id="playlist-videos" class="videos-container dark collapse">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Search in playlist videos" ng-model="playlistVideosSearch">
+                            </div>
+                            <ul class="videos">
+                            <!-- videos appends here -->
+                                <li class="row item" ng-repeat="video in activePlaylist.videos | filter: playlistVideosSearch" data-id="{{ video.id }}">
+                                    <!-- videos only -->
+                                    <div class="info">
+                                        <div class="row">
+                                            <div class="col-xs-6 likes">
+                                                <p class="count">{{ video.likes }}</p>
+                                            </div>
+                                            <div class="col-xs-6 dislikes">
+                                                <p class="count">{{ video.dislikes }}</p>
+                                            </div>
+                                        </div>
+                                        <p class="duration">{{ video.duration }}</p>
+                                    </div>
+                                    <a href="#!" title="{{ video.description }}" ng-click="playVideo($index);">
+                                        <div class="col-xs-12">
+                                            <div class="pull-left th">
+                                                <img src="{{ video.thumbnail }}">
+                                            </div>
+                                            <h4 class="title">{{ video.title }}</h4>
+                                            <p class="excerpt">{{ video.excerpt }}</p>
+                                        </div>
+                                    </a>
+                                    <div class="btn-group">
+                                        <a class="btn btn-default add" title="Add current video to this playlist" ng-click="addVideo();">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                        </a>
+                                        <a class="btn btn-default listen" title="Play this playlist" ng-click="playPlaylist($index);">
+                                            <i class="glyphicon glyphicon-play"></i>
+                                        </a>
+                                        <a class="btn btn-default edit" title="Edit playlist" ng-click="editPlaylist($index);">
+                                            <i class="glyphicon glyphicon-edit"></i>
+                                        </a>
+                                        <a class="btn btn-default delete" title="Delete playlist" ng-click="deletePlaylist($index);">
+                                            <i class="glyphicon glyphicon-ban-circle"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="button-container">
+                            <!-- <button class="prev-button paging-button" onclick="previousPage();">&#171; Previous Page</button> -->
+                            <button class="next-button paging-button" onclick="getVideos();">Next Page &#187;</button>
+                        </div>
                     </div>
-
                 </div>
-
 
                 <div class="col-xs-8">
                     <div class="player-container">
@@ -343,6 +383,7 @@
         <script type="text/javascript" src="js/statusCtrl.js"></script>
         <script type="text/javascript" src="js/oauth.js"></script>
         <script type="text/javascript" src="js/playlistCtrl.js"></script>
+        <script type="text/javascript" src="js/videoCtrl.js"></script>
         <script type="text/javascript" src="js/player.js"></script>
 
         <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>

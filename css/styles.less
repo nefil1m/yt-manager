@@ -226,6 +226,20 @@ footer {
         }
     }
 
+    .videos {
+        li:hover {
+            img {
+                opacity: .5;
+            }
+        }
+
+        li {
+            img {
+                transition: all .3s ease-out;
+                opacity: 1;
+            }
+        }
+    }
 
     .item {
         border-top: 1px solid darken(@secondaryColor, 50%);
@@ -245,6 +259,10 @@ footer {
 
         &:first-child {
             border-top: 0 none;
+        }
+
+        &.active {
+            background: green;
         }
 
         h4 {

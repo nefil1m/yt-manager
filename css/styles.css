@@ -190,6 +190,13 @@ footer p {
 .videos-container.dark p {
   color: #fff;
 }
+.videos-container .videos li:hover img {
+  opacity: .5;
+}
+.videos-container .videos li img {
+  transition: all 0.3s ease-out;
+  opacity: 1;
+}
 .videos-container .item {
   border-top: 1px solid #4d4d4d;
   height: 125px;
@@ -204,6 +211,9 @@ footer p {
 }
 .videos-container .item:first-child {
   border-top: 0 none;
+}
+.videos-container .item.active {
+  background: green;
 }
 .videos-container .item h4 {
   font-weight: 700;
