@@ -1,5 +1,7 @@
 app.controller('playerCtrl', ['$scope', 'channelData', function($scope, channelData) {
     $scope.videoDone = false;
+    $scope.buttons = $('.player-buttons');
+    var player;
 
     // $scope.onPlayerStateChange = function(e) {
     //     if( event.data == YT.PlayerState.PLAYING && !done ) {
@@ -9,27 +11,22 @@ app.controller('playerCtrl', ['$scope', 'channelData', function($scope, channelD
     // }
 
     $scope.changeStatus = function(status) {
-        var buttons = $('.player-buttons'),
-            info = $('.play-status');
 
-        buttons.find('.active').removeClass('active');
+        // $scope.buttons.find('.active').removeClass('active');
 
-        switch(status) {
-            case 'stop':
-                buttons.find('.stop').addClass('active');
-                info.find('.play-state').text('Stopped');
-            break;
+        // switch(status) {
+        //     case 'stop':
+        //         $scope.buttons.find('.stop').addClass('active');
+        //     break;
 
-            case 'play':
-                buttons.find('.play').addClass('active');
-                info.find('.play-state').text('Playing');
-            break;
+        //     case 'play':
+        //         $scope.buttons.find('.play').addClass('active');
+        //     break;
 
-            case 'pause':
-                buttons.find('.pause').addClass('active');
-                info.find('.play-state').text('Playing');
-            break;
-        }
+        //     case 'pause':
+        //         $scope.buttons.find('.pause').addClass('active');
+        //     break;
+        // }
     }
 
     $scope.init = function() {
@@ -44,14 +41,18 @@ app.controller('playerCtrl', ['$scope', 'channelData', function($scope, channelD
 
     $scope.createPlayer = function() {
         $(window).load(function() {
-            $scope.player = new YT.Player('player', {
+            channelData.player = new YT.Player('player', {
                 height: 450,
                 width: 800,
-                videoId: 'qDxtsPseia8',
-                events: {
-                    'onStateChange': $scope.onPlayerStateChange
-                }
+                videoId: 'qDxtsPseia8'
             });
         });
-    }
+    };
+
+    // $scope.playVideo = function() {
+    //     console.log('yay');
+    //     player.playVideo();
+    // };
+
+    // $scope.$on('playing', $scope.playVideo);
 }]);

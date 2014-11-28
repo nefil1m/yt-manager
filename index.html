@@ -19,16 +19,16 @@
                     </div>
                     <div class="col-sm-8 col-md-9 col-lg-9 status" ng-controller="statusCtrl">
                         <div class="player-buttons pull-right">
-                            <a href="#!" class="prev">
+                            <a href="#!" class="prev" ng-click="">
                                 <i class="glyphicon glyphicon-fast-backward"></i>
                             </a>
                             <a class="play" href="#!">
-                                <i class="glyphicon glyphicon-play"></i>
+                                <i class="glyphicon glyphicon-play" ng-class=" data.playState == 'playing' ? 'active' : ''; " ng-click="play();"></i>
                             </a>
                             <a class="pause" href="#!">
-                                <i class="glyphicon glyphicon-pause"></i>
+                                <i class="glyphicon glyphicon-pause" ng-class=" data.playState == 'paused' ? 'active' : ''; "></i>
                             </a>
-                            <a href="#!" class="stop active">
+                            <a href="#!" class="stop" ng-class=" data.playState == 'stopped' ? 'active' : ''; ">
                                 <i class="glyphicon glyphicon-stop"></i>
                             </a>
                             <a href="#!" class="next">
@@ -36,13 +36,13 @@
                             </a>
                         </div>
                         <ul>
-                            <li>Active playlist: <span class="current-playlist">{{ data.activePlaylist.title }}</span></li>
-                            <li>Current song: <span class="current-video">{{ data.activeVideo.title }}</span></li>
+                            <li>Active playlist: <span class="current-playlist">{{ data.activePlaylist }}</span></li>
+                            <li>Current song: <span class="current-video">{{ data.video }}</span></li>
                             <li>Authorization status:
                                 <span class="authorization-btn"><a href="#!" data-toggle="modal" data-target="#authorizationModal" ng-if="!angular.isUndefined(data.id);">Authorize</a></span>
                                 <span ng-if="angular.isUndefined(data.id);">ok</span>
                             </li>
-                            <li>Channel: <span class="channel">{{ data.title }}</span></li>
+                            <li>Channel: <span class="channel">{{ data.channel }}</span></li>
                         </ul>
                     </div>
                 </div>

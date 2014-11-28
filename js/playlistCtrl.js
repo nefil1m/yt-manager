@@ -182,6 +182,7 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
         });
         $scope.activePlaylist = channelData.playlists[index];
         channelData.activePlaylist = $scope.activePlaylist;
+        channelData.simplified.activePlaylist = $scope.activePlaylist.title;
         $scope.activePlaylist.selected = !$scope.activePlaylist.selected;
         $('#playlists').removeClass('in');
         $('#playlist-videos').addClass('in');

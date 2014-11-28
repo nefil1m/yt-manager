@@ -63,13 +63,14 @@ app.controller('videoCtrl', ['$scope', 'channelData', function($scope, channelDa
     $scope.makeActive = function(index) {
         if( angular.isDefined(channelData.activeVideo) ) {
             channelData.activeVideo.selected = false;
-            channelData.activeVideo = channelData.activePlaylist.videos[index];
-            channelData.activeVideo.selected = true;
-        } else {
-            channelData.activeVideo = channelData.activePlaylist.videos[index];
-            channelData.activeVideo.selected = true;
         }
 
+        channelData.activeVideo = channelData.activePlaylist.videos[index];
+        channelData.activeVideo.selected = true;
+        channelData.simplified.video = channelData.activeVideo.title;
+        channelData.player.loadVideoById(channelData.activeVideo.id);
+
+        $scope.$broadcast('playing');
     }
 
     $scope.translateDuration = function(dur) {
