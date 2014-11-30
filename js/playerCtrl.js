@@ -46,13 +46,17 @@ app.controller('playerCtrl', ['$scope', 'channelData', function($scope, channelD
                 width: 800,
                 videoId: 'qDxtsPseia8'
             });
+
+            channelData.player.addEventListener('ended', $scope.playNextVideo);
         });
     };
 
-    // $scope.playVideo = function() {
-    //     console.log('yay');
-    //     player.playVideo();
-    // };
+    $scope.playNextVideo = function() {
+        var index = channelData.nextVideo;
 
-    // $scope.$on('playing', $scope.playVideo);
+        if( angular.isDefined(channelData.nextVideo) ) {
+            channelData.loadVideoById(channelData.activePlaylist.videos[index].id);
+            channelData.nextVideo++;
+        }
+    };
 }]);

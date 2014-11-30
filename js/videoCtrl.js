@@ -68,6 +68,8 @@ app.controller('videoCtrl', ['$scope', 'channelData', function($scope, channelDa
         channelData.activeVideo = channelData.activePlaylist.videos[index];
         channelData.activeVideo.selected = true;
         channelData.simplified.video = channelData.activeVideo.title;
+
+        channelData.nextVideo = ++index;
         channelData.player.loadVideoById(channelData.activeVideo.id);
 
         $scope.$broadcast('playing');

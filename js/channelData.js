@@ -47,7 +47,8 @@ app.factory('channelData', function($rootScope) {
         },
         // prevVideo: '',
         // nextVideo: '',
-        playState: 'stopped'
+        playState: 'stopped',
+        simplified: {}
     };
 
     return this.channel;

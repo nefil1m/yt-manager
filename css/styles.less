@@ -158,8 +158,40 @@ footer {
             font-weight: 700;
 
             span {
-                font-weight: 300;
+                font-weight: 400;
+                font-size: 15px;
             }
+
+            span:before {
+                font-family: 'Glyphicons Halflings';
+                margin-right: 5px;
+            }
+        }
+
+        .author:before {
+            content: '\e008';
+        }
+
+        .views:before {
+            content: '\e105';
+        }
+
+        .likes:before {
+            content: '\e125';
+            color: green;
+        }
+
+        .dislikes:before {
+            content: '\e126';
+            color: red;
+        }
+
+        .published:before {
+            content: '\e109';
+        }
+
+        .description:before {
+            content: '\270f';
         }
     }
 

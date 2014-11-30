@@ -142,7 +142,32 @@ footer p {
   font-weight: 700;
 }
 #main-content #video-info p span {
-  font-weight: 300;
+  font-weight: 400;
+  font-size: 15px;
+}
+#main-content #video-info p span:before {
+  font-family: 'Glyphicons Halflings';
+  margin-right: 5px;
+}
+#main-content #video-info .author:before {
+  content: '\e008';
+}
+#main-content #video-info .views:before {
+  content: '\e105';
+}
+#main-content #video-info .likes:before {
+  content: '\e125';
+  color: green;
+}
+#main-content #video-info .dislikes:before {
+  content: '\e126';
+  color: red;
+}
+#main-content #video-info .published:before {
+  content: '\e109';
+}
+#main-content #video-info .description:before {
+  content: '\270f';
 }
 #main-content #search {
   margin-top: 20px;

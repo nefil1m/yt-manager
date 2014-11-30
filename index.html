@@ -23,12 +23,12 @@
                                 <i class="glyphicon glyphicon-fast-backward"></i>
                             </a>
                             <a class="play" href="#!">
-                                <i class="glyphicon glyphicon-play" ng-class=" data.playState == 'playing' ? 'active' : ''; " ng-click="play();"></i>
+                                <i class="glyphicon glyphicon-play" ng-class=" data.simplified.playState == 'playing' ? 'active' : ''; " ng-click="play();"></i>
                             </a>
                             <a class="pause" href="#!">
-                                <i class="glyphicon glyphicon-pause" ng-class=" data.playState == 'paused' ? 'active' : ''; "></i>
+                                <i class="glyphicon glyphicon-pause" ng-class=" data.simplified.playState == 'paused' ? 'active' : ''; " ng-click="pause();"></i>
                             </a>
-                            <a href="#!" class="stop" ng-class=" data.playState == 'stopped' ? 'active' : ''; ">
+                            <a href="#!" class="stop" ng-class=" data.simplified.playState == 'stopped' ? 'active' : ''; " ng-click="stop();">
                                 <i class="glyphicon glyphicon-stop"></i>
                             </a>
                             <a href="#!" class="next">
@@ -202,16 +202,17 @@
                             <i class="glyphicon glyphicon-thumbs-down"></i> Dislike
                         </button>
                     </div>
-                    <div id="video-info" class="row">
+                    <div id="video-info" class="row" ng-controller="videoDataCtrl">
+                        <h3>{{ video.title }}</h3>
                         <div class="col-xs-4">
-                            <p>Author: <span class="author"></span></p>
-                            <p>Views: <span class="views"></span></p>
-                            <p>Likes: <span class="likes"></span></p>
-                            <p>Dislikes: <span class="dislikes"></span></p>
-                            <p>Published at: <span class="published"></span></p>
+                            <p><span class="author">{{ video.author }}</span></p>
+                            <p><span class="views">{{ video.views }}</span></p>
+                            <p><span class="likes">{{ video.likes }}</span></p>
+                            <p><span class="dislikes">{{ video.dislikes }}</span></p>
+                            <p><span class="published">{{ video.publishedAt }}</span></p>
                         </div>
                         <div class="col xs-8">
-                            <p class="description"></p>
+                            <p><span class="description">{{ video.description }}</span></p>
                         </div>
                     </div>
                     <div id="search" class="row">
@@ -394,5 +395,6 @@
         <script type="text/javascript" src="js/playlistCtrl.js"></script>
         <script type="text/javascript" src="js/videoCtrl.js"></script>
         <script type="text/javascript" src="js/playerCtrl.js"></script>
+        <script type="text/javascript" src="js/videoDataCtrl.js"></script>
     </body>
 </html>
