@@ -1,185 +1,233 @@
     <!DOCTYPE html>
 <html lang="pl" ng-app="playlistManager">
     <head>
-        <title>YouTube Playlist Manager</title>
+        <title>YouTube Playlists Manager</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <link rel="Shortcut icon" href="img/fav.gif">
+
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="css/bs.xl.css" type="text/css">
         <link rel="stylesheet" href="css/styles.css" type="text/css">
 
     </head>
-    <body ng-controller="playlistCtrl">
+    <body ng-controller="mainCtrl">
         <div class="mainContainer">
 
             <header class="row">
                 <div class="container">
                     <div class="col-sm-4 col-md-3 col-lg-3">
-                        <h1>YT<span>PlaylistManager</span></h1>
-                    </div>
-                    <div class="col-sm-8 col-md-9 col-lg-9 status" ng-controller="statusCtrl">
-                        <div class="player-buttons pull-right">
-                            <a href="#!" class="prev" ng-click="">
-                                <i class="glyphicon glyphicon-fast-backward"></i>
-                            </a>
-                            <a class="play" href="#!">
-                                <i class="glyphicon glyphicon-play" ng-class=" data.simplified.playState == 'playing' ? 'active' : ''; " ng-click="play();"></i>
-                            </a>
-                            <a class="pause" href="#!">
-                                <i class="glyphicon glyphicon-pause" ng-class=" data.simplified.playState == 'paused' ? 'active' : ''; " ng-click="pause();"></i>
-                            </a>
-                            <a href="#!" class="stop" ng-class=" data.simplified.playState == 'stopped' ? 'active' : ''; " ng-click="stop();">
-                                <i class="glyphicon glyphicon-stop"></i>
-                            </a>
-                            <a href="#!" class="next">
-                                <i class="glyphicon glyphicon-fast-forward"></i>
-                            </a>
-                        </div>
-                        <ul>
-                            <li>Active playlist: <span class="current-playlist">{{ data.activePlaylist }}</span></li>
-                            <li>Current song: <span class="current-video">{{ data.video }}</span></li>
-                            <li>Authorization status:
-                                <span class="authorization-btn"><a href="#!" data-toggle="modal" data-target="#authorizationModal" ng-if="!angular.isUndefined(data.id);">Authorize</a></span>
-                                <span ng-if="angular.isUndefined(data.id);">ok</span>
-                            </li>
-                            <li>Channel: <span class="channel">{{ data.channel }}</span></li>
-                        </ul>
+                        <h1>YT<span>PlaylistsManager</span></h1>
                     </div>
                 </div>
             </header>
 
+            <div id="status" ng-controller="statusCtrl">
+                <div class="container">
+                    <div class="row-fluid">
+
+                        <div class="player-buttons col-xs-4 text-right">
+
+                            <a href="#!" data-toggle="tooltip" data-placement="top" data-title="{{ data.simplified.prevSong.title }}" class="prev"
+                               ng-click="">
+                                <i class="glyphicon glyphicon-fast-backward"></i>
+                            </a>
+
+                            <a class="play" href="#!" data-toggle="tooltip" data-placement="top" data-title="Play"
+                               ng-click="play();"
+                               ng-class=" data.playState == 'playing' ? 'active' : ''; ">
+                                <i class="glyphicon glyphicon-play"></i>
+                            </a>
+
+                            <a class="pause" href="#!" data-toggle="tooltip" data-placement="top" data-title="Pause"
+                               ng-click="pause();"
+                               ng-class=" data.playState == 'paused' ? 'active' : ''; ">
+                                <i class="glyphicon glyphicon-pause"></i>
+                            </a>
+
+                            <a href="#!" data-toggle="tooltip" data-placement="top" data-title="Stop" class="stop"
+                               ng-click="stop();"
+                               ng-class=" data.playState == 'stopped' ? 'active' : ''; ">
+                                <i class="glyphicon glyphicon-stop"></i>
+                            </a>
+
+                            <a href="#!" data-toggle="tooltip" data-placement="top" data-title="{{ data.nextSong.title }}" class="next">
+                                <i class="glyphicon glyphicon-fast-forward"></i>
+                            </a>
+
+                        </div>
+
+                        <ul class="col-xs-8" id="basic-info">
+                            <li>Channel: <span class="channel">{{ data.channel }}</span></li>
+                            <li>Playlist: <span class="current-playlist">{{ data.activePlaylist }}</span></li>
+                            <li>Song: <span class="current-video">{{ data.video }}</span></li>
+                            <li ng-show="!angular.isUndefined(data.id);">
+                                <span class="authorization-btn">
+                                    <a href="#!" data-toggle="modal" data-target="#authorizationModal" >Authorize</a>
+                                </span>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
             <div id="main-content" class="row">
 
-                <div class="col-xs-4" style="background: url('img/footer_lodyas.png')">
-                    <div >
-                        <h3><a data-toggle="collapse" data-target="#playlists" href="#!">Your Playlists</a></h3>
-                        <div id="playlists" class="collapse in">
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-addon">
-                                    <i class="glyphicon glyphicon-search"></i>
-                                </span>
-                                <input type="text" class="form-control" placeholder="Search in playlists" ng-model="playlistSearch">
-                            </div>
-                            <ul id="playlists-list" class="videos-container dark">
+                <div class="col-xs-6 add-padding user-stuff" style="background: url('img/footer_lodyas.png')">
+                    <div ng-controller="playlistCtrl" class="add-padding">
+                        <h3>Your Playlists</h3>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Search in playlists" ng-model="playlistSearch">
+                        </div>
+                        <div id="playlists">
 
+                            <ul id="playlists-list" class="videos-container dark">
                                 <li class="row item" ng-class="playlist.selected ? 'active' : ''" ng-repeat="playlist in playlists | filter: playlistSearch" data-id="{{ playlist.id }}">
-                                    <!-- videos only -->
-                                    <div class="privacy-status">
-                                        <img ng-src="img/{{ playlist.status }}.png" ng-click="changePrivacy($index);">
+
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a class="btn btn-default add" ng-click="addVideo();">
+                                                    <i class="glyphicon glyphicon-plus"></i>
+                                                    Add current video to this playlist
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-default listen" ng-click="playPlaylist($index);">
+                                                    <i class="glyphicon glyphicon-play"></i>
+                                                    Play this playlist
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-default edit" ng-click="editPlaylist($index);">
+                                                    <i class="glyphicon glyphicon-edit"></i>
+                                                    Edit playlist
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-default delete" ng-click="deletePlaylist($index);">
+                                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                                    Delete playlist
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
+
                                     <a href="#!" title="{{ playlist.description }}" ng-click="makeActive($index);">
-                                        <div class="col-xs-12">
-                                            <div class="pull-left th">
-                                                <img src="{{ playlist.thumbnail }}">
-                                            </div>
-                                            <h4 class="title">{{ playlist.title }}</h4>
-                                            <p class="excerpt" title="{{ playlist.description }}">{{ playlist.excerpt }}</p>
+                                        <img src="{{ playlist.thumbnail }}" class="th">
+                                        <div class="text">
+                                            <i class="glyphicon glyphicon-lock" ng-show="playlist.status == 'private'" ng-click="changePrivacy($index);"></i>
+                                            <i class="glyphicon glyphicon-link" ng-show="playlist.status == 'public'" ng-click="changePrivacy($index);"></i>
+                                            <p class="title">{{ playlist.title }}</p>
                                         </div>
                                     </a>
-                                    <div class="btn-group">
-                                        <a class="btn btn-default add" title="Add current video to this playlist" ng-click="addVideo();">
-                                            <i class="glyphicon glyphicon-plus"></i>
-                                        </a>
-                                        <a class="btn btn-default listen" title="Play this playlist" ng-click="playPlaylist($index);">
-                                            <i class="glyphicon glyphicon-play"></i>
-                                        </a>
-                                        <a class="btn btn-default edit" title="Edit playlist" ng-click="editPlaylist($index);">
-                                            <i class="glyphicon glyphicon-edit"></i>
-                                        </a>
-                                        <a class="btn btn-default delete" title="Delete playlist" ng-click="deletePlaylist($index);">
-                                            <i class="glyphicon glyphicon-ban-circle"></i>
-                                        </a>
-                                    </div>
+
                                 </li>
 
                             </ul>
-                            <div class="button-container">
-                                <!-- <button class="prev-button paging-button">&#171; Previous Page</button> -->
-                                <button class="next-button paging-button" ng-click="getPlaylists();">Next Page &#187;</button>
+                            <div class="btn-group">
+                                <button class="btn btn-default add-new-playlist" data-target="#newPlaylistModal" data-toggle="modal">
+                                    <i class="glyphicon glyphicon-plus"></i> Add New Playlist
+                                </button>
+                                <button class="btn btn-default next-button paging-button" ng-click="getPlaylists();">Load More &#187;</button>
                             </div>
-                            <div class="row add-new-playlist">
-                                <a href="#!" data-target="#newPlaylistModal" data-toggle="modal">
-                                    <div class="col-xs-12">
-                                        <div class="pull-left th">
-                                            <i class="glyphicon glyphicon-plus"></i>
-                                        </div>
-                                        <h4 class="title">Add New Playlist</h4>
-                                        <p class="excerpt">This button will create new playlist.</p>
-                                    </div>
-                                </a>
-                            </div>
-
 
                         </div>
                     </div>
-                    <div ng-controller="videoCtrl">
-                        <h3><a href="#!" class="collapsed" data-target="#playlist-videos" data-toggle="collapse">Videos in "<span class="current-playlist">{{ activePlaylist.title }}</span>"</a></h3>
 
-                        <div id="playlist-videos" class="videos-container dark collapse">
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-addon">
-                                    <i class="glyphicon glyphicon-search"></i>
-                                </span>
-                                <input type="text" class="form-control" placeholder="Search in playlist videos" ng-model="playlistVideosSearch">
-                            </div>
+                    <div ng-controller="videoCtrl" class="add-padding">
+                        <h3>Videos in "<span class="current-playlist">{{ activePlaylist.title }}</span>"</h3>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Search in playlist videos" ng-model="playlistVideosSearch">
+                        </div>
+
+                        <div id="playlist-videos" class="videos-container dark">
+
                             <ul class="videos">
-                            <!-- videos appends here -->
                                 <li class="row item" ng-repeat="video in activePlaylist.videos | filter: playlistVideosSearch" data-id="{{ video.id }}" ng-class=" video.selected ? 'active' : ''; ">
-                                    <!-- videos only -->
-                                    <div class="info">
-                                        <div class="row">
-                                            <div class="col-xs-6 likes">
-                                                <p class="count">{{ video.likes }}</p>
-                                            </div>
-                                            <div class="col-xs-6 dislikes">
-                                                <p class="count">{{ video.dislikes }}</p>
-                                            </div>
-                                        </div>
-                                        <p class="duration">{{ video.duration }}</p>
+
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a class="btn btn-default listen" ng-click="playPlaylist($index);">
+                                                    <i class="glyphicon glyphicon-play"></i>
+                                                    Play playlist from this video
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-default listen" ng-click="playVideo($index);">
+                                                    <i class="glyphicon glyphicon-play-circle"></i>
+                                                    Play only this video
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-default delete" ng-click="deleteVideo($index);">
+                                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                                    Delete video from playlist
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-default move-top" ng-click="moveToTop($index);">
+                                                    <i class=" glyphicon glyphicon-cloud-upload"></i>
+                                                    Make first
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-default move-up" ng-click="moveUp($index);">
+                                                    <i class="glyphicon glyphicon-arrow-up"></i>
+                                                    Move up
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-default move-down" ng-click="moveDown($index);">
+                                                    <i class="glyphicon glyphicon-arrow-down"></i>
+                                                    Move down
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-default move-bottom" ng-click="moveToBottom($index);">
+                                                    <i class="glyphicon glyphicon-cloud-download"></i>
+                                                    Move to end
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
+
                                     <a href="#!" title="{{ video.description }}" ng-click="makeActive($index);">
-                                        <div class="col-xs-12">
-                                            <div class="pull-left th">
-                                                <img src="{{ video.thumbnail }}">
-                                            </div>
-                                            <h4 class="title">{{ video.title }}</h4>
-                                            <p class="excerpt">{{ video.excerpt }}</p>
+                                        <img src="{{ video.thumbnail }}" class="th">
+                                        <div class="text">
+                                            <p class="title">{{ video.title }}</p>
                                         </div>
                                     </a>
-                                    <div class="btn-group">
-                                        <a class="btn btn-default listen" title="Play playlist from this video" ng-click="playPlaylist($index);">
-                                            <i class="glyphicon glyphicon-play"></i>
-                                        </a>
-                                        <a class="btn btn-default listen" title="Play only this video" ng-click="playVideo($index);">
-                                            <i class="glyphicon glyphicon-play-circle"></i>
-                                        </a>
-                                        <a class="btn btn-default delete" title="Delete video from playlist" ng-click="deleteVideo($index);">
-                                            <i class="glyphicon glyphicon-ban-circle"></i>
-                                        </a>
-                                        <a class="btn btn-default move-top" title="Make first" ng-click="moveToTop($index);">
-                                            <i class=" glyphicon glyphicon-cloud-upload"></i>
-                                        </a>
-                                        <a class="btn btn-default move-up" title="Move up" ng-click="moveUp($index);">
-                                            <i class="glyphicon glyphicon-arrow-up"></i>
-                                        </a>
-                                        <a class="btn btn-default move-down" title="Move down" ng-click="moveDown($index);">
-                                            <i class="glyphicon glyphicon-arrow-down"></i>
-                                        </a>
-                                        <a class="btn btn-default move-bottom" title="Move to end" ng-click="moveToBottom($index);">
-                                            <i class="glyphicon glyphicon-cloud-download"></i>
-                                        </a>
-                                    </div>
+
                                 </li>
                             </ul>
                         </div>
                         <div class="button-container">
-                            <!-- <button class="prev-button paging-button" onclick="previousPage();">&#171; Previous Page</button> -->
-                            <button class="next-button paging-button" onclick="getVideos();">Next Page &#187;</button>
+                            <button class="next-button paging-button" ng-click="getVideos();">Next Page &#187;</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xs-8" ng-controller="playerCtrl" ng-init="init();">
+                <div class="col-xs-6 right-side" ng-controller="playerCtrl" ng-init="init();">
                     <div class="player-container">
                         <div id="player">
                             <!-- player goes here -->
@@ -389,6 +437,7 @@
         <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
         <script type="text/javascript" src="js/angular.min.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/mainCtrl.js"></script>
         <script type="text/javascript" src="js/channelData.js"></script>
         <script type="text/javascript" src="js/statusCtrl.js"></script>
         <script type="text/javascript" src="js/loginCtrl.js"></script>
@@ -396,5 +445,18 @@
         <script type="text/javascript" src="js/videoCtrl.js"></script>
         <script type="text/javascript" src="js/playerCtrl.js"></script>
         <script type="text/javascript" src="js/videoDataCtrl.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var resizePlayer = function() {
+                    var player = $("#player");
+                    player.height( parseInt(player.width(), 10) * 0.5225 + "px");
+                }
+
+                $('[data-toggle="tooltip"]').tooltip();
+                resizePlayer();
+
+                $(window).resize(resizePlayer);
+            });
+        </script>
     </body>
 </html>

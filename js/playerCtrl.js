@@ -39,15 +39,24 @@ app.controller('playerCtrl', ['$scope', 'channelData', function($scope, channelD
         $scope.createPlayer();
     };
 
+    var emitStateChange = function(event) {
+        console.log('yay');
+        channelData.player.playVideo();
+    }
+
     $scope.createPlayer = function() {
         $(window).load(function() {
             channelData.player = new YT.Player('player', {
-                height: 450,
-                width: 800,
-                videoId: 'qDxtsPseia8'
+                height: '100%',
+                width: '100%',
+                videoId: 'qDxtsPseia8',
+                event: {
+                    'onReady': emitStateChange,
+                    'onStateChange': emitStateChange
+                }
             });
 
-            channelData.player.addEventListener('ended', $scope.playNextVideo);
+            // channelData.player.addEventListener('0', emitStateChange);
         });
     };
 

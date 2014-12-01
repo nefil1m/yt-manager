@@ -33,7 +33,7 @@ app.controller('loginCtrl', function($scope, channelData) {
                 channelData.title = res.snippet.title;
                 channelData.simplified = {};
                 channelData.simplified.channel = channelData.title;
-                $scope.$emit('logged');
+                $scope.$broadcast('logged');
             });
         });
     };

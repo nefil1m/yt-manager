@@ -8,7 +8,7 @@ app.controller('videoCtrl', ['$scope', 'channelData', function($scope, channelDa
         };
 
         if( angular.isDefined(channelData.nextVideosToken) ) {
-            request.pageToken = channelData.nextVideosToken;
+            options.pageToken = channelData.nextVideosToken;
         }
 
         var request = gapi.client.youtube.playlistItems.list(options);
