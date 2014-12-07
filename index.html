@@ -87,52 +87,8 @@
                         <div id="playlists">
 
                             <ul id="playlists-list" class="videos-container dark">
-                                <li class="row item" ng-class="playlist.selected ? 'active' : ''" ng-repeat="playlist in playlists | filter: playlistSearch" data-id="{{ playlist.id }}">
 
-                                    <div class="dropdown">
-                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                            <span class="icon-bar"></span>
-                                            <span class="icon-bar"></span>
-                                            <span class="icon-bar"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="btn btn-default add" ng-click="addVideo();">
-                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                    Add current video to this playlist
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="btn btn-default listen" ng-click="playPlaylist($index);">
-                                                    <i class="glyphicon glyphicon-play"></i>
-                                                    Play this playlist
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="btn btn-default edit" ng-click="editPlaylist($index);">
-                                                    <i class="glyphicon glyphicon-edit"></i>
-                                                    Edit playlist
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="btn btn-default delete" ng-click="deletePlaylist($index);">
-                                                    <i class="glyphicon glyphicon-ban-circle"></i>
-                                                    Delete playlist
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <a href="#!" title="{{ playlist.description }}" ng-click="makeActive($index);">
-                                        <img src="{{ playlist.thumbnail }}" class="th">
-                                        <div class="text">
-                                            <i class="glyphicon glyphicon-lock" ng-show="playlist.status == 'private'" ng-click="changePrivacy($index);"></i>
-                                            <i class="glyphicon glyphicon-link" ng-show="playlist.status == 'public'" ng-click="changePrivacy($index);"></i>
-                                            <p class="title">{{ playlist.title }}</p>
-                                        </div>
-                                    </a>
-
-                                </li>
+                                <playlist></playlist>
 
                             </ul>
                             <div class="btn-group">
@@ -157,68 +113,9 @@
                         <div id="playlist-videos" class="videos-container dark">
 
                             <ul class="videos">
-                                <li class="row item" ng-repeat="video in activePlaylist.videos | filter: playlistVideosSearch" data-id="{{ video.id }}" ng-class=" video.selected ? 'active' : ''; ">
 
-                                    <div class="dropdown">
-                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                            <span class="icon-bar"></span>
-                                            <span class="icon-bar"></span>
-                                            <span class="icon-bar"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="btn btn-default listen" ng-click="playPlaylist($index);">
-                                                    <i class="glyphicon glyphicon-play"></i>
-                                                    Play playlist from this video
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="btn btn-default listen" ng-click="playVideo($index);">
-                                                    <i class="glyphicon glyphicon-play-circle"></i>
-                                                    Play only this video
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="btn btn-default delete" ng-click="deleteVideo($index);">
-                                                    <i class="glyphicon glyphicon-ban-circle"></i>
-                                                    Delete video from playlist
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="btn btn-default move-top" ng-click="moveToTop($index);">
-                                                    <i class=" glyphicon glyphicon-cloud-upload"></i>
-                                                    Make first
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="btn btn-default move-up" ng-click="moveUp($index);">
-                                                    <i class="glyphicon glyphicon-arrow-up"></i>
-                                                    Move up
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="btn btn-default move-down" ng-click="moveDown($index);">
-                                                    <i class="glyphicon glyphicon-arrow-down"></i>
-                                                    Move down
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="btn btn-default move-bottom" ng-click="moveToBottom($index);">
-                                                    <i class="glyphicon glyphicon-cloud-download"></i>
-                                                    Move to end
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                <yt-video>
 
-                                    <a href="#!" title="{{ video.description }}" ng-click="makeActive($index);">
-                                        <img src="{{ video.thumbnail }}" class="th">
-                                        <div class="text">
-                                            <p class="title">{{ video.title }}</p>
-                                        </div>
-                                    </a>
-
-                                </li>
                             </ul>
                         </div>
                         <div class="button-container">
@@ -445,6 +342,7 @@
         <script type="text/javascript" src="js/videoCtrl.js"></script>
         <script type="text/javascript" src="js/playerCtrl.js"></script>
         <script type="text/javascript" src="js/videoDataCtrl.js"></script>
+        <script type="text/javascript" src="js/directives.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
                 var resizePlayer = function() {
