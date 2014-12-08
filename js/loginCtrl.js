@@ -1,9 +1,7 @@
 app.controller('loginCtrl', function($scope, channelData) {
     var CLIENT_ID = '877549163404-chjiknp3ffeiatmb2mcb8dfp23u7sm8q.apps.googleusercontent.com',
-    SCOPES = [
-      'https://www.googleapis.com/auth/youtube'
-    ],
-    apiKey = 'AIzaSyDJIOlGzyjPFEQ5j-Q2qEJVbOJtgqmby_Y';
+        SCOPES = [ 'https://www.googleapis.com/auth/youtube' ],
+        apiKey = 'AIzaSyDJIOlGzyjPFEQ5j-Q2qEJVbOJtgqmby_Y';
 
     var auth = function(){
         gapi.client.setApiKey = apiKey;

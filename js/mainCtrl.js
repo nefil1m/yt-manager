@@ -9,4 +9,6 @@ app.controller('mainCtrl', ['$scope', 'channelData', function($scope, channelDat
             return string;
         }
     };
+
+    // $scope.$on('logged', )
 }]);
