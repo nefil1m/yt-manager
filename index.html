@@ -59,10 +59,10 @@
                         </div>
 
                         <ul class="col-xs-8" id="basic-info">
-                            <li>Channel: <span class="channel">{{ data.channel }}</span></li>
+                            <li>Channel: <span class="channel">{{ data.channelTitle }}</span></li>
                             <li>Playlist: <span class="current-playlist">{{ data.activePlaylist }}</span></li>
                             <li>Song: <span class="current-video">{{ data.video }}</span></li>
-                            <li ng-show="!angular.isUndefined(data.id);">
+                            <li>
                                 <span class="authorization-btn">
                                     <a href="#!" data-toggle="modal" data-target="#authorizationModal" >Authorize</a>
                                 </span>
@@ -98,6 +98,116 @@
                                 <button class="btn btn-default next-button paging-button" ng-click="getPlaylists();">Load More &#187;</button>
                             </div>
 
+                        </div>
+                        <div id="newPlaylistModal" class="modal fade" aria-hidden="true" role="dialog">
+                            <form ng-submit="addNewPlaylist();" name="newPlaylistForm">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                            <h4>Add New Playlist</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-horizontal" role="form">
+                                                <div class="form-group">
+                                                    <label for="playlistName" class="control-label col-xs-3">Name</label>
+                                                    <div class="col-xs-9">
+                                                        <input type="text" id="playlistName" class="form-control" required placeholder="Playlist Title" ng-model="newPlaylist.title">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="playlistDescription" class="control-label col-xs-3">Description</label>
+                                                    <div class="col-xs-9">
+                                                        <textarea id="playlistDescription" cols="30" rows="10" class="form-control" placeholder="Playlist Description" ng-model="newPlaylist.description"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="playlistPrivate" class="control-label col-xs-3">
+                                                        Private
+                                                    </label>
+                                                    <div class="col-xs-9 check">
+                                                        <input type="checkbox" id="editPlaylistPrivate" ng-model="newPlaylist.status" ng-true-value="'private'" ng-false-value="'public'">
+                                                        <i class="glyphicon glyphicon-lock"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="playlistTags" class="control-label col-xs-3">Tags</label>
+                                                    <div class="col-xs-9">
+                                                        <input type="text" id="playlistTags" class="form-control" placeholder="Comma separated values" ng-model="newPlaylist.tags">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input class="btn btn-success pull-right" type="submit" value="Submit" ng-disabled="newPlaylistForm.$invalid">
+                                            <button class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="editPlaylistModal" class="modal fade" aria-hidden="true" role="dialog">
+                            <form ng-submit="editPlaylist();" name="editPlaylistForm">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                            <h4>Edit "{{ playlistToEdit.title }}" playlist</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-horizontal" role="form">
+                                                <div class="form-group">
+                                                    <label for="editPlaylistName" class="control-label col-xs-3">Name</label>
+                                                    <div class="col-xs-9">
+                                                        <input type="text" class="form-control" id="editPlaylistName" ng-model="playlistToEdit.title" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editPlaylistDescription" class="control-label col-xs-3">Description</label>
+                                                    <div class="col-xs-9">
+                                                        <textarea id="editPlaylistDescription" cols="30" rows="10" class="form-control" placeholder="Playlist Description" ng-model="playlistToEdit.description"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editPlaylistPrivate" class="control-label col-xs-3">
+                                                        Private
+                                                    </label>
+                                                    <div class="col-xs-9 check">
+                                                        <input type="checkbox" id="editPlaylistPrivate" ng-model="playlistToEdit.status" ng-true-value="'private'" ng-false-value="'public'">
+                                                        <i class="glyphicon glyphicon-lock"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editPlaylistTags" class="control-label col-xs-3">Tags</label>
+                                                    <div class="col-xs-9">
+                                                        <input type="text" id="editPlaylistTags" class="form-control" placeholder="Comma separated values" ng-model="playlistToEdit.tags">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input class="btn btn-success pull-right" ng-disabled="editPlaylistForm.$invalid" type="submit" value="Submit">
+                                            <button class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal fade" id="confirmPlaylistDeleteModal" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                        <h4>Are You sure You want to delete playlist "{{ playlistToDelete.title }}" playlist</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-success pull-right" id="deletePlaylistYes">Yes</button>
+                                        <button class="btn btn-danger pull-right" id="deletePlaylistNo">No</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -209,113 +319,6 @@
             </div>
         </div>
 
-         <div id="newPlaylistModal" class="modal fade" aria-hidden="true" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4>Add New Playlist</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label for="playlistName" class="control-label col-xs-3">Name</label>
-                                <div class="col-xs-9">
-                                    <input type="text" id="playlistName" class="form-control" required placeholder="Playlist Title">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="playlistDescription" class="control-label col-xs-3">Description</label>
-                                <div class="col-xs-9">
-                                    <textarea id="playlistDescription" cols="30" rows="10" class="form-control" placeholder="Playlist Description"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="playlistPrivate" class="control-label col-xs-3">
-                                    Private
-                                </label>
-                                <div class="col-xs-9 check">
-                                    <input type="checkbox" id="playlistPrivate">
-                                    <i class="glyphicon glyphicon-lock"></i>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="playlistTags" class="control-label col-xs-3">Tags</label>
-                                <div class="col-xs-9">
-                                    <input type="text" id="playlistTags" class="form-control" placeholder="Comma separated values">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button ng-click="addNewPlaylist();" class="btn btn-success pull-right" id="newPlaylistSubmit">Submit</button>
-                        <button class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="editPlaylistModal" class="modal fade" aria-hidden="true" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4>Edit "{{ playlistToEdit.title }}" playlist</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label for="editPlaylistName" class="control-label col-xs-3">Name</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" id="editPlaylistName" ng-model="playlistToEdit.title" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="editPlaylistDescription" class="control-label col-xs-3">Description</label>
-                                <div class="col-xs-9">
-                                    <textarea id="editPlaylistDescription" cols="30" rows="10" class="form-control" placeholder="Playlist Description" ng-model="playlistToEdit.description"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="editPlaylistPrivate" class="control-label col-xs-3">
-                                    Private
-                                </label>
-                                <div class="col-xs-9 check">
-                                    <input type="checkbox" id="editPlaylistPrivate" ng-model="playlistToEdit.status" ng-true-value="'private'" ng-false-value="'public'">
-                                    <i class="glyphicon glyphicon-lock"></i>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="editPlaylistTags" class="control-label col-xs-3">Tags</label>
-                                <div class="col-xs-9">
-                                    <input type="text" id="editPlaylistTags" class="form-control" placeholder="Comma separated values" ng-model="playlistToEdit.tags">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-success pull-right" id="editPlaylistSubmit">Submit</button>
-                        <button class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="confirmPlaylistDeleteModal" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4>Are You sure You want to delete playlist "{{ playlistToDelete.title }}" playlist</h4>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-success pull-right" id="deletePlaylistYes">Yes</button>
-                        <button class="btn btn-danger pull-right" id="deletePlaylistNo">No</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="modal fade" id="errorModal">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
@@ -335,7 +338,7 @@
         <script type="text/javascript" src="js/angular.min.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
         <script type="text/javascript" src="js/mainCtrl.js"></script>
-        <script type="text/javascript" src="js/channelData.js"></script>
+        <script type="text/javascript" src="js/channel.js"></script>
         <script type="text/javascript" src="js/statusCtrl.js"></script>
         <script type="text/javascript" src="js/loginCtrl.js"></script>
         <script type="text/javascript" src="js/playlistCtrl.js"></script>

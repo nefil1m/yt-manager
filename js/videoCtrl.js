@@ -1,20 +1,20 @@
-app.controller('videoCtrl', ['$scope', 'channelData', function($scope, channelData) {
+app.controller('videoCtrl', ['$scope', 'channel', function($scope, channel) {
 
     $scope.getVideos = function() {
         var options = {
-            playlistId: channelData.activePlaylist.id,
+            playlistId: channel.activePlaylist.id,
             part: 'snippet',
             maxResults: 10
         };
 
-        if( angular.isDefined(channelData.nextVideosToken) ) {
-            options.pageToken = channelData.nextVideosToken;
+        if( angular.isDefined(channel.nextVideosToken) ) {
+            options.pageToken = channel.nextVideosToken;
         }
 
         var request = gapi.client.youtube.playlistItems.list(options);
 
         request.execute(function(response) {
-            channelData.nextVideosToken = response.result.nextPageToken;
+            channel.nextVideosToken = response.result.nextPageToken;
 
             if( angular.isUndefined(response.error) ) {
                 var res = response.result.items;
@@ -43,13 +43,13 @@ app.controller('videoCtrl', ['$scope', 'channelData', function($scope, channelDa
                             publishedAt: res[0].snippet.publishedAt
                         };
 
-                        if( angular.isUndefined(channelData.activePlaylist.videos) ) {
-                            channelData.activePlaylist.videos = [];
+                        if( angular.isUndefined(channel.activePlaylist.videos) ) {
+                            channel.activePlaylist.videos = [];
                         }
-                        channelData.activePlaylist.videos.push(item);
+                        channel.activePlaylist.videos.push(item);
 
                         $scope.$apply(function() {
-                            $scope.activePlaylist = channelData.activePlaylist;
+                            $scope.activePlaylist = channel.activePlaylist;
                         });
                     })
                 });
@@ -61,16 +61,16 @@ app.controller('videoCtrl', ['$scope', 'channelData', function($scope, channelDa
     };
 
     $scope.makeActive = function(index) {
-        if( angular.isDefined(channelData.activeVideo) ) {
-            channelData.activeVideo.selected = false;
+        if( angular.isDefined(channel.activeVideo) ) {
+            channel.activeVideo.selected = false;
         }
 
-        channelData.activeVideo = channelData.activePlaylist.videos[index];
-        channelData.activeVideo.selected = true;
-        channelData.simplified.video = channelData.activeVideo.title;
+        channel.activeVideo = channel.activePlaylist.videos[index];
+        channel.activeVideo.selected = true;
+        channel.simplified.video = channel.activeVideo.title;
 
-        channelData.nextVideo = ++index;
-        channelData.player.loadVideoById(channelData.activeVideo.id);
+        channel.nextVideo = ++index;
+        channel.player.loadVideoById(channel.activeVideo.id);
 
         $scope.$broadcast('playing');
     }

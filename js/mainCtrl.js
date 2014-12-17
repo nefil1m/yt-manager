@@ -1,4 +1,4 @@
-app.controller('mainCtrl', ['$scope', 'channelData', function($scope, channelData) {
+app.controller('mainCtrl', ['$scope', 'channel', function($scope, channel) {
 
     $scope.makeExcerpt = function(string) {
         if( string.length >= 119 ) {
@@ -10,5 +10,7 @@ app.controller('mainCtrl', ['$scope', 'channelData', function($scope, channelDat
         }
     };
 
-    // $scope.$on('logged', )
+    $scope.$on('logged', function() {
+        $scope.$broadcast('getPlaylists');
+    });
 }]);

@@ -1,4 +1,4 @@
-app.controller('loginCtrl', function($scope, channelData) {
+app.controller('loginCtrl', ['$scope', 'channel', function($scope, channel) {
     var CLIENT_ID = '877549163404-chjiknp3ffeiatmb2mcb8dfp23u7sm8q.apps.googleusercontent.com',
         SCOPES = [ 'https://www.googleapis.com/auth/youtube' ],
         apiKey = 'AIzaSyDJIOlGzyjPFEQ5j-Q2qEJVbOJtgqmby_Y';
@@ -26,12 +26,13 @@ app.controller('loginCtrl', function($scope, channelData) {
             request.execute(function(response) {
                 var res = response.result.items[0];
 
-                $('.status').find('.authorization-btn').html('ok');
-                channelData.id = res.id;
-                channelData.title = res.snippet.title;
-                channelData.simplified = {};
-                channelData.simplified.channel = channelData.title;
-                $scope.$broadcast('logged');
+                $('#status').find('.authorization-btn').parent().remove();
+                channel.authorized = true;
+                channel.id = res.id;
+                channel.title = res.snippet.title;
+                channel.simplified = {};
+                channel.simplified.channelTitle = channel.title;
+                $scope.$emit('logged');
             });
         });
     };
@@ -39,4 +40,4 @@ app.controller('loginCtrl', function($scope, channelData) {
     $('#login-link').click(function() {
       checkAuth();
     });
-});
+}]);

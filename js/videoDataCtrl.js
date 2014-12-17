@@ -1,5 +1,5 @@
-app.controller('videoDataCtrl', ['$scope', 'channelData', function($scope, channelData) {
-    $scope.$watch(function() { return channelData.activeVideo }, function() {
-        $scope.video = channelData.activeVideo;
+app.controller('videoDataCtrl', ['$scope', 'channel', function($scope, channel) {
+    $scope.$watch(function() { return channel.activeVideo }, function() {
+        $scope.video = channel.activeVideo;
     });
 }]);

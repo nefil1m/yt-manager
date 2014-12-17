@@ -1,4 +1,4 @@
-app.controller('playerCtrl', ['$scope', 'channelData', function($scope, channelData) {
+app.controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
     $scope.videoDone = false;
     $scope.buttons = $('.player-buttons');
     var player;
@@ -41,12 +41,12 @@ app.controller('playerCtrl', ['$scope', 'channelData', function($scope, channelD
 
     var emitStateChange = function(event) {
         console.log('yay');
-        channelData.player.playVideo();
+        channel.player.playVideo();
     }
 
     $scope.createPlayer = function() {
         $(window).load(function() {
-            channelData.player = new YT.Player('player', {
+            channel.player = new YT.Player('player', {
                 height: '100%',
                 width: '100%',
                 videoId: 'qDxtsPseia8',
@@ -56,16 +56,16 @@ app.controller('playerCtrl', ['$scope', 'channelData', function($scope, channelD
                 }
             });
 
-            // channelData.player.addEventListener('0', emitStateChange);
+            // channel.player.addEventListener('0', emitStateChange);
         });
     };
 
     $scope.playNextVideo = function() {
-        var index = channelData.nextVideo;
+        var index = channel.nextVideo;
 
-        if( angular.isDefined(channelData.nextVideo) ) {
-            channelData.loadVideoById(channelData.activePlaylist.videos[index].id);
-            channelData.nextVideo++;
+        if( angular.isDefined(channel.nextVideo) ) {
+            channel.loadVideoById(channel.activePlaylist.videos[index].id);
+            channel.nextVideo++;
         }
     };
 }]);

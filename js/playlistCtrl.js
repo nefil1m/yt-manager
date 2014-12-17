@@ -1,46 +1,9 @@
-app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channelData) {
-    $scope.playlists = channelData.playlists;
-    $scope.playlistToken;
+app.controller('playlistCtrl', ['$scope', 'channel', function($scope, channel) {
+    $scope.playlistToken = '';
+    $scope.playlistCount = channel.playlistCount;
 
     $scope.getPlaylists = function() {
-
-        var options = {
-            channelId: channelData.id,
-            part: 'id,snippet,status',
-            maxResults: 5
-        }
-
-        if( angular.isDefined($scope.playlistToken) ) {
-            options.pageToken = $scope.playlistToken;
-        }
-
-        var request = gapi.client.youtube.playlists.list(options);
-
-        request.execute(function(response) {
-            if( angular.isUndefined(response.error) ) {
-                var res = response.result.items;
-                $scope.playlistToken = response.result.nextPageToken;
-
-                $.each(res, function(i) {
-                    var newPlaylist = {
-                        id: res[i].id,
-                        thumbnail: res[i].snippet.thumbnails.medium.url,
-                        title: res[i].snippet.title,
-                        description: res[i].snippet.description,
-                        excerpt: $scope.makeExcerpt(res[i].snippet.description),
-                        status: res[i].status.privacyStatus,
-                        tags: res[i].snippet.tags
-                    };
-
-                    $scope.$apply(function(){
-                        channelData.playlists.push(newPlaylist);
-                    });
-                });
-            } else {
-                console.error(response.code, response.error.message);
-                $('#errorModal').modal('show');
-            }
-        });
+        channel.request('playlist');
     };
 
     $scope.addVideo = function() {
@@ -52,52 +15,30 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
     };
 
     $scope.addNewPlaylist = function() {
-        if( typeof channelData.id != 'undefined' ) {
-            var title = $('#playlistName').val(),
-                description = $('#playlistDescription').val(),
-                tags = $('#playlistTags').val().replace(/,\s/g, ',').split(','),
-                status = 'public';
-
-            if( $('#playlistPrivate').is(':checked') ) {
-                status = 'private';
+        var options = {
+            part: 'snippet,status',
+            resource: {
+                snippet: {
+                    title: $scope.newPlaylist.title,
+                    description: $scope.newPlaylist.description,
+                    tags: $scope.newPlaylist.tags
+                },
+                status: {
+                    privacyStatus: $scope.newPlaylist.status
+                }
             }
+        };
 
-            var request = gapi.client.youtube.playlists.insert({
-                part: 'snippet,status',
-                resource: {
-                    snippet: {
-                        title: title,
-                        description: description,
-                        tags: tags
-                    },
-                    status: {
-                        privacyStatus: status
-                    }
-                }
+        var push = channel.sendNewPlaylist(options);
+        console.log(push);
+
+        if( angular.isUndefined(push.error) ) {
+            $scope.$apply(function() {
+                channel.playlists.push(push);
             });
-
-            request.execute(function(response) {
-                if( angular.isUndefined(response.error) ) {
-                    var res = response.result;
-                    $('#newPlaylistModal').modal('hide');
-
-                    var newPlaylist = {
-                        id: res.id,
-                        title: title,
-                        description: description,
-                        excerpt: $scope.makeExcerpt(description),
-                        thumbnail: res.snippet.thumbnails.medium.url,
-                        status: res.status.privacyStatus
-                    };
-
-                    $scope.$apply(function() {
-                        channelData.playlists.push(newPlaylist);
-                    });
-                } else {
-                    console.error(response.code, response.error.message);
-                    $('#errorModal').modal('show');
-                }
-            });
+        } else {
+            console.error(push.code, push.error.message);
+            $('#errorModal').modal('show');
         }
     };
 
@@ -118,7 +59,7 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
                 request.execute(function(response) {
                     if( angular.isUndefined(response.error) ) {
                         $scope.$apply(function() {
-                            channelData.playlists.splice(index, 1);
+                            channel.playlists.splice(index, 1);
                         });
                         $('#confirmPlaylistDeleteModal').modal('hide');
                     } else {
@@ -131,58 +72,43 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
         });
     };
 
-    $scope.editPlaylist = function(index) {
+    $scope.prepareEditModal = function(index) {
         var pl = $scope.playlists[index];
 
-         $scope.playlistToEdit = {
-            id: pl.id,
-            title: pl.title,
-            status: pl.status,
-            description: pl.description,
-            tags: angular.isUndefined(pl.tags) ? '' : pl.tags.toString()
-        };
+        $scope.playlistToEdit = $scope.playlists[index];
+    };
 
-        $('#editPlaylistModal').modal('show');
+    $scope.editPlaylist = function() {
+        var request = gapi.client.youtube.playlists.update({
+            id: $scope.playlistToEdit.id,
+            part: 'snippet,status',
+            snippet: {
+                title: $scope.playlistToEdit.title,
+                description: $scope.playlistToEdit.description,
+                tags: angular.isUndefined($scope.playlistToEdit.tags) ? '' : $scope.playlistToEdit.tags.replace(/,\s/g, ",").split(',')
+            },
+            status: {
+                privacyStatus: $scope.playlistToEdit.status
+            }
+        });
 
-        $('#editPlaylistModal').on('click', '#editPlaylistSubmit', function() {
-            var request = gapi.client.youtube.playlists.update({
-                id: $scope.playlistToEdit.id,
-                part: 'snippet,status',
-                snippet: {
-                    title: $scope.playlistToEdit.title,
-                    description: $scope.playlistToEdit.description,
-                    tags: angular.isUndefined($scope.playlistToEdit.tags) ? '' : $scope.playlistToEdit.tags.replace(/,\s/g, ",").split(',')
-                },
-                status: {
-                    privacyStatus: $scope.playlistToEdit.status
-                }
-            });
-
-            request.execute(function(response) {
-                if( angular.isUndefined(response.error) ) {
-                    $('#editPlaylistModal').modal('hide');
-                    $scope.$apply(function() {
-                        channelData.playlists[index].title = $scope.playlistToEdit.title;
-                        channelData.playlists[index].description = $scope.playlistToEdit.description;
-                        channelData.playlists[index].excerpt = $scope.makeExcerpt($scope.playlistToEdit.description);
-                        channelData.playlists[index].tags = angular.isUndefined($scope.playlistToEdit.tags) ? '' : $scope.playlistToEdit.tags;
-                        channelData.playlists[index].status = $scope.playlistToEdit.status;
-                    });
-                } else {
-                    console.error(response.code, response.error.message);
-                    $('#errorModal').modal('show');
-                }
-            });
+        request.execute(function(response) {
+            if( angular.isUndefined(response.error) ) {
+                $('#editPlaylistModal').modal('hide');
+            } else {
+                console.error(response.code, response.error.message);
+                $('#errorModal').modal('show');
+            }
         });
     }
 
     $scope.makeActive = function(index) {
-        $.each(channelData.playlists, function(index) {
-            channelData.playlists[index].selected = false;
+        $.each(channel.playlists, function(index) {
+            channel.playlists[index].selected = false;
         });
-        $scope.activePlaylist = channelData.playlists[index];
-        channelData.activePlaylist = $scope.activePlaylist;
-        channelData.simplified.activePlaylist = $scope.activePlaylist.title;
+        $scope.activePlaylist = channel.playlists[index];
+        channel.activePlaylist = $scope.activePlaylist;
+        channel.simplified.activePlaylist = $scope.activePlaylist.title;
         $scope.activePlaylist.selected = !$scope.activePlaylist.selected;
         $scope.$broadcast('getVideos');
     };
@@ -213,7 +139,7 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
         request.execute(function(response) {
             if( angular.isUndefined(response.error) ) {
                 $scope.$apply(function() {
-                    channelData.playlists[index].status = privacy;
+                    channel.playlists[index].status = privacy;
                 });
             } else {
                 console.error(response.code, response.error.message);
@@ -222,15 +148,5 @@ app.controller('playlistCtrl', ['$scope', 'channelData', function($scope, channe
         });
     };
 
-    $scope.makeExcerpt = function(string) {
-        if( string.length >= 119 ) {
-            return string.slice(0,120) + "...";
-        } else if( string.length <= 0 ) {
-            return "...";
-        } else {
-            return string;
-        }
-    };
-
-    $scope.$on('logged', $scope.getPlaylists);
+    $scope.$on('getPlaylists', $scope.getPlaylists);
 }]);

@@ -1,21 +1,21 @@
-app.controller('statusCtrl', ['$scope', 'channelData', function($scope, channelData) {
+app.controller('statusCtrl', ['$scope', 'channel', function($scope, channel) {
 
-    $scope.$watch(function() { return channelData.simplified }, function() {
-        $scope.data = channelData.simplified;
+    $scope.$watch(function() { return channel.simplified }, function() {
+        $scope.data = channel.simplified;
     }, true);
 
     $scope.play = function() {
-        channelData.simplified.playState = 'playing';
-        channelData.player.playVideo();
+        channel.simplified.playState = 'playing';
+        channel.player.playVideo();
     };
 
     $scope.stop = function() {
-        channelData.simplified.playState = 'stopped';
-        channelData.player.stopVideo();
+        channel.simplified.playState = 'stopped';
+        channel.player.stopVideo();
     };
 
     $scope.pause = function() {
-        channelData.simplified.playState = 'paused';
-        channelData.player.pauseVideo();
+        channel.simplified.playState = 'paused';
+        channel.player.pauseVideo();
     }
 }]);
