@@ -35,6 +35,7 @@ header,
 footer {
   background: #333333;
   color: #fff;
+  clear: both;
 }
 header a,
 footer a,
@@ -63,6 +64,9 @@ header h1 {
 header h1 span {
   font-size: 18px;
   font-weight: 100;
+}
+footer {
+  margin-top: -18px;
 }
 #status {
   right: 0;
@@ -135,16 +139,14 @@ footer p {
 }
 #main-content #video-info {
   width: 800px;
-  margin: 20px 20px;
+  margin: 0 20px;
 }
-#main-content #video-info p {
+#main-content #video-info span {
   font-weight: 700;
+  font-size: 12px;
+  padding: 0 10px;
 }
-#main-content #video-info p span {
-  font-weight: 400;
-  font-size: 15px;
-}
-#main-content #video-info p span:before {
+#main-content #video-info span:before {
   font-family: 'Glyphicons Halflings';
   margin-right: 5px;
 }
@@ -165,7 +167,12 @@ footer p {
 #main-content #video-info .published:before {
   content: '\e109';
 }
-#main-content #video-info .description:before {
+#main-content #video-info .description span {
+  font-weight: 400;
+  text-align: justify;
+  padding-top: 10px;
+}
+#main-content #video-info .description span:before {
   content: '\270f';
 }
 #main-content #search {
@@ -176,15 +183,23 @@ footer p {
   border: 1px solid #ccc;
   width: 100%;
 }
+.user-stuff {
+  margin-bottom: 0;
+}
 .user-stuff h3 {
   color: #fff;
 }
 .user-stuff input {
   max-width: 500px;
 }
-.user-stuff #playlists-list {
+.user-stuff #playlists-list,
+.user-stuff #playlist-videos {
   max-height: 300px;
   margin-top: 5px;
+  overflow-y: auto;
+}
+.user-stuff #playlist-videos {
+  padding-left: 15px;
 }
 .user-stuff .add-new-playlist i {
   color: green;
@@ -259,7 +274,7 @@ footer p {
 }
 .videos-container .item .dropdown {
   float: right;
-  top: 57px;
+  top: 76px;
   right: 15px;
   opacity: 0;
   z-index: 100;

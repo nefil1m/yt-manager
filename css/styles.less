@@ -42,6 +42,7 @@ a:hover, a:focus, a:visited, a:active {
 header, footer {
     background: @mainColor;
     color: #fff;
+    clear: both;
 
     a, a:link {
         color: #000;
@@ -65,6 +66,10 @@ header {
             font-weight: 100;
         }
     }
+}
+
+footer {
+    margin-top: -18px;
 }
 
 #status {
@@ -132,6 +137,7 @@ footer {
     h3 {
         margin: 25px 0;
         border-bottom: 1px solid darken(@secondaryColor, 50%);
+        // padding-bottom: 0;
 
         a {
             color: #fff;
@@ -154,20 +160,17 @@ footer {
 
     #video-info {
         width: 800px;
-        margin: 20px 20px;
+        margin: 0 20px;
 
-        p {
+        span {
             font-weight: 700;
+            font-size: 12px;
+            padding: 0 10px
+        }
 
-            span {
-                font-weight: 400;
-                font-size: 15px;
-            }
-
-            span:before {
-                font-family: 'Glyphicons Halflings';
-                margin-right: 5px;
-            }
+        span:before {
+            font-family: 'Glyphicons Halflings';
+            margin-right: 5px;
         }
 
         .author:before {
@@ -192,7 +195,13 @@ footer {
             content: '\e109';
         }
 
-        .description:before {
+        .description span {
+            font-weight: 400;
+            text-align: justify;
+            padding-top: 10px;
+        }
+
+        .description span:before {
             content: '\270f';
         }
     }
@@ -209,6 +218,9 @@ footer {
 }
 
 .user-stuff {
+    // top: 0; bottom: 0;
+    margin-bottom: 0;
+
     h3 {
         color: #fff;
     }
@@ -217,9 +229,14 @@ footer {
         max-width: 500px;
     }
 
-    #playlists-list {
+    #playlists-list, #playlist-videos {
         max-height: 300px;
         margin-top: 5px;
+        overflow-y: auto;
+    }
+
+    #playlist-videos {
+        padding-left: 15px;
     }
 
     .add-new-playlist {
@@ -227,6 +244,8 @@ footer {
             color: green;
         }
     }
+
+
 }
 
 .videos-container {
@@ -316,7 +335,7 @@ footer {
 
         .dropdown {
             float: right;
-            top: 57px; right: 15px;
+            top: 76px; right: 15px;
             opacity: 0;
             z-index: 100;
             height: 24px;
