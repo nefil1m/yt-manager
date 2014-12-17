@@ -1,9 +1,12 @@
-app.controller('playlistCtrl', ['$scope', 'channel', function($scope, channel) {
-    $scope.playlistToken = '';
+app.controller('playlistCtrl', ['$scope', 'channel', 'Playlist', function($scope, channel, Playlist) {
+    // $scope.playlistToken = '';
     $scope.playlistCount = channel.playlistCount;
+    $scope.newPlaylist = {
+
+    }
 
     $scope.getPlaylists = function() {
-        channel.request('playlist');
+        channel.requestPlaylists();
     };
 
     $scope.addVideo = function() {
@@ -15,30 +18,20 @@ app.controller('playlistCtrl', ['$scope', 'channel', function($scope, channel) {
     };
 
     $scope.addNewPlaylist = function() {
-        var options = {
-            part: 'snippet,status',
-            resource: {
-                snippet: {
-                    title: $scope.newPlaylist.title,
-                    description: $scope.newPlaylist.description,
-                    tags: $scope.newPlaylist.tags
-                },
-                status: {
-                    privacyStatus: $scope.newPlaylist.status
+        if( channel.authorized ) {
+            var playlist = new Playlist($scope.newPlaylist);
+            send = playlist.new(playlist);
+            if( angular.isDefined(send) ) {
+                channel.playlists.unshift(send);
+            }
+        } else {
+            $('#errorModal').modal('show');
+            playlist = {
+                code: 401,
+                error: {
+                    message: "Not authorized"
                 }
             }
-        };
-
-        var push = channel.sendNewPlaylist(options);
-        console.log(push);
-
-        if( angular.isUndefined(push.error) ) {
-            $scope.$apply(function() {
-                channel.playlists.push(push);
-            });
-        } else {
-            console.error(push.code, push.error.message);
-            $('#errorModal').modal('show');
         }
     };
 
@@ -149,4 +142,7 @@ app.controller('playlistCtrl', ['$scope', 'channel', function($scope, channel) {
     };
 
     $scope.$on('getPlaylists', $scope.getPlaylists);
+    $scope.$watch(function() { return channel.playlists }, function() {
+        $scope.playlists = channel.playlists;
+    }, true);
 }]);

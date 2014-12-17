@@ -99,6 +99,9 @@
                             </div>
 
                         </div>
+                        
+                        <!-- ugly modals -->
+
                         <div id="newPlaylistModal" class="modal fade" aria-hidden="true" role="dialog">
                             <form ng-submit="addNewPlaylist();" name="newPlaylistForm">
                                 <div class="modal-dialog">
@@ -210,6 +213,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- end of ugly modals -->
 
                     <div ng-controller="videoCtrl" class="add-padding">
                         <h3>Videos in "<span class="current-playlist">{{ activePlaylist.title }}</span>"</h3>
@@ -337,6 +342,7 @@
         <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
         <script type="text/javascript" src="js/angular.min.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/factories.js"></script>
         <script type="text/javascript" src="js/mainCtrl.js"></script>
         <script type="text/javascript" src="js/channel.js"></script>
         <script type="text/javascript" src="js/statusCtrl.js"></script>
