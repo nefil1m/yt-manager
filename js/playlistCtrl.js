@@ -56,41 +56,6 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
                 $scope.playlists.splice(i, 1);
             });
         });
-
-        // if( $scope.deleteAnswer == true) {
-        //     alert($scope.deleteAnswer);
-        //     $scope.playlists[index].delete();
-        //     $scope.deleteAnswer = false;
-        //     alert($scope.deleteAnswer);
-        // }
-
-        // $scope.playlistToDelete = {
-        //     id: $scope.playlists[index].id,
-        //     title: $scope.playlists[index].title
-        // };
-
-        // $('#confirmPlaylistDeleteModal').modal('show');
-
-        // $('#confirmPlaylistDeleteModal').on('click', 'button', function() {
-        //     if( $(this).attr('id') == 'deletePlaylistYes' ) {
-        //         var request = gapi.client.youtube.playlists.delete({
-        //             id: $scope.playlistToDelete.id
-        //         });
-
-        //         request.execute(function(response) {
-        //             if( angular.isUndefined(response.error) ) {
-        //                 $scope.$apply(function() {
-        //                     channel.playlists.splice(index, 1);
-        //                 });
-        //                 $('#confirmPlaylistDeleteModal').modal('hide');
-        //             } else {
-        //                 console.error(response.code, response.error.message);
-        //             }
-        //         });
-        //     } else {
-        //         $('#confirmPlaylistDeleteModal').modal('hide');
-        //     }
-        // });
     };
 
     $scope.prepareEditModal = function(index) {
@@ -100,26 +65,12 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
     };
 
     $scope.editPlaylist = function() {
-        var request = gapi.client.youtube.playlists.update({
-            id: $scope.playlistToEdit.id,
-            part: 'snippet,status',
-            snippet: {
-                title: $scope.playlistToEdit.title,
-                description: $scope.playlistToEdit.description,
-                tags: angular.isUndefined($scope.playlistToEdit.tags) ? '' : $scope.playlistToEdit.tags.replace(/,\s/g, ",").split(',')
-            },
-            status: {
-                privacyStatus: $scope.playlistToEdit.status
-            }
-        });
+        $scope.playlistToEdit.edit();
 
-        request.execute(function(response) {
-            if( angular.isUndefined(response.error) ) {
-                $('#editPlaylistModal').modal('hide');
-            } else {
-                console.error(response.code, response.error.message);
-                $('#errorModal').modal('show');
-            }
+        $rootScope.$on('editPlaylist', function() {
+            $scope.$apply(function() {
+                $scope.playlists = channel.playlists;
+            })
         });
     }
 

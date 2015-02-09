@@ -106,6 +106,33 @@ app.factory('Video', function(){
             });
         };
 
+        this.edit = function() {
+            var tags = angular.isUndefined(this.tags) ? '' : this.tags.replace(/,\s/g, ",").split(',');
+
+            var request = gapi.client.youtube.playlists.update({
+                id: this.id,
+                part: 'snippet,status',
+                snippet: {
+                    title: this.title,
+                    description: this.description,
+                    tags: tags
+                },
+                status: {
+                    privacyStatus: this.status
+                }
+            });
+
+            request.execute(function(response) {
+                if( angular.isUndefined(response.error) ) {
+                    $('#editPlaylistModal').modal('hide');
+                    $rootScope.$emit('editPlaylist');
+                } else {
+                    console.error(response.code, response.error.message);
+                    $('#errorModal').modal('show');
+                }
+            });
+        };
+
         return this;
     };
 
