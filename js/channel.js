@@ -1,4 +1,4 @@
-app.service('channel', ['Playlist', function(Playlist) {
+app.service('channel', ['$rootScope', 'Playlist', function($rootScope, Playlist) {
 
     var channel = {
         // id: '',
@@ -81,10 +81,13 @@ app.service('channel', ['Playlist', function(Playlist) {
 
                         $.each(res, function(i) {
                             playlists[i] = new Playlist(res[i]);
-                            var send = playlists[i].get(playlists[i]);
+                            playlists[i].get(playlists[i]);
                         });
 
                         channel.playlists = channel.playlists.concat(playlists);
+
+                        $rootScope.$emit('requestPlaylist');
+
                     } else {
                         console.error(response.code, response.error.message);
                         $('#errorModal').modal('show');

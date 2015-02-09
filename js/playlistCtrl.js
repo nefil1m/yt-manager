@@ -1,12 +1,17 @@
-app.controller('playlistCtrl', ['$scope', 'channel', 'Playlist', function($scope, channel, Playlist) {
+app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', function($scope, $rootScope, channel, Playlist) {
     // $scope.playlistToken = '';
     $scope.playlistCount = channel.playlistCount;
-    $scope.newPlaylist = {
+    $scope.deleteAnswer = false;
 
-    }
 
     $scope.getPlaylists = function() {
         channel.requestPlaylists();
+
+        $rootScope.$on('requestPlaylist', function() {
+            $scope.$apply(function() {
+                $scope.playlists = channel.playlists;
+            });
+        });
     };
 
     $scope.addVideo = function() {
@@ -20,10 +25,13 @@ app.controller('playlistCtrl', ['$scope', 'channel', 'Playlist', function($scope
     $scope.addNewPlaylist = function() {
         if( channel.authorized ) {
             var playlist = new Playlist($scope.newPlaylist);
-            send = playlist.new(playlist);
-            if( angular.isDefined(send) ) {
-                channel.playlists.unshift(send);
-            }
+                playlist.new(playlist);
+
+            $rootScope.$on('newPlaylist', function() {
+                $scope.$apply(function() {
+                    channel.playlists.unshift(playlist);
+                });
+            });
         } else {
             $('#errorModal').modal('show');
             playlist = {
@@ -35,34 +43,54 @@ app.controller('playlistCtrl', ['$scope', 'channel', 'Playlist', function($scope
         }
     };
 
-    $scope.deletePlaylist = function(index) {
-        $scope.playlistToDelete = {
-            id: $scope.playlists[index].id,
-            title: $scope.playlists[index].title
-        };
+    $scope.askDeletePlaylist = function(index) {
+        $scope.playlistToDelete = $scope.playlists[index];
+    };
 
-        $('#confirmPlaylistDeleteModal').modal('show');
-
-        $('#confirmPlaylistDeleteModal').on('click', 'button', function() {
-            if( $(this).attr('id') == 'deletePlaylistYes' ) {
-                var request = gapi.client.youtube.playlists.delete({
-                    id: $scope.playlistToDelete.id
-                });
-
-                request.execute(function(response) {
-                    if( angular.isUndefined(response.error) ) {
-                        $scope.$apply(function() {
-                            channel.playlists.splice(index, 1);
-                        });
-                        $('#confirmPlaylistDeleteModal').modal('hide');
-                    } else {
-                        console.error(response.code, response.error.message);
-                    }
-                });
-            } else {
-                $('#confirmPlaylistDeleteModal').modal('hide');
-            }
+    $scope.deletePlaylist = function() {
+        $scope.playlistToDelete.delete();
+        $rootScope.$on('deletePlaylist', function() {
+            var i = $scope.playlists.indexOf($scope.playlistToDelete);
+            console.log(i);
+            $scope.$apply(function() {
+                $scope.playlists.splice(i, 1);
+            });
         });
+
+        // if( $scope.deleteAnswer == true) {
+        //     alert($scope.deleteAnswer);
+        //     $scope.playlists[index].delete();
+        //     $scope.deleteAnswer = false;
+        //     alert($scope.deleteAnswer);
+        // }
+
+        // $scope.playlistToDelete = {
+        //     id: $scope.playlists[index].id,
+        //     title: $scope.playlists[index].title
+        // };
+
+        // $('#confirmPlaylistDeleteModal').modal('show');
+
+        // $('#confirmPlaylistDeleteModal').on('click', 'button', function() {
+        //     if( $(this).attr('id') == 'deletePlaylistYes' ) {
+        //         var request = gapi.client.youtube.playlists.delete({
+        //             id: $scope.playlistToDelete.id
+        //         });
+
+        //         request.execute(function(response) {
+        //             if( angular.isUndefined(response.error) ) {
+        //                 $scope.$apply(function() {
+        //                     channel.playlists.splice(index, 1);
+        //                 });
+        //                 $('#confirmPlaylistDeleteModal').modal('hide');
+        //             } else {
+        //                 console.error(response.code, response.error.message);
+        //             }
+        //         });
+        //     } else {
+        //         $('#confirmPlaylistDeleteModal').modal('hide');
+        //     }
+        // });
     };
 
     $scope.prepareEditModal = function(index) {

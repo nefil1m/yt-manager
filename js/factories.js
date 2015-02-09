@@ -4,7 +4,7 @@ app.factory('Video', function(){
     };
 
     return Video;
-}).factory('Playlist', ['Video', function(Video) {
+}).factory('Playlist', ['$rootScope', 'Video', function($rootScope, Video) {
     var Playlist = function(ytRes) {
 
         if( angular.isDefined(ytRes.id) ) {
@@ -49,19 +49,18 @@ app.factory('Video', function(){
                     }
                 }
             };
+
             var request = gapi.client.youtube.playlists.insert(options);
 
             request.execute(function(response) {
                 if( angular.isUndefined(response.error) ) {
                     var res = response.result;
 
-                    $('#newPlaylistModal').modal('hide');
-
                     playlist.id = res.id;
                     playlist.thumbnail = res.snippet.thumbnails.medium.url;
                     playlist.itemCount = 0;
 
-                    return playlist;
+                    $rootScope.$emit('newPlaylist');
                 } else {
                     console.error(response.code, response.error.message);
                     $('#errorModal').modal('show');
@@ -85,16 +84,27 @@ app.factory('Video', function(){
                     playlist.tags = res.snippet.description;
                     playlist.status = res.status.privacyStatus;
                     playlist.itemCount = res.contentDetails.itemCount;
-
-                    console.log(playlist);
-
-                    return playlist;
                 } else {
                     console.error(response.code, response.error.message);
                     $('#errorModal').modal('show');
                 }
             });
-        }
+        };
+
+        this.delete = function() {
+            var request = gapi.client.youtube.playlists.delete({
+                id: this.id
+            });
+
+            request.execute(function(response) {
+                if( angular.isUndefined(response.error) ) {
+                    $rootScope.$emit('deletePlaylist');
+                } else {
+                    console.log(response.code, response.error.message);
+                    $("#errorModal").modal('show');
+                }
+            });
+        };
 
         return this;
     };

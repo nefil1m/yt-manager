@@ -317,3 +317,6 @@ footer p {
 .modal .form-control {
   border-radius: 0 !important;
 }
+.modal ul {
+  padding: 0 25px;
+}

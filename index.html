@@ -99,122 +99,7 @@
                             </div>
 
                         </div>
-                        
-                        <!-- ugly modals -->
-
-                        <div id="newPlaylistModal" class="modal fade" aria-hidden="true" role="dialog">
-                            <form ng-submit="addNewPlaylist();" name="newPlaylistForm">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                            <h4>Add New Playlist</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-horizontal" role="form">
-                                                <div class="form-group">
-                                                    <label for="playlistName" class="control-label col-xs-3">Name</label>
-                                                    <div class="col-xs-9">
-                                                        <input type="text" id="playlistName" class="form-control" required placeholder="Playlist Title" ng-model="newPlaylist.title">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="playlistDescription" class="control-label col-xs-3">Description</label>
-                                                    <div class="col-xs-9">
-                                                        <textarea id="playlistDescription" cols="30" rows="10" class="form-control" placeholder="Playlist Description" ng-model="newPlaylist.description"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="playlistPrivate" class="control-label col-xs-3">
-                                                        Private
-                                                    </label>
-                                                    <div class="col-xs-9 check">
-                                                        <input type="checkbox" id="editPlaylistPrivate" ng-model="newPlaylist.status" ng-true-value="'private'" ng-false-value="'public'">
-                                                        <i class="glyphicon glyphicon-lock"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="playlistTags" class="control-label col-xs-3">Tags</label>
-                                                    <div class="col-xs-9">
-                                                        <input type="text" id="playlistTags" class="form-control" placeholder="Comma separated values" ng-model="newPlaylist.tags">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input class="btn btn-success pull-right" type="submit" value="Submit" ng-disabled="newPlaylistForm.$invalid">
-                                            <button class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div id="editPlaylistModal" class="modal fade" aria-hidden="true" role="dialog">
-                            <form ng-submit="editPlaylist();" name="editPlaylistForm">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                            <h4>Edit "{{ playlistToEdit.title }}" playlist</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-horizontal" role="form">
-                                                <div class="form-group">
-                                                    <label for="editPlaylistName" class="control-label col-xs-3">Name</label>
-                                                    <div class="col-xs-9">
-                                                        <input type="text" class="form-control" id="editPlaylistName" ng-model="playlistToEdit.title" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="editPlaylistDescription" class="control-label col-xs-3">Description</label>
-                                                    <div class="col-xs-9">
-                                                        <textarea id="editPlaylistDescription" cols="30" rows="10" class="form-control" placeholder="Playlist Description" ng-model="playlistToEdit.description"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="editPlaylistPrivate" class="control-label col-xs-3">
-                                                        Private
-                                                    </label>
-                                                    <div class="col-xs-9 check">
-                                                        <input type="checkbox" id="editPlaylistPrivate" ng-model="playlistToEdit.status" ng-true-value="'private'" ng-false-value="'public'">
-                                                        <i class="glyphicon glyphicon-lock"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="editPlaylistTags" class="control-label col-xs-3">Tags</label>
-                                                    <div class="col-xs-9">
-                                                        <input type="text" id="editPlaylistTags" class="form-control" placeholder="Comma separated values" ng-model="playlistToEdit.tags">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input class="btn btn-success pull-right" ng-disabled="editPlaylistForm.$invalid" type="submit" value="Submit">
-                                            <button class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="modal fade" id="confirmPlaylistDeleteModal" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-sm">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                        <h4>Are You sure You want to delete playlist "{{ playlistToDelete.title }}" playlist</h4>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-success pull-right" id="deletePlaylistYes">Yes</button>
-                                        <button class="btn btn-danger pull-right" id="deletePlaylistNo">No</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
-                    <!-- end of ugly modals -->
 
                     <div ng-controller="videoCtrl" class="add-padding">
                         <h3>Videos in "<span class="current-playlist">{{ activePlaylist.title }}</span>"</h3>
@@ -302,19 +187,48 @@
 
         <!-- authorization modal -->
 
-        <div id="authorizationModal" class="modal fade" aria-hidden="false" role="dialog" ng-controller="loginCtrl">
+        <div id="authorizationModal" class="modal fade in" role="dialog" ng-controller="loginCtrl">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4>Authorization</h4>
+                        <h4>Read Me!</h4>
                     </div>
                     <div class="modal-body">
                         <div id="login-container" class="pre-auth">
                             <p>This application requires access to your YouTube account.</p>
-                            <p style="color: red;">Notice that it will make changes to your account! Author doesn't take responsibility for your actions.</p>
+                            <div class="panel panel-warning">
+                                <div class="panel-heading">
+                                    Attention!
+                                </div>
+                                <div class="panel-body">
+                                    Notice that it will make changes to your account! Author doesn't take responsibility for your actions.
+                                </div>
+                            </div>
 
-                            <p>Please authorize to continue.</p>
+                            <p>Also notice that application is in pre-alpha state and not everything is working properly or doesn't work at all. For now, list of functionalities which should work somehow is:</p>
+
+                            <ul>
+                                <li>Login</li>
+                                <li>Playlists:
+                                    <ul>
+                                        <li>Get playlists from channel</li>
+                                        <li>Add new one</li>
+                                        <li>Delete</li>
+                                    </ul>
+                                </li>
+                                <li>Status bar (on bottom):
+                                    <ul>
+                                        <li>Play</li>
+                                        <li>Pause</li>
+                                        <li>Stop</li>
+                                        <li>Status</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <p>Please, authorize to continue</p>
+                            <p>Enjoy!</p>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -354,6 +268,8 @@
         <script type="text/javascript" src="js/directives.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
+                $('#authorizationModal').modal('show');
+
                 var resizePlayer = function() {
                     var player = $("#player");
                     player.height( parseInt(player.width(), 10) * 0.5225 + "px");
