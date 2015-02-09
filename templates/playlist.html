@@ -73,7 +73,7 @@
                                     Private
                                 </label>
                                 <div class="col-xs-9 check">
-                                    <input type="checkbox" id="editPlaylistPrivate" ng-model="newPlaylist.status" ng-true-value="'private'" ng-false-value="'public'">
+                                    <input type="checkbox" id="editPlaylistPrivate" ng-model="newPlaylist.status.privacyStatus" ng-true-value="'private'" ng-false-value="'public'">
                                     <i class="glyphicon glyphicon-lock"></i>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
             </div>
         </form>
     </div>
-    
+
     <div class="modal fade" id="confirmPlaylistDeleteModal" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
