@@ -2,16 +2,17 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
     // $scope.playlistToken = '';
     $scope.playlistCount = channel.playlistCount;
     $scope.deleteAnswer = false;
+    $scope.playlistToDelete
 
 
     $scope.getPlaylists = function() {
         channel.requestPlaylists();
 
-        $rootScope.$on('requestPlaylist', function() {
-            $scope.$apply(function() {
-                $scope.playlists = channel.playlists;
-            });
-        });
+        // $rootScope.$on('requestPlaylist', function() {
+        //     $scope.$apply(function() {
+        //         $scope.playlists = channel.playlists;
+        //     });
+        // });
     };
 
     $scope.addVideo = function() {
@@ -33,29 +34,27 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
                 });
             });
         } else {
-            $('#errorModal').modal('show');
-            playlist = {
+            $rootScope.$emit('throwError', {
                 code: 401,
                 error: {
                     message: "Not authorized"
                 }
-            }
+            });
         }
     };
 
     $scope.askDeletePlaylist = function(index) {
-        $scope.playlistToDelete = $scope.playlists[index];
-    };
+        $scope.deletePlaylist = function() {
+            var title = $scope.playlists[index].title;
+            $scope.playlists[index].delete();
 
-    $scope.deletePlaylist = function() {
-        $scope.playlistToDelete.delete();
-        $rootScope.$on('deletePlaylist', function() {
-            var i = $scope.playlists.indexOf($scope.playlistToDelete);
-            console.log(i);
-            $scope.$apply(function() {
+            $rootScope.$on('deletePlaylist', function() {
+                var i = $scope.playlists.indexOf($scope.playlists[index]);
+                console.log(index, $scope.playlists);
                 $scope.playlists.splice(i, 1);
+                $rootScope.$emit('throwSuccess', 'Successfuly deleted playlist "' + title + '"' );
             });
-        });
+        };
     };
 
     $scope.prepareEditModal = function(index) {
@@ -98,4 +97,9 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
     };
 
     $scope.$on('getPlaylists', $scope.getPlaylists);
+    $rootScope.$on('applyPlaylist', function() {
+        $scope.$apply(function() {
+            $scope.playlists = channel.playlists;
+        });
+    });
 }]);

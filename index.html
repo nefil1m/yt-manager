@@ -240,17 +240,32 @@
             </div>
         </div>
 
-        <div class="modal fade" id="errorModal">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Something went wrong. Try again later.</h4>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+        <div id="esContainer">
+            <div id="successBox">
+                <div class="container">
+                    {{ msg }}
+                    <span>&times;</span>
+                </div>
+            </div>
+
+            <div class="modal fade" id="errorModal">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">{{ error.code }}</div>
+                                <div class="panel-body">
+                                    {{ error.message }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -283,6 +298,8 @@
                 $(window).resize(resizePlayer);
 
                 $('.videos-container').find('.dropdown').addClass('dropup');
+
+                $('#successBox').slideUp(0);
             });
         </script>
     </body>

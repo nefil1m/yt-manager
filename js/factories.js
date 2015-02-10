@@ -61,9 +61,9 @@ app.factory('Video', function(){
                     playlist.itemCount = 0;
 
                     $rootScope.$emit('newPlaylist');
+                    $rootScope.$emit('throwSuccess', 'Successfuly added playlist "' + playlist.title + '"' );
                 } else {
-                    console.error(response.code, response.error.message);
-                    $('#errorModal').modal('show');
+                    $rootScope.$emit('throwError', response.error);
                 }
             });
         };
@@ -84,9 +84,9 @@ app.factory('Video', function(){
                     playlist.tags = res.snippet.description;
                     playlist.status = res.status.privacyStatus;
                     playlist.itemCount = res.contentDetails.itemCount;
+                    $rootScope.$emit('applyPlaylist');
                 } else {
-                    console.error(response.code, response.error.message);
-                    $('#errorModal').modal('show');
+                    $rootScope.$emit('throwError', response.error);
                 }
             });
         };
@@ -100,8 +100,7 @@ app.factory('Video', function(){
                 if( angular.isUndefined(response.error) ) {
                     $rootScope.$emit('deletePlaylist');
                 } else {
-                    console.log(response.code, response.error.message);
-                    $("#errorModal").modal('show');
+                    $rootScope.$emit('throwError', response.error);
                 }
             });
         };
@@ -126,9 +125,9 @@ app.factory('Video', function(){
                 if( angular.isUndefined(response.error) ) {
                     $('#editPlaylistModal').modal('hide');
                     $rootScope.$emit('editPlaylist');
+                    $rootScope.$emit('throwSuccess', 'Playlist updated');
                 } else {
-                    console.error(response.code, response.error.message);
-                    $('#errorModal').modal('show');
+                    $rootScope.$emit('throwError', response.error);
                 }
             });
         };
@@ -152,9 +151,9 @@ app.factory('Video', function(){
                 if( angular.isUndefined(response.error) ) {
                     $rootScope.$emit('changePrivacy');
                     that.status = privacy;
+                    $rootScope.$emit('throwSuccess', 'Success');
                 } else {
-                    console.error(response.code, response.error.message);
-                    $('#errorModal').modal('show');
+                    $rootScope.$emit('throwError', response.error);
                 }
             });
         }

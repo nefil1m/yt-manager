@@ -98,7 +98,7 @@ app.service('channel', ['$rootScope', 'Playlist', function($rootScope, Playlist)
                     $("#playlists").find('.next-button').hide();
                 }
             } else {
-                $('#errorModal').modal('show');
+                $rootScope.$emit('throwError', { code: 401, message: "Channel is not authorized" });
             }
         }
     };
