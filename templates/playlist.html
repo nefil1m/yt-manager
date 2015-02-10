@@ -34,13 +34,13 @@
                 </li>
             </ul>
         </div>
-
-        <a href="#!" title="{{ playlist.description }}" ng-click="makeActive($index);">
-            <img src="{{ playlist.thumbnail }}" class="th">
+        
+        <a href="#!" title="{{ playlist.description }}">
+            <img src="{{ playlist.thumbnail }}" class="th" ng-click="makeActive($index);">
             <div class="text">
                 <i class="glyphicon glyphicon-lock" ng-show="playlist.status == 'private'" ng-click="changePrivacy($index);"></i>
                 <i class="glyphicon glyphicon-link" ng-show="playlist.status == 'public'" ng-click="changePrivacy($index);"></i>
-                <p class="title">{{ playlist.title }}</p>
+                <p class="title" ng-click="makeActive($index);">{{ playlist.title }}</p>
             </div>
         </a>
 

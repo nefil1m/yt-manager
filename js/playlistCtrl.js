@@ -66,28 +66,21 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
 
     $scope.editPlaylist = function() {
         $scope.playlistToEdit.edit();
-
-        $rootScope.$on('editPlaylist', function() {
-            $scope.$apply(function() {
-                $scope.playlists = channel.playlists;
-            })
-        });
-    }
+    };
 
     $scope.makeActive = function(index) {
         $.each(channel.playlists, function(index) {
             channel.playlists[index].selected = false;
         });
-        $scope.activePlaylist = channel.playlists[index];
-        channel.activePlaylist = $scope.activePlaylist;
+        channel.activePlaylist = channel.playlists[index];
+        $scope.activePlaylist = channel.activePlaylist;
         channel.simplified.activePlaylist = $scope.activePlaylist.title;
-        $scope.activePlaylist.selected = !$scope.activePlaylist.selected;
+        $scope.activePlaylist.selected = true;
         $scope.$broadcast('getVideos');
     };
 
     $scope.changePrivacy = function(index) {
-        var item = $scope.playlists[index],
-            privacy = item.status;
+        var privacy = $scope.playlists[index].status;
 
         if( privacy == 'private' ) {
             privacy = 'public';
@@ -95,33 +88,14 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
             privacy = 'private';
         }
 
-        var request = gapi.client.youtube.playlists.update({
-            id: item.id,
-            part: 'snippet,status',
-            snippet: {
-                title: item.title,
-                description: item.description,
-                tags: item.tags
-            },
-            status: {
-                privacyStatus: privacy
-            }
-        });
+        $scope.playlists[index].updatePrivacy(privacy);
 
-        request.execute(function(response) {
-            if( angular.isUndefined(response.error) ) {
-                $scope.$apply(function() {
-                    channel.playlists[index].status = privacy;
-                });
-            } else {
-                console.error(response.code, response.error.message);
-                $('#errorModal').modal('show');
-            }
+        $rootScope.$on('changePrivacy', function() {
+            $scope.$apply(function() {
+                $scope.playlists[index].status = privacy;
+            });
         });
     };
 
     $scope.$on('getPlaylists', $scope.getPlaylists);
-    $scope.$watch(function() { return channel.playlists }, function() {
-        $scope.playlists = channel.playlists;
-    }, true);
 }]);

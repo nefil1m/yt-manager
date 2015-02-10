@@ -133,6 +133,32 @@ app.factory('Video', function(){
             });
         };
 
+        this.updatePrivacy = function(privacy) {
+            var that = this;
+            var request = gapi.client.youtube.playlists.update({
+                id: this.id,
+                part: 'snippet,status',
+                snippet: {
+                    title: this.title,
+                    description: this.description,
+                    tags: this.tags
+                },
+                status: {
+                    privacyStatus: privacy
+                }
+            });
+
+            request.execute(function(response) {
+                if( angular.isUndefined(response.error) ) {
+                    $rootScope.$emit('changePrivacy');
+                    that.status = privacy;
+                } else {
+                    console.error(response.code, response.error.message);
+                    $('#errorModal').modal('show');
+                }
+            });
+        }
+
         return this;
     };
 

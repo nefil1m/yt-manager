@@ -218,7 +218,6 @@ footer {
 }
 
 .user-stuff {
-    // top: 0; bottom: 0;
     margin-bottom: 0;
 
     h3 {
@@ -229,10 +228,9 @@ footer {
         max-width: 500px;
     }
 
-    #playlists-list, #playlist-videos {
-        max-height: 300px;
+    #playlists, #playlist-videos {
+        // max-height: 300px;
         margin-top: 5px;
-        overflow-y: auto;
     }
 
     #playlist-videos {
@@ -244,8 +242,6 @@ footer {
             color: green;
         }
     }
-
-
 }
 
 .videos-container {
@@ -286,6 +282,7 @@ footer {
         margin-right: 5px;
         display: inline-block;
         text-align: center;
+        position: relative;
 
         a, a:focus, a:active, a:hover, a:visited {
             text-decoration: none;
@@ -337,8 +334,9 @@ footer {
             float: right;
             top: 76px; right: 15px;
             opacity: 0;
-            z-index: 100;
+            z-index: 1000;
             height: 24px;
+            position: absolute;
 
             .dropdown-toggle {
                 i {

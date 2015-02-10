@@ -192,11 +192,9 @@ footer p {
 .user-stuff input {
   max-width: 500px;
 }
-.user-stuff #playlists-list,
+.user-stuff #playlists,
 .user-stuff #playlist-videos {
-  max-height: 300px;
   margin-top: 5px;
-  overflow-y: auto;
 }
 .user-stuff #playlist-videos {
   padding-left: 15px;
@@ -232,6 +230,7 @@ footer p {
   margin-right: 5px;
   display: inline-block;
   text-align: center;
+  position: relative;
 }
 .videos-container .item a,
 .videos-container .item a:focus,
@@ -277,8 +276,9 @@ footer p {
   top: 76px;
   right: 15px;
   opacity: 0;
-  z-index: 100;
+  z-index: 1000;
   height: 24px;
+  position: absolute;
 }
 .videos-container .item .dropdown .dropdown-toggle i {
   clear: both;

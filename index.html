@@ -215,6 +215,8 @@
                                         <li>Get playlists from channel</li>
                                         <li>Add new one</li>
                                         <li>Delete</li>
+                                        <li>Edit</li>
+                                        <li>Change privacy (lock icon nearby playlist title)</li>
                                     </ul>
                                 </li>
                                 <li>Status bar (on bottom):
@@ -279,6 +281,8 @@
                 resizePlayer();
 
                 $(window).resize(resizePlayer);
+
+                $('.videos-container').find('.dropdown').addClass('dropup');
             });
         </script>
     </body>
