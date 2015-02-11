@@ -27,7 +27,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="btn btn-default delete" data-target="#confirmPlaylistDeleteModal" data-toggle="modal" ng-click="askDeletePlaylist($index);">
+                    <a class="btn btn-default delete" data-target="#confirmPlaylistDeleteModal" data-toggle="modal" ng-click="makeActive($index);">
                         <i class="glyphicon glyphicon-ban-circle"></i>
                         Delete playlist
                     </a>
@@ -99,7 +99,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4>Are You sure You want to delete "{{ playlistToDelete.title }}" playlist</h4>
+                    <h4>Are You sure You want to delete playlist?</h4>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-success pull-right" data-dismiss="modal" ng-click="deletePlaylist();">Yes</button>

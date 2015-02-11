@@ -2,7 +2,7 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
     // $scope.playlistToken = '';
     $scope.playlistCount = channel.playlistCount;
     $scope.deleteAnswer = false;
-    $scope.playlistToDelete
+    $scope.playlistToDelete;
 
 
     $scope.getPlaylists = function() {
@@ -44,17 +44,25 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
     };
 
     $scope.askDeletePlaylist = function(index) {
-        $scope.deletePlaylist = function() {
-            var title = $scope.playlists[index].title;
-            $scope.playlists[index].delete();
+        $scope.makeActive(index);
+    };
 
-            $rootScope.$on('deletePlaylist', function() {
-                var i = $scope.playlists.indexOf($scope.playlists[index]);
-                console.log(index, $scope.playlists);
-                $scope.playlists.splice(i, 1);
-                $rootScope.$emit('throwSuccess', 'Successfuly deleted playlist "' + title + '"' );
+    $scope.deletePlaylist = function() {
+        var title = $scope.activePlaylist.title;
+
+        $scope.activePlaylist.delete();
+
+        $rootScope.$on('deletePlaylist', function() {
+            $.each($scope.playlists,  function(index) {
+                if( $scope.playlists[index] == $scope.activePlaylist ) {
+                    channel.playlists.splice(index, 1);
+                }
             });
-        };
+            $scope.$apply(function() {
+                $scope.playlists = channel.playlists;
+            });
+            $rootScope.$emit('throwSuccess', 'Successfuly deleted playlist "' + title + '"' );
+        });
     };
 
     $scope.prepareEditModal = function(index) {
