@@ -1,18 +1,18 @@
-app.service('channel', ['$rootScope', 'Playlist', function($rootScope, Playlist) {
+app.service('channel', ['$rootScope', 'Playlist', 'Video', function($rootScope, Playlist, Video) {
 
     var channel = {
         // id: '',
         // title: 'title',
         authorized: false,
         // playlistCount: 1,
-        playlists: [
+        // playlists: [
         //     {
         //         id: '',
         //         title: '',
         //         description: '',
         //         tags: [],
         //         status: '',
-        //         videos: [
+                // videos: [
         //             {
         //                 id: '',
         //                 title: '',
@@ -25,8 +25,8 @@ app.service('channel', ['$rootScope', 'Playlist', function($rootScope, Playlist)
         //             }
         //         ]
         //     }
-        ],
-        activePlaylist: {
+        // ],
+        // activePlaylist: {
         //     id: '',
         //     title: '',
         //     description: '',
@@ -44,10 +44,10 @@ app.service('channel', ['$rootScope', 'Playlist', function($rootScope, Playlist)
         //             publishedAt: ''
         //         }
             // ]
-        },
-        activeVideo: {
-            title: 'Touch and go - Tango in Harlem'
-        },
+        // },
+        // activeVideo: {
+        //     title: 'Touch and go - Tango in Harlem'
+        // },
         // prevVideo: '',
         // nextVideo: '',
         playState: 'stopped',
@@ -81,13 +81,15 @@ app.service('channel', ['$rootScope', 'Playlist', function($rootScope, Playlist)
                                 playlists = [];
 
                             $.each(res, function(i) {
-                                playlists[i] = new Playlist(res[i]);
-                                playlists[i].get(playlists[i]);
+                                playlists[i] = new Playlist(res[i].id);
+                                playlists[i].get();
                             });
 
-                            channel.playlists = channel.playlists.concat(playlists);
-
-                            $rootScope.$emit('requestPlaylist');
+                            if( angular.isUndefined(channel.playlists) ) {
+                                channel.playlists = playlists;
+                            } else {
+                                channel.playlists = channel.playlists.concat(playlists);
+                            }
 
                         } else {
                             console.error(response.code, response.error.message);
@@ -100,6 +102,44 @@ app.service('channel', ['$rootScope', 'Playlist', function($rootScope, Playlist)
             } else {
                 $rootScope.$emit('throwError', { code: 401, message: "Channel is not authorized" });
             }
+        },
+        requestVideos: function() {
+
+            var options = {
+                playlistId: channel.activePlaylist.id,
+                part: 'snippet',
+                maxResults: 3
+            };
+
+            if( angular.isDefined(channel.activePlaylist.nextVideosToken) ) {
+                options.pageToken = channel.activePlaylist.nextVideosToken;
+            }
+
+            var request = gapi.client.youtube.playlistItems.list(options);
+
+            request.execute(function(response) {
+                channel.activePlaylist.nextVideosToken = response.result.nextPageToken;
+
+                if( angular.isUndefined(response.error) ) {
+                    var res = response.result.items,
+                        videos = [];
+
+                    $.each(res, function(i) {
+                        videos[i] = new Video(res[i].snippet.resourceId.videoId);
+                        videos[i].get();
+                    });
+
+                    if( angular.isUndefined(channel.activePlaylist.videos) ) {
+                        channel.activePlaylist.videos = videos;
+                        $rootScope.$emit('videosLoaded', 0);
+                    } else {
+                        channel.activePlaylist.videos = channel.activePlaylist.videos.concat(videos);
+                    }
+
+                } else {
+                    $rootScope.$emit('throwError', response.error);
+                }
+            });
         }
     };
 

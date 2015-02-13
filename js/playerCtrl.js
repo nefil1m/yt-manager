@@ -40,7 +40,6 @@ app.controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
     };
 
     var emitStateChange = function(event) {
-        console.log('yay');
         channel.player.playVideo();
     }
 
@@ -60,12 +59,12 @@ app.controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
         });
     };
 
-    $scope.playNextVideo = function() {
-        var index = channel.nextVideo;
+    // $scope.playNextVideo = function() {
+    //     var index = channel.nextVideo;
 
-        if( angular.isDefined(channel.nextVideo) ) {
-            channel.loadVideoById(channel.activePlaylist.videos[index].id);
-            channel.nextVideo++;
-        }
-    };
+    //     if( angular.isDefined(channel.nextVideo) ) {
+    //         channel.loadVideoById(channel.activePlaylist.videos[index].id);
+    //         channel.nextVideo++;
+    //     }
+    // };
 }]);

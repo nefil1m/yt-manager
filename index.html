@@ -102,7 +102,7 @@
                     </div>
 
                     <div ng-controller="videoCtrl" class="add-padding">
-                        <h3>Videos in "<span class="current-playlist">{{ activePlaylist.title }}</span>"</h3>
+                        <h3>Videos in "<span class="current-playlist">{{ playlistTitle }}</span>"</h3>
                         <div class="input-group input-group-sm">
                             <span class="input-group-addon">
                                 <i class="glyphicon glyphicon-search"></i>
@@ -213,10 +213,16 @@
                                 <li>Playlists:
                                     <ul>
                                         <li>Get playlists from channel</li>
-                                        <li>Add new one</li>
+                                        <li>Add new one (bugged)</li>
                                         <li>Delete</li>
                                         <li>Edit</li>
                                         <li>Change privacy (lock icon nearby playlist title)</li>
+                                        <li>Load Videos</li>
+                                    </ul>
+                                </li>
+                                <li>Videos:
+                                    <ul>
+                                        <li>Play</li>
                                     </ul>
                                 </li>
                                 <li>Status bar (on bottom):
@@ -273,9 +279,10 @@
         <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
         <script type="text/javascript" src="js/angular.min.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
-        <script type="text/javascript" src="js/factories.js"></script>
+        <script type="text/javascript" src="js/videoFctr.js"></script>
+        <script type="text/javascript" src="js/playlistFctr.js"></script>
         <script type="text/javascript" src="js/mainCtrl.js"></script>
-        <script type="text/javascript" src="js/channel.js"></script>
+        <script type="text/javascript" src="js/channelSrvc.js"></script>
         <script type="text/javascript" src="js/statusCtrl.js"></script>
         <script type="text/javascript" src="js/loginCtrl.js"></script>
         <script type="text/javascript" src="js/playlistCtrl.js"></script>

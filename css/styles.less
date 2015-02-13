@@ -304,6 +304,7 @@ footer {
 
             .dropdown {
                 right: 13px;
+                top: 55px;
             }
         }
 
@@ -319,7 +320,7 @@ footer {
         }
 
         .text {
-            padding-top: 5px;
+            padding: 5px;
 
             * {
                 display: inline-block;
@@ -332,11 +333,15 @@ footer {
 
         .dropdown {
             float: right;
-            top: 76px; right: 15px;
-            opacity: 0;
-            z-index: 1000;
+            top: 57px; right: 15px;
+            z-index: 1;
             height: 24px;
             position: absolute;
+            opacity: 0;
+
+            &.open {
+                opacity: 1;
+            }
 
             .dropdown-toggle {
                 i {
@@ -346,6 +351,7 @@ footer {
 
             .dropdown-menu {
                 padding: 0;
+                z-index: 1101;
                 position: absolute;
 
                 li {

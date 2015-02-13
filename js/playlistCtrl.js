@@ -1,5 +1,5 @@
 app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', function($scope, $rootScope, channel, Playlist) {
-    // $scope.playlistToken = '';
+
     $scope.playlistCount = channel.playlistCount;
     $scope.deleteAnswer = false;
     $scope.playlistToDelete;
@@ -7,26 +7,16 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
 
     $scope.getPlaylists = function() {
         channel.requestPlaylists();
-
-        // $rootScope.$on('requestPlaylist', function() {
-        //     $scope.$apply(function() {
-        //         $scope.playlists = channel.playlists;
-        //     });
-        // });
     };
 
     $scope.addVideo = function() {
 
     };
 
-    $scope.playPlaylist = function(id) {
-
-    };
-
     $scope.addNewPlaylist = function() {
         if( channel.authorized ) {
-            var playlist = new Playlist($scope.newPlaylist);
-                playlist.new(playlist);
+            var playlist = new Playlist();
+                playlist.new($scope.newPlaylist);
 
             $rootScope.$on('newPlaylist', function() {
                 $scope.$apply(function() {
@@ -34,12 +24,7 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
                 });
             });
         } else {
-            $rootScope.$emit('throwError', {
-                code: 401,
-                error: {
-                    message: "Not authorized"
-                }
-            });
+            $rootScope.$emit('throwError', { code: 401, message: "Not authorized" } );
         }
     };
 
@@ -83,7 +68,11 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
         $scope.activePlaylist = channel.activePlaylist;
         channel.simplified.activePlaylist = $scope.activePlaylist.title;
         $scope.activePlaylist.selected = true;
-        $scope.$broadcast('getVideos');
+    };
+
+    $scope.loadVideos = function(index) {
+        $scope.makeActive(index);
+        $rootScope.$emit('loadVideos');
     };
 
     $scope.changePrivacy = function(index) {

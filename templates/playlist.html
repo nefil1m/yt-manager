@@ -15,7 +15,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="btn btn-default listen" ng-click="playPlaylist($index);">
+                    <a class="btn btn-default listen" ng-click="loadVideos($index);">
                         <i class="glyphicon glyphicon-play"></i>
                         Play this playlist
                     </a>
@@ -36,7 +36,7 @@
         </div>
 
         <a href="#!" title="{{ playlist.description }}">
-            <img src="{{ playlist.thumbnail }}" class="th" ng-click="makeActive($index);">
+            <img src="{{ playlist.thumbnail }}" class="th" ng-click="loadVideos($index);">
             <div class="text">
                 <i class="glyphicon glyphicon-lock" ng-show="playlist.status == 'private'" ng-click="changePrivacy($index);"></i>
                 <i class="glyphicon glyphicon-link" ng-show="playlist.status == 'public'" ng-click="changePrivacy($index);"></i>

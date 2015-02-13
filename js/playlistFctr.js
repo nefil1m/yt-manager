@@ -1,38 +1,8 @@
-app.factory('Video', function(){
-    var Video = function() {
+app.factory('Playlist', ['$rootScope', function($rootScope) {
+    var Playlist = function(id) {
 
-    };
-
-    return Video;
-}).factory('Playlist', ['$rootScope', 'Video', function($rootScope, Video) {
-    var Playlist = function(ytRes) {
-
-        if( angular.isDefined(ytRes.id) ) {
-            this.id = ytRes.id;
-        }
-
-        if( angular.isDefined(ytRes.snippet) ) {
-            this.thumbnail = ytRes.snippet.thumbnails.medium.url;
-            this.title = ytRes.snippet.title;
-            this.description = ytRes.snippet.description;
-            this.tags = ytRes.snippet.tags;
-        } else {
-            this.thumbnail = ytRes.thumbnail;
-            this.title = ytRes.title;
-            this.description = ytRes.description;
-            this.tags = ytRes.tags;
-        }
-
-        if( angular.isDefined(ytRes.status) ) {
-            this.status = ytRes.status.privacyStatus;
-        } else {
-            this.status = ytRes.status;
-        }
-
-        if( angular.isDefined(ytRes.contentDetails) ) {
-            this.itemCount = ytRes.contentDetails.itemCount;
-        } else {
-            this.itemCount = 0;
+        if( angular.isDefined(id) ) {
+            this.id = id;
         }
 
         this.new = function(playlist) {
@@ -68,22 +38,24 @@ app.factory('Video', function(){
             });
         };
 
-        this.get = function(playlist) {
+        this.get = function() {
+            var that = this;
             var request = gapi.client.youtube.playlists.list({
-                id: playlist.id,
+                id: this.id,
                 part: 'snippet,status,contentDetails'
             });
+
 
             request.execute(function(response) {
                 if( angular.isUndefined(response.error) ) {
                     var res = response.result.items[0];
 
-                    playlist.title = res.snippet.title;
-                    playlist.thumbnail = res.snippet.thumbnails.medium.url;
-                    playlist.description = res.snippet.description;
-                    playlist.tags = res.snippet.description;
-                    playlist.status = res.status.privacyStatus;
-                    playlist.itemCount = res.contentDetails.itemCount;
+                    that.title = res.snippet.title;
+                    that.thumbnail = res.snippet.thumbnails.medium.url;
+                    that.description = res.snippet.description;
+                    that.tags = res.snippet.description;
+                    that.status = res.status.privacyStatus;
+                    that.itemCount = res.contentDetails.itemCount;
                     $rootScope.$emit('applyPlaylist');
                 } else {
                     $rootScope.$emit('throwError', response.error);

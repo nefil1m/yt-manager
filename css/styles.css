@@ -251,6 +251,7 @@ footer p {
 }
 .videos-container .item.active .dropdown {
   right: 13px;
+  top: 55px;
 }
 .videos-container .item .th {
   transition: opacity .2s;
@@ -263,7 +264,7 @@ footer p {
   height: 80px;
 }
 .videos-container .item .text {
-  padding-top: 5px;
+  padding: 5px;
 }
 .videos-container .item .text * {
   display: inline-block;
@@ -273,18 +274,22 @@ footer p {
 }
 .videos-container .item .dropdown {
   float: right;
-  top: 76px;
+  top: 57px;
   right: 15px;
-  opacity: 0;
-  z-index: 1000;
+  z-index: 1;
   height: 24px;
   position: absolute;
+  opacity: 0;
+}
+.videos-container .item .dropdown.open {
+  opacity: 1;
 }
 .videos-container .item .dropdown .dropdown-toggle i {
   clear: both;
 }
 .videos-container .item .dropdown .dropdown-menu {
   padding: 0;
+  z-index: 1101;
   position: absolute;
 }
 .videos-container .item .dropdown .dropdown-menu li {
