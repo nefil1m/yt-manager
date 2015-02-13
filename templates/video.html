@@ -1,62 +1,65 @@
-<li class="row item" ng-repeat="video in videos | filter: playlistVideosSearch" data-id="{{ video.id }}" ng-class=" video.selected ? 'active' : ''; ">
+<li class="item" ng-repeat="video in videos | filter: playlistVideosSearch" data-id="{{ video.id }}" ng-class=" video.selected ? 'active' : ''; ">
 
-    <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li>
-                <a class="btn btn-default listen" ng-click="playPlaylist($index);">
-                    <i class="glyphicon glyphicon-play"></i>
-                    Play playlist from this video
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-default listen" ng-click="playVideo($index);">
-                    <i class="glyphicon glyphicon-play-circle"></i>
-                    Play only this video
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-default delete" ng-click="deleteVideo($index);">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                    Delete video from playlist
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-default move-top" ng-click="moveToTop($index);">
-                    <i class=" glyphicon glyphicon-cloud-upload"></i>
-                    Make first
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-default move-up" ng-click="moveUp($index);">
-                    <i class="glyphicon glyphicon-arrow-up"></i>
-                    Move up
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-default move-down" ng-click="moveDown($index);">
-                    <i class="glyphicon glyphicon-arrow-down"></i>
-                    Move down
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-default move-bottom" ng-click="moveToBottom($index);">
-                    <i class="glyphicon glyphicon-cloud-download"></i>
-                    Move to end
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <a href="#!" title="{{ video.description }}" ng-click="makeActive($index);">
-        <img src="{{ video.thumbnail }}" class="th">
-        <div class="text">
-            <p class="title">{{ video.title }}</p>
+    <div class="video">
+        <a href="#!" title="{{ video.description }}">
+            <img ng-src="{{ video.thumbnail }}" class="th">
+            <div class="text">
+                <div class="va-middle">
+                    {{ video.title }}
+                </div>
+            </div>
+        </a>
+        <div class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="listen" ng-click="playPlaylist($index);">
+                        <i class="glyphicon glyphicon-play"></i>
+                        Play playlist from this video
+                    </a>
+                </li>
+                <li>
+                    <a class="listen" ng-click="playVideo($index);">
+                        <i class="glyphicon glyphicon-play-circle"></i>
+                        Play only this video
+                    </a>
+                </li>
+                <li>
+                    <a class="delete" ng-click="deleteVideo($index);">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        Delete video from playlist
+                    </a>
+                </li>
+                <li>
+                    <a class="move-top" ng-click="moveToTop($index);">
+                        <i class=" glyphicon glyphicon-cloud-upload"></i>
+                        Make first
+                    </a>
+                </li>
+                <li>
+                    <a class="move-up" ng-click="moveUp($index);">
+                        <i class="glyphicon glyphicon-arrow-up"></i>
+                        Move up
+                    </a>
+                </li>
+                <li>
+                    <a class="move-down" ng-click="moveDown($index);">
+                        <i class="glyphicon glyphicon-arrow-down"></i>
+                        Move down
+                    </a>
+                </li>
+                <li>
+                    <a class="move-bottom" ng-click="moveToBottom($index);">
+                        <i class="glyphicon glyphicon-cloud-download"></i>
+                        Move to end
+                    </a>
+                </li>
+            </ul>
         </div>
-    </a>
+    </div>
 
 </li>

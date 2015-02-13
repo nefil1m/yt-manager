@@ -40,8 +40,33 @@ app.controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
     };
 
     var emitStateChange = function(event) {
-        channel.player.playVideo();
-    }
+        if( event.data == 0 ) {
+            if( angular.isDefined(channel.activeVideo) ) {
+                channel.activeVideo.selected = false;
+            }
+
+            if( angular.isUndefined(channel.nextVideo) ) {
+                channel.nextVideo = 0;
+            }
+
+            if( channel.activePlaylist.itemCount >= channel.activePlaylist.videos.length ) {
+                if( channel.nextVideo >= channel.activePlaylist.videos.length - 2 ) {
+                    channel.requestVideos();
+                    channel.nextVideo += 1;
+                } else {
+                    channel.nextVideo += 1;
+                }
+            } else {
+                channel.nextVideo = 0;
+            }
+
+            channel.activeVideo = channel.activePlaylist.videos[channel.nextVideo];
+            channel.activeVideo.selected = true;
+            channel.simplified.video = channel.activeVideo.title;
+
+            channel.player.loadVideoById(channel.activePlaylist.videos[channel.nextVideo].id); // xD
+        }
+    };
 
     $scope.createPlayer = function() {
         $(window).load(function() {
@@ -49,13 +74,11 @@ app.controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
                 height: '100%',
                 width: '100%',
                 videoId: 'qDxtsPseia8',
-                event: {
-                    'onReady': emitStateChange,
+                events: {
+                    // 'onReady': emitStateChange,
                     'onStateChange': emitStateChange
                 }
             });
-
-            // channel.player.addEventListener('0', emitStateChange);
         });
     };
 

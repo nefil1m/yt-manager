@@ -108,7 +108,7 @@ app.service('channel', ['$rootScope', 'Playlist', 'Video', function($rootScope, 
             var options = {
                 playlistId: channel.activePlaylist.id,
                 part: 'snippet',
-                maxResults: 3
+                maxResults: 20
             };
 
             if( angular.isDefined(channel.activePlaylist.nextVideosToken) ) {

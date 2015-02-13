@@ -9,6 +9,7 @@ body {
   font-family: "Raleway", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: url('../img/footer_lodyas.png');
 }
 .mainContainer {
   width: 100%;
@@ -133,6 +134,7 @@ footer p {
 }
 #main-content .right-side {
   padding-left: 0;
+  background: #fff;
 }
 #main-content #main-buttons {
   margin: 5px 20px 0 20px;
@@ -185,19 +187,17 @@ footer p {
 }
 .user-stuff {
   margin-bottom: 0;
+  padding-right: 0;
 }
 .user-stuff h3 {
   color: #fff;
 }
-.user-stuff input {
-  max-width: 500px;
-}
 .user-stuff #playlists,
 .user-stuff #playlist-videos {
-  margin-top: 5px;
+  padding-top: 0;
 }
-.user-stuff #playlist-videos {
-  padding-left: 15px;
+.user-stuff #playlists-list {
+  padding: 0;
 }
 .user-stuff .add-new-playlist i {
   color: green;
@@ -224,92 +224,91 @@ footer p {
   opacity: 1;
 }
 .videos-container .item {
-  width: 150px;
-  vertical-align: top;
-  padding-top: 5px;
-  margin-right: 5px;
-  display: inline-block;
-  text-align: center;
+  width: 33.3%;
   position: relative;
-}
-.videos-container .item a,
-.videos-container .item a:focus,
-.videos-container .item a:active,
-.videos-container .item a:hover,
-.videos-container .item a:visited {
-  text-decoration: none;
-}
-.videos-container .item:hover .th {
-  opacity: .8;
-}
-.videos-container .item:hover .dropdown {
-  opacity: 1;
-}
-.videos-container .item.active {
-  border: 2px solid green;
-  padding-top: 3px;
-}
-.videos-container .item.active .dropdown {
-  right: 13px;
-  top: 55px;
-}
-.videos-container .item .th {
-  transition: opacity .2s;
-  opacity: 1;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-  width: 120px;
-  height: 80px;
-}
-.videos-container .item .text {
-  padding: 5px;
-}
-.videos-container .item .text * {
   display: inline-block;
+  margin-bottom: -5px;
 }
-.videos-container .item .text i {
-  font-size: 10px;
+.videos-container .item a {
+  display: block;
 }
-.videos-container .item .dropdown {
-  float: right;
-  top: 57px;
-  right: 15px;
-  z-index: 1;
-  height: 24px;
+.videos-container .item .video {
   position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+.videos-container .item .video a {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.videos-container .item .video img {
+  max-width: 100%;
+  min-width: 100%;
+  height: 100%;
+}
+.videos-container .item .video .text {
+  position: absolute;
+  top: 0;
+  color: #eee;
+  background: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  display: table;
+  text-align: center;
   opacity: 0;
 }
-.videos-container .item .dropdown.open {
+.videos-container .item .video .text .va-middle {
+  display: table-cell;
+  vertical-align: middle;
+  height: 100%;
+  width: 100%;
+}
+.videos-container .item .video .dropdown {
+  opacity: 0;
+}
+.videos-container .item .video .dropdown .dropdown-menu {
+  background: #222;
+  box-shadow: none;
+  border: 0px;
+}
+.videos-container .item .video .dropdown > a {
+  display: block;
+  height: 25px;
+  margin-top: -30px;
+  padding: 5px;
+  cursor: pointer;
+}
+.videos-container .item .video .dropdown > a span {
+  background: #eee;
+  height: 2px;
+  width: 15px;
+}
+.videos-container .item .video .dropdown li {
+  text-align: left;
+  cursor: pointer;
+}
+.videos-container .item .video .dropdown li a {
+  color: #cccccc;
+}
+.videos-container .item .video .dropdown li a:hover,
+.videos-container .item .video .dropdown li a:focus {
+  background: #0E7EFB;
+}
+.videos-container .item .video .dropdown.open {
   opacity: 1;
 }
-.videos-container .item .dropdown .dropdown-toggle i {
-  clear: both;
+.videos-container .item:hover .text,
+.videos-container .item:hover .dropdown {
+  transition: opacity .3s;
+  opacity: 1;
 }
-.videos-container .item .dropdown .dropdown-menu {
-  padding: 0;
-  z-index: 1101;
-  position: absolute;
-}
-.videos-container .item .dropdown .dropdown-menu li {
-  position: relative;
-  margin-top: -2px;
-  text-align: left;
-}
-.videos-container .item .dropdown .dropdown-menu li:first-child {
-  margin-top: 0;
-}
-.videos-container .item .dropdown .dropdown-menu a {
-  color: #333333;
-  text-align: left;
-  padding: 5px 10px;
-}
-.videos-container .item .dropdown .dropdown-menu .add i {
-  color: green;
-}
-.videos-container .item .dropdown .dropdown-menu .delete i {
-  color: red;
+.videos-container .item:before {
+  content: "";
+  padding-top: 56.7%;
+  display: block;
 }
 .modal .modal-content {
   box-shadow: 0 0 0;

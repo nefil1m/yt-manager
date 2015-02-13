@@ -51,7 +51,11 @@ app.factory('Playlist', ['$rootScope', function($rootScope) {
                     var res = response.result.items[0];
 
                     that.title = res.snippet.title;
-                    that.thumbnail = res.snippet.thumbnails.medium.url;
+                    if( res.snippet.thumbnails.medium.url == "https://i.ytimg.com/vi/default.jpg" ) {
+                        that.thumbnail = 'img/default.jpg';
+                    } else {
+                        that.thumbnail = res.snippet.thumbnails.medium.url;
+                    }
                     that.description = res.snippet.description;
                     that.tags = res.snippet.description;
                     that.status = res.status.privacyStatus;

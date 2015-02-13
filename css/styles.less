@@ -15,6 +15,7 @@ body {
     font-family: "Raleway", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: url('../img/footer_lodyas.png');
 }
 
 .mainContainer {
@@ -137,7 +138,6 @@ footer {
     h3 {
         margin: 25px 0;
         border-bottom: 1px solid darken(@secondaryColor, 50%);
-        // padding-bottom: 0;
 
         a {
             color: #fff;
@@ -152,6 +152,7 @@ footer {
 
     .right-side {
         padding-left: 0;
+        background: #fff;
     }
 
     #main-buttons {
@@ -219,22 +220,18 @@ footer {
 
 .user-stuff {
     margin-bottom: 0;
+    padding-right: 0;
 
     h3 {
         color: #fff;
     }
 
-    input {
-        max-width: 500px;
-    }
-
     #playlists, #playlist-videos {
-        // max-height: 300px;
-        margin-top: 5px;
+        padding-top: 0;
     }
 
-    #playlist-videos {
-        padding-left: 15px;
+    #playlists-list {
+        padding: 0;
     }
 
     .add-new-playlist {
@@ -276,113 +273,104 @@ footer {
     }
 
     .item {
-        width: 150px;
-        vertical-align: top;
-        padding-top: 5px;
-        margin-right: 5px;
-        display: inline-block;
-        text-align: center;
+        width: 33.3%;
         position: relative;
+        display: inline-block;
+        margin-bottom: -5px;
 
-        a, a:focus, a:active, a:hover, a:visited {
-            text-decoration: none;
+        a {
+            display: block;
+        }
+
+        .video {
+            position: absolute;
+            top: 0; bottom: 0; right: 0; left: 0;
+
+            a {
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+            }
+
+            img {
+                max-width: 100%;
+                min-width: 100%;
+                height: 100%;
+            }
+
+            .text {
+                position: absolute;
+                top: 0;
+                color: #eee;
+                background: rgba(0,0,0,.8);
+                width: 100%;
+                height: 100%;
+                display: table;
+                text-align: center;
+                opacity: 0;
+
+                .va-middle {
+                    display: table-cell;
+                    vertical-align: middle;
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+
+            .dropdown {
+                opacity: 0;
+
+                .dropdown-menu {
+                    background: #222;
+                    box-shadow: none;
+                    border: 0px;
+                }
+
+                > a {
+                    display: block;
+                    height: 25px;
+                    margin-top: -30px;
+                    padding: 5px;
+                    cursor: pointer;
+
+                    span {
+                        background: #eee;
+                        height: 2px;
+                        width: 15px;
+                    }
+                }
+
+                li {
+                    text-align: left;
+                    cursor: pointer;
+
+                    a {
+                        color: @secondaryColor;
+
+                        &:hover, &:focus {
+                            background: #0E7EFB;
+                        }
+                    }
+                }
+            }
+
+            .dropdown.open {
+                opacity: 1;
+            }
         }
 
         &:hover {
-            .th {
-                opacity: .8;
-            }
-
-            .dropdown {
+            .text, .dropdown {
+                transition: opacity .3s;
                 opacity: 1;
             }
         }
+    }
 
-        &.active {
-            border: 2px solid green;
-            padding-top: 3px;
-
-            .dropdown {
-                right: 13px;
-                top: 55px;
-            }
-        }
-
-        .th {
-            transition: opacity .2s;
-            opacity: 1;
-            border: 0;
-            background: transparent;
-            padding: 0;
-            border-radius: 0;
-            width: 120px;
-            height: 80px;
-        }
-
-        .text {
-            padding: 5px;
-
-            * {
-                display: inline-block;
-            }
-
-            i {
-                font-size: 10px;
-            }
-        }
-
-        .dropdown {
-            float: right;
-            top: 57px; right: 15px;
-            z-index: 1;
-            height: 24px;
-            position: absolute;
-            opacity: 0;
-
-            &.open {
-                opacity: 1;
-            }
-
-            .dropdown-toggle {
-                i {
-                    clear: both;
-                }
-            }
-
-            .dropdown-menu {
-                padding: 0;
-                z-index: 1101;
-                position: absolute;
-
-                li {
-                    position: relative;
-                    margin-top: -2px;
-                    text-align: left;
-
-                    &:first-child {
-                        margin-top: 0;
-                    }
-                }
-
-                a {
-                    color: @mainColor;
-                    text-align: left;
-                    padding: 5px 10px;
-                }
-
-                .add {
-                    i {
-                        color: green;
-                    }
-                }
-
-                .delete {
-                    i {
-                        color: red;
-                    }
-                }
-            }
-        }
+    .item:before {
+        content: "";
+        padding-top: 56.7%;
+        display: block;
     }
 }
 
