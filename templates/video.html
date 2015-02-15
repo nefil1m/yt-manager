@@ -9,7 +9,7 @@
                 </div>
             </div>
         </a>
-        <div class="dropdown">
+        <div class="dropdown" ng-if="video.source == 'playlist'">
             <a class="dropdown-toggle" data-toggle="dropdown">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -56,6 +56,24 @@
                     <a class="move-bottom" ng-click="moveToBottom($index);">
                         <i class="glyphicon glyphicon-cloud-download"></i>
                         Move to end
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- if source is search -->
+
+        <div class="dropdown" ng-if="video.source == 'search'">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="listen" ng-click="playVideo($index);">
+                        <i class="glyphicon glyphicon-play-circle"></i>
+                        Play video
                     </a>
                 </li>
             </ul>

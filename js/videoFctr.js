@@ -60,6 +60,7 @@ app.factory('Video', ['$rootScope', function($rootScope){
                     that.dislikes = res.statistics.dislikeCount;
                     that.views = res.statistics.viewCount;
                     that.duration = translateDuration(res.contentDetails.duration);
+                    that.source = 'playlist';
                     $rootScope.$emit('applyVideo');
                 } else {
                     $rootScope.$emit('throwError', response.error);

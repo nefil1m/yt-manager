@@ -96,50 +96,52 @@ app.service('channel', ['$rootScope', 'Playlist', 'Video', function($rootScope, 
                             $('#errorModal').modal('show');
                         }
                     });
-                } else {
-                    $("#playlists").find('.next-button').hide();
                 }
             } else {
                 $rootScope.$emit('throwError', { code: 401, message: "Channel is not authorized" });
             }
         },
         requestVideos: function() {
+            var length = channel.activePlaylist.videos || '0';
 
-            var options = {
-                playlistId: channel.activePlaylist.id,
-                part: 'snippet',
-                maxResults: 20
-            };
+            if( channel.activePlaylist.itemCount > length ) {
 
-            if( angular.isDefined(channel.activePlaylist.nextVideosToken) ) {
-                options.pageToken = channel.activePlaylist.nextVideosToken;
-            }
+                var options = {
+                    playlistId: channel.activePlaylist.id,
+                    part: 'snippet',
+                    maxResults: 20
+                };
 
-            var request = gapi.client.youtube.playlistItems.list(options);
-
-            request.execute(function(response) {
-                channel.activePlaylist.nextVideosToken = response.result.nextPageToken;
-
-                if( angular.isUndefined(response.error) ) {
-                    var res = response.result.items,
-                        videos = [];
-
-                    $.each(res, function(i) {
-                        videos[i] = new Video(res[i].snippet.resourceId.videoId);
-                        videos[i].get();
-                    });
-
-                    if( angular.isUndefined(channel.activePlaylist.videos) ) {
-                        channel.activePlaylist.videos = videos;
-                        $rootScope.$emit('videosLoaded', 0);
-                    } else {
-                        channel.activePlaylist.videos = channel.activePlaylist.videos.concat(videos);
-                    }
-
-                } else {
-                    $rootScope.$emit('throwError', response.error);
+                if( angular.isDefined(channel.activePlaylist.nextVideosToken) ) {
+                    options.pageToken = channel.activePlaylist.nextVideosToken;
                 }
-            });
+
+                var request = gapi.client.youtube.playlistItems.list(options);
+
+                request.execute(function(response) {
+                    channel.activePlaylist.nextVideosToken = response.result.nextPageToken;
+
+                    if( angular.isUndefined(response.error) ) {
+                        var res = response.result.items,
+                            videos = [];
+
+                        $.each(res, function(i) {
+                            videos[i] = new Video(res[i].snippet.resourceId.videoId);
+                            videos[i].get();
+                        });
+
+                        if( angular.isUndefined(channel.activePlaylist.videos) ) {
+                            channel.activePlaylist.videos = videos;
+                            $rootScope.$emit('videosLoaded', 0);
+                        } else {
+                            channel.activePlaylist.videos = channel.activePlaylist.videos.concat(videos);
+                        }
+
+                    } else {
+                        $rootScope.$emit('throwError', response.error);
+                    }
+                });
+            }
         }
     };
 

@@ -75,10 +75,10 @@
 
             <div id="main-content" class="row">
 
-                <div class="col-xs-6 user-stuff">
+                <div class="col-xs-6 user-stuff add-padding">
                     <div ng-controller="playlistCtrl" class="row-fluid">
                         <h1>Your Playlists</h1>
-                        <div class="input-group input-group-sm">
+                        <div class="input-group input-group-lg">
                             <span class="input-group-addon">
                                 <i class="glyphicon glyphicon-search"></i>
                             </span>
@@ -103,7 +103,7 @@
 
                     <div ng-controller="videoCtrl" class="row-fluid">
                         <h1>Videos in "<span class="current-playlist">{{ playlistTitle }}</span>"</h1>
-                        <div class="input-group input-group-sm">
+                        <div class="input-group input-group-lg">
                             <span class="input-group-addon">
                                 <i class="glyphicon glyphicon-search"></i>
                             </span>
@@ -125,50 +125,58 @@
                 </div>
 
                 <div class="col-xs-6 right-side" ng-controller="playerCtrl" ng-init="init();">
-                    <div class="player-container">
-                        <div id="player">
+                    <div class="player-container row">
+                        <div id="player" class="col-xs-12">
                             <!-- player goes here -->
                         </div>
                     </div>
-                    <div id="main-buttons" class="btn-group">
-                        <button class="btn btn-default add" type="button" title="Add this video to active playlist">
-                            <i class="glyphicon glyphicon-plus"></i> Add
-                        </button>
-                        <button class="btn btn-default remove" type="button" title="Remove this video from active playlist">
-                            <i class="glyphicon glyphicon-minus"></i> Remove
-                        </button>
-                        <!-- <button class="btn btn-default share-fb" type="button" title="Add this video to active playlist">
-                            <img src="img/glyphicons_social_30_facebook.png" style="width: 15px;"> Share
-                        </button> -->
-                        <button class="btn btn-default like" type="button" title="Like">
-                            <i class="glyphicon glyphicon-thumbs-up"></i> Like
-                        </button>
-                        <button class="btn btn-default dislike" type="button" title="Dislike">
-                            <i class="glyphicon glyphicon-thumbs-down"></i> Dislike
-                        </button>
-                    </div>
-                    <div id="video-info" class="row" ng-controller="videoDataCtrl">
-                        <h3>{{ video.title }}</h3>
-                        <div class="col-xs-12">
-                            <span class="author">{{ video.author }}</span>
-                            <span class="views">{{ video.views }}</span>
-                            <span class="likes">{{ video.likes }}</span>
-                            <span class="dislikes">{{ video.dislikes }}</span>
-                            <span class="published">{{ video.publishedAt }}</span>
+                    <div class="add-padding">
+                        <div id="main-buttons" class="row">
+                            <div class="col-xs-12 btn-group-lg">
+                                <button class="btn btn-default add" type="button" title="Add this video to active playlist">
+                                    <i class="glyphicon glyphicon-plus"></i> Add
+                                </button>
+                                <button class="btn btn-default remove" type="button" title="Remove this video from active playlist">
+                                    <i class="glyphicon glyphicon-minus"></i> Remove
+                                </button>
+                                <!-- <button class="btn btn-default share-fb" type="button" title="Add this video to active playlist">
+                                    <img src="img/glyphicons_social_30_facebook.png" style="width: 15px;"> Share
+                                </button> -->
+                                <button class="btn btn-default like" type="button" title="Like">
+                                    <i class="glyphicon glyphicon-thumbs-up"></i> Like
+                                </button>
+                                <button class="btn btn-default dislike" type="button" title="Dislike">
+                                    <i class="glyphicon glyphicon-thumbs-down"></i> Dislike
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-xs-12">
-                            <p class="description"><span>{{ video.description }}</span></p>
+                        <div id="video-info" class="row" ng-controller="videoDataCtrl">
+                            <h3>{{ video.title }}</h3>
+                            <div class="col-xs-12">
+                                <span class="author">{{ video.author }}</span>
+                                <span class="views">{{ video.views }}</span>
+                                <span class="likes">{{ video.likes }}</span>
+                                <span class="dislikes">{{ video.dislikes }}</span>
+                                <span class="published">{{ video.publishedAt }}</span>
+                            </div>
+                            <div class="col-xs-12">
+                                <p class="description"><span>{{ video.description }}</span></p>
+                            </div>
                         </div>
-                    </div>
-                    <div id="search" class="row">
-                        <div class="col-xs-12">
-                            <label for="search">Search Videos</label>
-                            <input type="text" name="search">
-                        </div>
-                        <div class="col-xs-12 search-result">
-                            <h3>Search result:</h3>
-                            <div class="videos-container light">
-
+                        <div id="search" class="row" ng-controller="searchCtrl">
+                            <div class="col-xs-12">
+                                <div class="input-group input-group-lg">
+                                    <div class="input-group-addon" ng-click="search(searchKeywords);">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Search..." ng-model="searchKeywords">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 search-result">
+                                <h1>Search result:</h1>
+                                <div class="videos-container light">
+                                    <yt-video></yt-video>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -289,6 +297,7 @@
         <script type="text/javascript" src="js/videoCtrl.js"></script>
         <script type="text/javascript" src="js/playerCtrl.js"></script>
         <script type="text/javascript" src="js/videoDataCtrl.js"></script>
+        <script type="text/javascript" src="js/searchCtrl.js"></script>
         <script type="text/javascript" src="js/directives.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){

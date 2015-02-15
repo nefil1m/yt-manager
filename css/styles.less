@@ -142,14 +142,7 @@ footer {
         background: #fff;
     }
 
-    #main-buttons {
-        margin: 5px 20px 0 20px;
-    }
-
     #video-info {
-        width: 800px;
-        margin: 0 20px;
-
         span {
             font-weight: 700;
             font-size: 12px;
@@ -195,9 +188,6 @@ footer {
     }
 
     #search {
-        margin: 20px;
-        width: 800px;
-
         input {
             border: 1px solid #ccc;
             width: 100%;
@@ -207,7 +197,6 @@ footer {
 
 .user-stuff {
     margin-bottom: 0;
-    padding-right: 0;
     background: #000;
 
     h1 {
@@ -262,6 +251,14 @@ footer {
     &.light {
         a, p, h3 {
             color: #333;
+        }
+
+        .item {
+            .video {
+                img {
+                    opacity: 1;
+                }
+            }
         }
     }
 
@@ -397,6 +394,23 @@ footer {
         content: "";
         padding-top: 56.7%;
         display: block;
+    }
+}
+
+#search {
+    .input-group-addon {
+        cursor: pointer;
+        border: 0;
+        background: @blue;
+        color: #fff;
+
+        &:focus, &:active {
+            background: darken(@blue, 20%);
+        }
+    }
+
+    input.form-control {
+        border: 1px solid @blue !important;
     }
 }
 
