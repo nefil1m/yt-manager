@@ -77,7 +77,7 @@
 
                 <div class="col-xs-6 user-stuff">
                     <div ng-controller="playlistCtrl" class="row-fluid">
-                        <h3>Your Playlists</h3>
+                        <h1>Your Playlists</h1>
                         <div class="input-group input-group-sm">
                             <span class="input-group-addon">
                                 <i class="glyphicon glyphicon-search"></i>
@@ -92,17 +92,17 @@
 
                             </ul>
                             <div class="btn-group">
-                                <button class="btn btn-default add-new-playlist" data-target="#newPlaylistModal" data-toggle="modal">
+                                <button class="btn add-new-playlist" data-target="#newPlaylistModal" data-toggle="modal">
                                     <i class="glyphicon glyphicon-plus"></i> Add New Playlist
                                 </button>
-                                <button class="btn btn-default next-button paging-button" ng-click="getPlaylists();">Load More &#187;</button>
+                                <button class="btn next-button paging-button" ng-click="getPlaylists();">Load More &#187;</button>
                             </div>
 
                         </div>
                     </div>
 
                     <div ng-controller="videoCtrl" class="row-fluid">
-                        <h3>Videos in "<span class="current-playlist">{{ playlistTitle }}</span>"</h3>
+                        <h1>Videos in "<span class="current-playlist">{{ playlistTitle }}</span>"</h1>
                         <div class="input-group input-group-sm">
                             <span class="input-group-addon">
                                 <i class="glyphicon glyphicon-search"></i>
@@ -118,8 +118,8 @@
 
                             </ul>
                         </div>
-                        <div class="button-container">
-                            <button class="btn btn-default next-button paging-button" ng-click="getVideos();">Next Page &#187;</button>
+                        <div class="btn-group">
+                            <button class="btn next-button paging-button" ng-click="getVideos();">Load More &#187;</button>
                         </div>
                     </div>
                 </div>
@@ -213,10 +213,10 @@
                                 <li>Playlists:
                                     <ul>
                                         <li>Get playlists from channel</li>
-                                        <li>Add new one (bugged)</li>
+                                        <li>Add new one</li>
                                         <li>Delete</li>
                                         <li>Edit</li>
-                                        <li>Change privacy (lock icon nearby playlist title)</li>
+                                        <!-- <li>Change privacy (lock icon nearby playlist title)</li> -->
                                         <li>Load Videos</li>
                                     </ul>
                                 </li>

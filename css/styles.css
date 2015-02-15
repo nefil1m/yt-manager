@@ -121,14 +121,7 @@ footer p {
   color: #fff;
 }
 #main-content h3 {
-  margin: 25px 0;
-  border-bottom: 1px solid #4d4d4d;
-}
-#main-content h3 a {
-  color: #fff;
-}
-#main-content .button-container button {
-  padding: 5px 20px;
+  margin: 15px 0 5px 0;
 }
 #main-content .right-side {
   padding-left: 0;
@@ -186,8 +179,9 @@ footer p {
 .user-stuff {
   margin-bottom: 0;
   padding-right: 0;
+  background: #000;
 }
-.user-stuff h3 {
+.user-stuff h1 {
   color: #fff;
   padding-left: 15px;
 }
@@ -195,32 +189,52 @@ footer p {
 .user-stuff #playlist-videos {
   padding-top: 0;
 }
-.user-stuff #playlists-list {
+.user-stuff #playlists-list,
+.user-stuff #playlist-videos {
   padding: 0;
+  margin-bottom: 0;
 }
-.user-stuff .add-new-playlist i {
-  color: green;
+.user-stuff .btn-group {
+  margin: 0;
+  width: 100%;
+}
+.user-stuff .btn-group button {
+  padding: 5px 20px;
+  height: 60px;
+  width: 50%;
+  background: #0e7efb;
+  font-size: 25px;
+  color: #fff;
+  border: none;
+}
+.user-stuff .btn-group button:only-child {
+  width: 100%;
+}
+.user-stuff .btn-group button:hover {
+  background: #034da0;
+}
+.user-stuff .btn-group button.add-new-playlist {
+  background: green;
+}
+.user-stuff .btn-group button.add-new-playlist:hover {
+  background: #004d00;
 }
 .videos-container {
   list-style-type: none;
-  padding: 20px 0;
 }
 .videos-container.light a,
 .videos-container.light p,
 .videos-container.light h3 {
   color: #333;
 }
+.videos-container.dark {
+  margin: 0;
+  background: #000;
+}
 .videos-container.dark a,
 .videos-container.dark p,
 .videos-container.dark h3 {
   color: #fff;
-}
-.videos-container .videos li:hover img {
-  opacity: .5;
-}
-.videos-container .videos li img {
-  transition: all 0.3s ease-out;
-  opacity: 1;
 }
 .videos-container .item {
   width: 33.3%;
@@ -247,12 +261,13 @@ footer p {
   max-width: 100%;
   min-width: 100%;
   height: 100%;
+  opacity: .3;
 }
 .videos-container .item .video .text {
   position: absolute;
   top: 0;
   color: #eee;
-  background: rgba(0, 0, 0, 0.8);
+  background: #0e7efb;
   width: 100%;
   height: 100%;
   display: table;
@@ -276,8 +291,7 @@ footer p {
 }
 .videos-container .item .video .dropdown > a {
   display: block;
-  height: 25px;
-  margin-top: -25px;
+  margin-top: -24px;
   padding: 5px;
   cursor: pointer;
   background: #222;
@@ -294,6 +308,10 @@ footer p {
 }
 .videos-container .item .video .dropdown li a {
   color: #cccccc;
+}
+.videos-container .item .video .dropdown li a i {
+  color: #0e7efb;
+  margin-right: 5px;
 }
 .videos-container .item .video .dropdown li a:hover,
 .videos-container .item .video .dropdown li a:focus {

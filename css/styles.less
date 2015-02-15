@@ -134,18 +134,7 @@ footer {
 
 #main-content {
     h3 {
-        margin: 25px 0;
-        border-bottom: 1px solid darken(@secondaryColor, 50%);
-
-        a {
-            color: #fff;
-        }
-    }
-
-    .button-container {
-        button {
-            padding: 5px 20px;
-        }
+        margin: 15px 0 5px 0;
     }
 
     .right-side {
@@ -219,8 +208,9 @@ footer {
 .user-stuff {
     margin-bottom: 0;
     padding-right: 0;
+    background: #000;
 
-    h3 {
+    h1 {
         color: #fff;
         padding-left: 15px;
     }
@@ -229,20 +219,45 @@ footer {
         padding-top: 0;
     }
 
-    #playlists-list {
+    #playlists-list, #playlist-videos {
         padding: 0;
+        margin-bottom: 0;
     }
 
-    .add-new-playlist {
-        i {
-            color: green;
+    .btn-group {
+        margin: 0;
+        width: 100%;
+
+        button {
+            padding: 5px 20px;
+            height: 60px;
+            width: 50%;
+            background: @blue;
+            font-size: 25px;
+            color: #fff;
+            border: none;
+
+            &:only-child {
+                width: 100%;
+            }
+
+            &:hover {
+                background: darken(@blue, 20%);
+            }
+
+            &.add-new-playlist {
+                background: green;
+
+                &:hover {
+                    background: darken(green, 10%);
+                }
+            }
         }
     }
 }
 
 .videos-container {
     list-style-type: none;
-    padding: 20px 0;
 
     &.light {
         a, p, h3 {
@@ -251,23 +266,11 @@ footer {
     }
 
     &.dark {
+        margin: 0;
+        background: #000;
+
         a, p, h3 {
             color: #fff;
-        }
-    }
-
-    .videos {
-        li:hover {
-            img {
-                opacity: .5;
-            }
-        }
-
-        li {
-            img {
-                transition: all .3s ease-out;
-                opacity: 1;
-            }
         }
     }
 
@@ -295,13 +298,14 @@ footer {
                 max-width: 100%;
                 min-width: 100%;
                 height: 100%;
+                opacity: .3;
             }
 
             .text {
                 position: absolute;
                 top: 0;
                 color: #eee;
-                background: rgba(0,0,0,.8);
+                background: @blue;
                 width: 100%;
                 height: 100%;
                 display: table;
@@ -328,8 +332,7 @@ footer {
 
                 > a {
                     display: block;
-                    height: 25px;
-                    margin-top: -25px;
+                    margin-top: -24px;
                     padding: 5px;
                     cursor: pointer;
                     background: #222;
@@ -348,6 +351,11 @@ footer {
 
                     a {
                         color: @secondaryColor;
+
+                        i {
+                            color: @blue;
+                            margin-right: 5px;
+                        }
 
                         &:hover, &:focus {
                             background: @blue;

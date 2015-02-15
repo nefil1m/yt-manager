@@ -62,7 +62,7 @@ app.service('channel', ['$rootScope', 'Playlist', 'Video', function($rootScope, 
                     var options = {
                         channelId: channel.id,
                         part: 'id',
-                        maxResults: 5
+                        maxResults: 6
                     }
 
                     if( angular.isDefined(channel.playlistToken) ) {
