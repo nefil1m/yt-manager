@@ -10,13 +10,13 @@ app.controller('videoCtrl', ['$rootScope', '$scope', 'channel', function($rootSc
         }
 
         if( channel.activePlaylist.videos.length > 0 ) {
-            $scope.videos = channel.activePlaylist.videos;
             $scope.playlistTitle = channel.activePlaylist.title;
 
             channel.activeVideo = channel.activePlaylist.videos[index];
             channel.activeVideo.selected = true;
             channel.simplified.video = channel.activeVideo.title;
             channel.nextVideo = index;
+            channel.startNextVid = true;
 
             channel.player.loadVideoById(channel.activeVideo.id);
         } else {
@@ -25,6 +25,19 @@ app.controller('videoCtrl', ['$rootScope', '$scope', 'channel', function($rootSc
             });
         }
     };
+
+    $scope.playOnlyThis = function(index) {
+        if( angular.isDefined(channel.activeVideo) ) {
+            channel.activeVideo.selected = false;
+        }
+
+        channel.activeVideo = channel.activePlaylist.videos[index];
+        channel.activeVideo.selected = true;
+        channel.simplified.video = channel.activeVideo.title;
+        channel.startNextVid = false;
+
+        channel.player.loadVideoById(channel.activeVideo.id);
+    }
 
     $rootScope.$on('loadVideos', $scope.getVideos);
     $rootScope.$on('videosLoaded', function(event, index) {

@@ -6,6 +6,8 @@ app.factory('Playlist', ['$rootScope', function($rootScope) {
         }
 
         this.new = function(playlist) {
+            var that = this;
+
             var options = {
                 part: 'snippet,status',
                 resource: {
@@ -26,11 +28,16 @@ app.factory('Playlist', ['$rootScope', function($rootScope) {
                 if( angular.isUndefined(response.error) ) {
                     var res = response.result;
 
-                    playlist.id = res.id;
-                    playlist.thumbnail = res.snippet.thumbnails.medium.url;
-                    playlist.itemCount = 0;
-
-                    $rootScope.$emit('newPlaylist');
+                    that.id = res.id;
+                    that.title = playlist.title;
+                    that.description = playlist.description;
+                    that.status = playlist.status;
+                    if( res.snippet.thumbnails.medium.url == "https://i.ytimg.com/vi/default.jpg" ) {
+                        that.thumbnail = 'img/default.jpg';
+                    } else {
+                        that.thumbnail = res.snippet.thumbnails.medium.url;
+                    }
+                    that.itemCount = 0;
                     $rootScope.$emit('throwSuccess', 'Successfuly added playlist "' + playlist.title + '"' );
                 } else {
                     $rootScope.$emit('throwError', response.error);

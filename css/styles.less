@@ -2,6 +2,7 @@
 
 @mainColor: #333;
 @secondaryColor: #ccc;
+@blue: #0E7EFB;
 @headerHeight: 120px;
 
 * {
@@ -70,7 +71,15 @@ header {
 }
 
 footer {
+    text-align: center;
+    border-top: 5px solid darken(@mainColor, 10%);
+    padding-bottom: 45px;
     margin-top: -18px;
+
+    p {
+        line-height: 50px;
+        margin-bottom: 0;
+    }
 }
 
 #status {
@@ -120,17 +129,6 @@ footer {
                 color: #fff;
             }
         }
-    }
-}
-
-footer {
-    text-align: center;
-    border-top: 5px solid darken(@mainColor, 10%);
-    padding-bottom: 25px;
-
-    p {
-        line-height: 50px;
-        margin-bottom: 0;
     }
 }
 
@@ -224,6 +222,7 @@ footer {
 
     h3 {
         color: #fff;
+        padding-left: 15px;
     }
 
     #playlists, #playlist-videos {
@@ -286,7 +285,7 @@ footer {
             position: absolute;
             top: 0; bottom: 0; right: 0; left: 0;
 
-            a {
+            > a {
                 overflow: hidden;
                 width: 100%;
                 height: 100%;
@@ -324,14 +323,17 @@ footer {
                     background: #222;
                     box-shadow: none;
                     border: 0px;
+                    margin: 0;
                 }
 
                 > a {
                     display: block;
                     height: 25px;
-                    margin-top: -30px;
+                    margin-top: -25px;
                     padding: 5px;
                     cursor: pointer;
+                    background: #222;
+                    width: 30px;
 
                     span {
                         background: #eee;
@@ -348,7 +350,7 @@ footer {
                         color: @secondaryColor;
 
                         &:hover, &:focus {
-                            background: #0E7EFB;
+                            background: @blue;
                         }
                     }
                 }
@@ -356,7 +358,18 @@ footer {
 
             .dropdown.open {
                 opacity: 1;
+
+                > a span {
+                    background: @blue;
+                }
             }
+        }
+
+        .private:before {
+            font-family: "Glyphicons Halflings";
+            content: "\e033";
+            font-size: 12px;
+            margin: 5px;
         }
 
         &:hover {
@@ -364,6 +377,11 @@ footer {
                 transition: opacity .3s;
                 opacity: 1;
             }
+        }
+
+        &.active {
+            border: 2px solid green;
+            margin-top: -2px;
         }
     }
 

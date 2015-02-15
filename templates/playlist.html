@@ -6,7 +6,7 @@
                 <img ng-src="{{ playlist.thumbnail }}" class="th">
                 <div class="text">
                     <div class="va-middle">
-                        {{ playlist.title }}
+                        <p ng-class="playlist.status == 'private' ? 'private' : ''">{{ playlist.title }}</p>
                     </div>
                 </div>
             </a>
@@ -73,8 +73,8 @@
                                 <label for="playlistPrivate" class="control-label col-xs-3">
                                     Private
                                 </label>
-                                <div class="col-xs-9 check">
-                                    <input type="checkbox" id="editPlaylistPrivate" ng-model="newPlaylist.status.privacyStatus" ng-true-value="'private'" ng-false-value="'public'">
+                                <div class="col-xs-9 check" ng-init="newPlaylist.status = 'public'">
+                                    <input type="checkbox" id="editPlaylistPrivate" ng-model="newPlaylist.status" ng-true-value="'private'" ng-false-value="'public'">
                                     <i class="glyphicon glyphicon-lock"></i>
                                 </div>
                             </div>

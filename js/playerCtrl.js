@@ -1,33 +1,5 @@
-app.controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
-    $scope.videoDone = false;
-    $scope.buttons = $('.player-buttons');
+app.controller('playerCtrl', ['$rootScope', '$scope', 'channel', function($rootScope, $scope, channel) {
     var player;
-
-    // $scope.onPlayerStateChange = function(e) {
-    //     if( event.data == YT.PlayerState.PLAYING && !done ) {
-    //         $scope.videoDone = true;
-    //         changeStatus('play');
-    //     }
-    // }
-
-    $scope.changeStatus = function(status) {
-
-        // $scope.buttons.find('.active').removeClass('active');
-
-        // switch(status) {
-        //     case 'stop':
-        //         $scope.buttons.find('.stop').addClass('active');
-        //     break;
-
-        //     case 'play':
-        //         $scope.buttons.find('.play').addClass('active');
-        //     break;
-
-        //     case 'pause':
-        //         $scope.buttons.find('.pause').addClass('active');
-        //     break;
-        // }
-    }
 
     $scope.init = function() {
         var tag = document.createElement('script');
@@ -40,7 +12,7 @@ app.controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
     };
 
     var emitStateChange = function(event) {
-        if( event.data == 0 ) {
+        if( channel.startNextVid && event.data == 0 ) {
             if( angular.isDefined(channel.activeVideo) ) {
                 channel.activeVideo.selected = false;
             }
@@ -65,6 +37,7 @@ app.controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
             channel.simplified.video = channel.activeVideo.title;
 
             channel.player.loadVideoById(channel.activePlaylist.videos[channel.nextVideo].id); // xD
+            $rootScope.$emit('updateData'); // update video description
         }
     };
 
@@ -75,19 +48,9 @@ app.controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
                 width: '100%',
                 videoId: 'qDxtsPseia8',
                 events: {
-                    // 'onReady': emitStateChange,
                     'onStateChange': emitStateChange
                 }
             });
         });
     };
-
-    // $scope.playNextVideo = function() {
-    //     var index = channel.nextVideo;
-
-    //     if( angular.isDefined(channel.nextVideo) ) {
-    //         channel.loadVideoById(channel.activePlaylist.videos[index].id);
-    //         channel.nextVideo++;
-    //     }
-    // };
 }]);

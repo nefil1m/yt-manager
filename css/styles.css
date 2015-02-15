@@ -67,7 +67,14 @@ header h1 span {
   font-weight: 100;
 }
 footer {
+  text-align: center;
+  border-top: 5px solid #1a1a1a;
+  padding-bottom: 45px;
   margin-top: -18px;
+}
+footer p {
+  line-height: 50px;
+  margin-bottom: 0;
 }
 #status {
   right: 0;
@@ -112,15 +119,6 @@ footer {
 #status #basic-info li span {
   font-weight: 700;
   color: #fff;
-}
-footer {
-  text-align: center;
-  border-top: 5px solid #1a1a1a;
-  padding-bottom: 25px;
-}
-footer p {
-  line-height: 50px;
-  margin-bottom: 0;
 }
 #main-content h3 {
   margin: 25px 0;
@@ -191,6 +189,7 @@ footer p {
 }
 .user-stuff h3 {
   color: #fff;
+  padding-left: 15px;
 }
 .user-stuff #playlists,
 .user-stuff #playlist-videos {
@@ -239,7 +238,7 @@ footer p {
   right: 0;
   left: 0;
 }
-.videos-container .item .video a {
+.videos-container .item .video > a {
   overflow: hidden;
   width: 100%;
   height: 100%;
@@ -273,13 +272,16 @@ footer p {
   background: #222;
   box-shadow: none;
   border: 0px;
+  margin: 0;
 }
 .videos-container .item .video .dropdown > a {
   display: block;
   height: 25px;
-  margin-top: -30px;
+  margin-top: -25px;
   padding: 5px;
   cursor: pointer;
+  background: #222;
+  width: 30px;
 }
 .videos-container .item .video .dropdown > a span {
   background: #eee;
@@ -295,15 +297,28 @@ footer p {
 }
 .videos-container .item .video .dropdown li a:hover,
 .videos-container .item .video .dropdown li a:focus {
-  background: #0E7EFB;
+  background: #0e7efb;
 }
 .videos-container .item .video .dropdown.open {
   opacity: 1;
+}
+.videos-container .item .video .dropdown.open > a span {
+  background: #0e7efb;
+}
+.videos-container .item .private:before {
+  font-family: "Glyphicons Halflings";
+  content: "\e033";
+  font-size: 12px;
+  margin: 5px;
 }
 .videos-container .item:hover .text,
 .videos-container .item:hover .dropdown {
   transition: opacity .3s;
   opacity: 1;
+}
+.videos-container .item.active {
+  border: 2px solid green;
+  margin-top: -2px;
 }
 .videos-container .item:before {
   content: "";

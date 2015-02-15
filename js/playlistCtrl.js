@@ -18,11 +18,7 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
             var playlist = new Playlist();
                 playlist.new($scope.newPlaylist);
 
-            $rootScope.$on('newPlaylist', function() {
-                $scope.$apply(function() {
-                    channel.playlists.unshift(playlist);
-                });
-            });
+            channel.playlists.unshift(playlist);
         } else {
             $rootScope.$emit('throwError', { code: 401, message: "Not authorized" } );
         }
