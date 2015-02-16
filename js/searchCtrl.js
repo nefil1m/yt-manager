@@ -1,19 +1,14 @@
 app.controller('searchCtrl', ['$rootScope', '$scope', 'channel', function($rootScope, $scope, channel) {
-    // var getItem = function(id) {
-    //     var request = gapi.client.youtube.videos.list({
-    //         id: id,
-    //         part: 'snippet'
-    //     });
-    // }
-
     $scope.videos = [];
     $scope.token;
 
     $scope.search = function(keywords) {
+        $scope.videos = [];
+
         var request = gapi.client.youtube.search.list({
             q: keywords,
             part: 'snippet',
-            maxResults: 20
+            maxResults: 21
         });
 
         request.execute(function(response) {
@@ -21,7 +16,6 @@ app.controller('searchCtrl', ['$rootScope', '$scope', 'channel', function($rootS
 
             if( angular.isUndefined(response.error) ) {
                 $scope.token = response.result.nextPageToken;
-                console.log(res[0]);
 
                 $.each(res, function(i) {
                     var video = {
@@ -32,10 +26,6 @@ app.controller('searchCtrl', ['$rootScope', '$scope', 'channel', function($rootS
                         author: res[i].snippet.channelTitle,
                         publishedAt: res[i].snippet.publishedAt,
                         source: 'search'
-                        // likes: res[i].statistics.likeCount,
-                        // dislikes: res[i].statistics.dislikeCount,
-                        // views: res[i].statistics.viewCount
-                        // duration: translateDuration(res[i].contentDetails.duration);
                     };
 
                     $scope.$apply(function() {
@@ -50,6 +40,71 @@ app.controller('searchCtrl', ['$rootScope', '$scope', 'channel', function($rootS
 
     $scope.playVideo = function(index) {
         channel.player.loadVideoById($scope.videos[index].id);
-        console.log(channel.player.loadVideoById, $scope.videos[index].id);
+
+        var request = gapi.client.youtube.videos.list({
+            id: $scope.videos[index].id,
+            part: 'id,contentDetails,statistics'
+        });
+
+        request.execute(function(response) {
+            if( angular.isUndefined(response.error) ) {
+                var res = response.result.items[0],
+                    item = $scope.videos[index];
+
+                item.likes = res.statistics.likeCount;
+                item.dislikes = res.statistics.dislikeCount;
+                item.views = res.statistics.viewCount;
+                item.duration = $rootScope.translateDuration(res.contentDetails.duration);
+
+                if( angular.isDefined(channel.activeVideo) ) {
+                    channel.activeVideo.selected = false;
+                }
+
+                channel.activeVideo = item;
+                channel.activeVideo.selected = true;
+                channel.simplified.video = item.title;
+
+                $rootScope.$emit('updateData');
+            } else {
+                $rootScope.$emit('throwError', response.error);
+            }
+        });
+    };
+
+    $scope.addToAnotherPl = function(index) {
+        console.log('another');
+    };
+
+    $scope.addVideo = function(index) {
+        if( angular.isDefined(channel.activePlaylist) ) {
+            var request = gapi.client.youtube.playlistItems.insert({
+                part: 'snippet',
+                snippet: {
+                    playlistId: channel.activePlaylist.id,
+                    resourceId: {
+                        kind: 'youtube#video',
+                        videoId: $scope.videos[index].id
+                    }
+                }
+            });
+
+            request.execute(function(response) {
+                if( angular.isUndefined(response.error) ) {
+                    if( angular.isUndefined(channel.activePlaylist.videos) ) {
+                        channel.activePlaylist.videos = [];
+                    }
+                    var video = angular.copy($scope.videos[index]);
+                    video.source = 'playlist';
+
+                    channel.activePlaylist.videos.push(video);
+                    channel.activePlaylist.itemCount++;
+                    $rootScope.$emit('applyVideo');
+                } else {
+                    $rootScope.$emit('throwError', response.error);
+                }
+            });
+        } else {
+            $scope.addToAnotherPl(index);
+        }
     };
 }]);

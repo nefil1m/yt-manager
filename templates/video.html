@@ -1,7 +1,7 @@
 <li class="item" ng-repeat="video in videos | filter: playlistVideosSearch" data-id="{{ video.id }}" ng-class=" video.selected ? 'active' : ''; ">
 
     <div class="video">
-        <a href="#!" title="{{ video.description }}" ng-click="makeActive($index)">
+        <a href="#!" title="{{ video.description }}" ng-click="video.source == 'playlist' ? makeActive($index) : playVideo($index);">
             <img ng-src="{{ video.thumbnail }}" class="th">
             <div class="text">
                 <div class="va-middle">
@@ -74,6 +74,12 @@
                     <a class="listen" ng-click="playVideo($index);">
                         <i class="glyphicon glyphicon-play-circle"></i>
                         Play video
+                    </a>
+                </li>
+                <li>
+                    <a class="add" ng-click="addVideo($index)">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        Add Video
                     </a>
                 </li>
             </ul>
