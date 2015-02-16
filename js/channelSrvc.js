@@ -127,6 +127,7 @@ app.service('channel', ['$rootScope', 'Playlist', 'Video', function($rootScope, 
 
                         $.each(res, function(i) {
                             videos[i] = new Video(res[i].snippet.resourceId.videoId);
+                            videos[i].resId = res[i].id;
                             videos[i].get();
                         });
 

@@ -132,4 +132,10 @@ app.controller('searchCtrl', ['$rootScope', '$scope', 'channel', function($rootS
             $scope.addToAnotherPl(index);
         }
     };
+
+    $('#searchInput').keyup(function(e) {
+        if( e.which == 13 ) {
+            $scope.search($scope.searchKeywords);
+        }
+    })
 }]);

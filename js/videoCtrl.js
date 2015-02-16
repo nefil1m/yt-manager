@@ -37,7 +37,24 @@ app.controller('videoCtrl', ['$rootScope', '$scope', 'channel', function($rootSc
         channel.startNextVid = false;
 
         channel.player.loadVideoById(channel.activeVideo.id);
-    }
+    };
+
+    $scope.deleteVideo = function(index) {
+        var request = gapi.client.youtube.playlistItems.delete({
+            id: channel.activePlaylist.videos[index].resId
+        });
+
+        request.execute(function(response) {
+            if( angular.isUndefined(response.error) ) {
+                channel.activePlaylist.videos.splice(index, 1);
+                $scope.$apply(function() {
+                    $scope.videos = channel.activePlaylist.videos;
+                });
+            } else {
+                $rootScope.$emit('throwError', response.error);
+            }
+        });
+    };
 
     $rootScope.$on('loadVideos', $scope.getVideos);
     $rootScope.$on('videosLoaded', function(event, index) {
