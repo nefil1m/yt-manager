@@ -77,10 +77,22 @@
                     </a>
                 </li>
                 <li>
-                    <a class="add" ng-click="addVideo($index)">
+                    <a class="add" ng-click="addVideo($index);">
                         <i class="glyphicon glyphicon-plus"></i>
-                        Add Video
+                        Add video to playlist
                     </a>
+                </li>
+                <li class="add-to-another">
+                    <a>
+                        <i class="glyphicon glyphicon-share-alt"></i>
+                        Add to another playlist &#187;
+                    </a>
+                    <ul class="sub-dropdown">
+                        <li ng-repeat="playlist in playlistsList" ng-click="addToAnotherPl($parent.$index, $index);">
+                            {{ playlist.title }}
+                        </li>
+                    </ul>
+
                 </li>
             </ul>
         </div>

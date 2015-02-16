@@ -2,6 +2,10 @@ app.controller('searchCtrl', ['$rootScope', '$scope', 'channel', function($rootS
     $scope.videos = [];
     $scope.token;
 
+    $scope.$watch(function() { return channel.playlists }, function() {
+        $scope.playlistsList = channel.playlists;
+    }, true);
+
     $scope.search = function(keywords) {
         $scope.videos = [];
 
@@ -71,8 +75,29 @@ app.controller('searchCtrl', ['$rootScope', '$scope', 'channel', function($rootS
         });
     };
 
-    $scope.addToAnotherPl = function(index) {
-        console.log('another');
+    $scope.addToAnotherPl = function(index, playlistIndex) {
+        var playlist = channel.playlists[playlistIndex],
+            video = $scope.videos[index];
+
+        var request = gapi.client.youtube.playlistItems.insert({
+            part: 'snippet',
+            snippet: {
+                playlistId: playlist.id,
+                resourceId: {
+                    kind: 'youtube#video',
+                    videoId: video.id
+                }
+            }
+        });
+
+        request.execute(function(response) {
+            if( angular.isUndefined(response.error) ) {
+                playlist.itemCount++;
+                $rootScope.$emit('throwSuccess', 'Added ' + video.title + ' to ' + playlist.title);
+            } else {
+                $rootScope.$emit('throwError', response.error);
+            }
+        })
     };
 
     $scope.addVideo = function(index) {

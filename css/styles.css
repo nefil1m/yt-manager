@@ -274,12 +274,6 @@ footer p {
 .videos-container .item .video .dropdown {
   opacity: 0;
 }
-.videos-container .item .video .dropdown .dropdown-menu {
-  background: #222;
-  box-shadow: none;
-  border: 0px;
-  margin: 0;
-}
 .videos-container .item .video .dropdown > a {
   display: block;
   margin-top: -24px;
@@ -293,20 +287,47 @@ footer p {
   height: 2px;
   width: 15px;
 }
-.videos-container .item .video .dropdown li {
+.videos-container .item .video .dropdown .dropdown-menu {
+  background: #222;
+  box-shadow: none;
+  border: 0px;
+  margin: 0;
+}
+.videos-container .item .video .dropdown .dropdown-menu > li {
   text-align: left;
   cursor: pointer;
 }
-.videos-container .item .video .dropdown li a {
+.videos-container .item .video .dropdown .dropdown-menu > li a {
   color: #cccccc;
 }
-.videos-container .item .video .dropdown li a i {
+.videos-container .item .video .dropdown .dropdown-menu > li a i {
   color: #0e7efb;
   margin-right: 5px;
 }
-.videos-container .item .video .dropdown li a:hover,
-.videos-container .item .video .dropdown li a:focus {
+.videos-container .item .video .dropdown .dropdown-menu > li a:hover,
+.videos-container .item .video .dropdown .dropdown-menu > li a:focus {
   background: #0e7efb;
+}
+.videos-container .item .video .dropdown .sub-dropdown {
+  position: absolute;
+  top: 57px;
+  left: 220px;
+  background: #222;
+  min-width: 200px;
+  color: #eee;
+  list-style-type: none;
+}
+.videos-container .item .video .dropdown .sub-dropdown li {
+  padding: 5px 20px;
+}
+.videos-container .item .video .dropdown .sub-dropdown li:hover {
+  background: #0e7efb;
+}
+.videos-container .item .video .dropdown .add-to-another ul {
+  display: none;
+}
+.videos-container .item .video .dropdown .add-to-another:hover ul {
+  display: block;
 }
 .videos-container .item .video .dropdown.open {
   opacity: 1;

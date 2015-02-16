@@ -320,13 +320,6 @@ footer {
             .dropdown {
                 opacity: 0;
 
-                .dropdown-menu {
-                    background: #222;
-                    box-shadow: none;
-                    border: 0px;
-                    margin: 0;
-                }
-
                 > a {
                     display: block;
                     margin-top: -24px;
@@ -342,22 +335,55 @@ footer {
                     }
                 }
 
-                li {
-                    text-align: left;
-                    cursor: pointer;
+                .dropdown-menu {
+                    background: #222;
+                    box-shadow: none;
+                    border: 0px;
+                    margin: 0;
 
-                    a {
-                        color: @secondaryColor;
+                    > li {
+                        text-align: left;
+                        cursor: pointer;
 
-                        i {
-                            color: @blue;
-                            margin-right: 5px;
+                        a {
+                            color: @secondaryColor;
+
+                            i {
+                                color: @blue;
+                                margin-right: 5px;
+                            }
+
+                            &:hover, &:focus {
+                                background: @blue;
+                            }
                         }
+                    }
+                }
 
-                        &:hover, &:focus {
+                .sub-dropdown {
+                    position: absolute;
+                    top: 57px; left: 220px;
+                    background: #222;
+                    min-width: 200px;
+
+                    color: #eee;
+                    list-style-type: none;
+
+                    li {
+                        padding: 5px 20px;
+
+                        &:hover {
                             background: @blue;
                         }
                     }
+                }
+
+                .add-to-another ul {
+                    display: none;
+                }
+
+                .add-to-another:hover ul {
+                    display: block;
                 }
             }
 
