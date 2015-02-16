@@ -102,7 +102,7 @@ app.service('channel', ['$rootScope', 'Playlist', 'Video', function($rootScope, 
             }
         },
         requestVideos: function() {
-            var length = channel.activePlaylist.videos || '0';
+            var length = angular.isUndefined(channel.activePlaylist.videos) ? 0 : channel.activePlaylist.videos.length;
 
             if( channel.activePlaylist.itemCount > length ) {
 

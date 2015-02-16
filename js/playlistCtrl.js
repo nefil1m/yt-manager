@@ -1,4 +1,4 @@
-app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', function($scope, $rootScope, channel, Playlist) {
+app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', 'Video', function($scope, $rootScope, channel, Playlist, Video) {
 
     $scope.playlistCount = channel.playlistCount;
     $scope.deleteAnswer = false;
@@ -9,8 +9,35 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
         channel.requestPlaylists();
     };
 
-    $scope.addVideo = function() {
+    $scope.addVideo = function(index) {
+        var playlist = channel.playlists[index];
+        var request = gapi.client.youtube.playlistItems.insert({
+            part: 'snippet',
+            snippet: {
+                playlistId: playlist.id,
+                resourceId: {
+                    kind: "youtube#video",
+                    videoId: channel.activeVideo.id
+                }
+            }
+        });
 
+        request.execute(function(response) {
+            if( angular.isUndefined(response.error) ) {
+                if( angular.isDefined(playlist.videos) ) {
+                    if( playlist.videos.length >= playlist.itemCount ) {
+                        var video = new Video(channel.activeVideo.id);
+                        video.get();
+                        playlist.itemCount++;
+                        playlist.videos.push(video);
+                        console.log(video);
+                        $rootScope.$emit('throwSuccess', 'Added');
+                    }
+                }
+            } else {
+                $rootScope.$emit('throwError', response.error);
+            }
+        })
     };
 
     $scope.addNewPlaylist = function() {
@@ -64,11 +91,16 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', f
         $scope.activePlaylist = channel.activePlaylist;
         channel.simplified.activePlaylist = $scope.activePlaylist.title;
         $scope.activePlaylist.selected = true;
+        channel.startNextVid = true;
     };
 
     $scope.loadVideos = function(index) {
         $scope.makeActive(index);
-        $rootScope.$emit('loadVideos');
+        if( angular.isUndefined(channel.activePlaylist.videos) ) {
+            $rootScope.$emit('loadVideos');
+        } else {
+            $rootScope.$emit('refreshVideos');
+        }
     };
 
     $scope.changePrivacy = function(index) {

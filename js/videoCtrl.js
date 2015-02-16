@@ -50,6 +50,7 @@ app.controller('videoCtrl', ['$rootScope', '$scope', 'channel', function($rootSc
                 $scope.$apply(function() {
                     $scope.videos = channel.activePlaylist.videos;
                 });
+                $rootScope.$emit('throwSucces', 'Deleted');
             } else {
                 $rootScope.$emit('throwError', response.error);
             }
@@ -64,5 +65,9 @@ app.controller('videoCtrl', ['$rootScope', '$scope', 'channel', function($rootSc
         $scope.$apply(function() {
             $scope.videos = channel.activePlaylist.videos;
         });
+    });
+    $rootScope.$on('refreshVideos', function() {
+        $scope.videos = channel.activePlaylist.videos;
+        $scope.makeActive(0);
     });
 }]);

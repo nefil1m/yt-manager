@@ -7,13 +7,26 @@ app.controller('searchCtrl', ['$rootScope', '$scope', 'channel', function($rootS
     }, true);
 
     $scope.search = function(keywords) {
-        $scope.videos = [];
 
-        var request = gapi.client.youtube.search.list({
+        if( $scope.keywords != keywords || angular.isUndefined($scope.keywords) ) {
+            $scope.keywords = keywords;
+            $scope.videos = [];
+            console.log('wlazłem ^^', keywords);
+        } else {
+
+        }
+
+        var options = {
             q: keywords,
             part: 'snippet',
             maxResults: 21
-        });
+        };
+
+        if( angular.isDefined($scope.token) ) {
+            options.pageToken = $scope.token;
+        }
+
+        var request = gapi.client.youtube.search.list(options);
 
         request.execute(function(response) {
             var res = response.result.items;
@@ -64,6 +77,7 @@ app.controller('searchCtrl', ['$rootScope', '$scope', 'channel', function($rootS
                     channel.activeVideo.selected = false;
                 }
 
+                channel.startNextVid = false;
                 channel.activeVideo = item;
                 channel.activeVideo.selected = true;
                 channel.simplified.video = item.title;

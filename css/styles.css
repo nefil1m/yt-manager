@@ -183,11 +183,13 @@ footer p {
   padding: 0;
   margin-bottom: 0;
 }
-.user-stuff .btn-group {
+.user-stuff .btn-group,
+#search .btn-group {
   margin: 0;
   width: 100%;
 }
-.user-stuff .btn-group button {
+.user-stuff .btn-group button,
+#search .btn-group button {
   padding: 5px 20px;
   height: 60px;
   width: 50%;
@@ -196,16 +198,20 @@ footer p {
   color: #fff;
   border: none;
 }
-.user-stuff .btn-group button:only-child {
+.user-stuff .btn-group button:only-child,
+#search .btn-group button:only-child {
   width: 100%;
 }
-.user-stuff .btn-group button:hover {
+.user-stuff .btn-group button:hover,
+#search .btn-group button:hover {
   background: #034da0;
 }
-.user-stuff .btn-group button.add-new-playlist {
+.user-stuff .btn-group button.add-new-playlist,
+#search .btn-group button.add-new-playlist {
   background: green;
 }
-.user-stuff .btn-group button.add-new-playlist:hover {
+.user-stuff .btn-group button.add-new-playlist:hover,
+#search .btn-group button.add-new-playlist:hover {
   background: #004d00;
 }
 .videos-container {
