@@ -35,25 +35,25 @@
                     </a>
                 </li>
                 <li>
-                    <a class="move-top" ng-click="moveToTop($index);">
+                    <a class="move-top" ng-click="move($index, 0);">
                         <i class=" glyphicon glyphicon-cloud-upload"></i>
                         Make first
                     </a>
                 </li>
                 <li>
-                    <a class="move-up" ng-click="moveUp($index);">
+                    <a class="move-up" ng-click="move($index, $index - 1);">
                         <i class="glyphicon glyphicon-arrow-up"></i>
                         Move up
                     </a>
                 </li>
                 <li>
-                    <a class="move-down" ng-click="moveDown($index);">
+                    <a class="move-down" ng-click="move($index. $index + 1);">
                         <i class="glyphicon glyphicon-arrow-down"></i>
                         Move down
                     </a>
                 </li>
                 <li>
-                    <a class="move-bottom" ng-click="moveToBottom($index);">
+                    <a class="move-bottom" ng-click="move($index, 'last');">
                         <i class="glyphicon glyphicon-cloud-download"></i>
                         Move to end
                     </a>

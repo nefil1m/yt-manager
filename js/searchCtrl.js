@@ -11,9 +11,6 @@ app.controller('searchCtrl', ['$rootScope', '$scope', 'channel', function($rootS
         if( $scope.keywords != keywords || angular.isUndefined($scope.keywords) ) {
             $scope.keywords = keywords;
             $scope.videos = [];
-            console.log('wlazłem ^^', keywords);
-        } else {
-
         }
 
         var options = {

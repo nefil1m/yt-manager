@@ -28,7 +28,9 @@ app.controller('mainCtrl', ['$rootScope', '$scope', 'channel', function($rootSco
     }
 
     $rootScope.$on('throwError', function(event, err) {
-        $scope.error = err;
+        $scope.$apply(function() {
+            $scope.error = err;
+        });
         console.error(err.code, err.message);
         $('#errorModal').modal('show');
     });

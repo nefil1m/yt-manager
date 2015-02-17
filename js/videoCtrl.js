@@ -40,21 +40,46 @@ app.controller('videoCtrl', ['$rootScope', '$scope', 'channel', function($rootSc
     };
 
     $scope.deleteVideo = function(index) {
-        var request = gapi.client.youtube.playlistItems.delete({
-            id: channel.activePlaylist.videos[index].resId
-        });
+        var id = channel.activePlaylist.videos[index].resId;
+        var send = function(id) {
+            var request = gapi.client.youtube.playlistItems.delete({
+                id: id
+            });
 
-        request.execute(function(response) {
-            if( angular.isUndefined(response.error) ) {
-                channel.activePlaylist.videos.splice(index, 1);
-                $scope.$apply(function() {
-                    $scope.videos = channel.activePlaylist.videos;
+            request.execute(function(response) {
+                if( angular.isUndefined(response.error) ) {
+                    channel.activePlaylist.videos.splice(index, 1);
+                    $scope.$apply(function() {
+                        $scope.videos = channel.activePlaylist.videos;
+                    });
+                    $rootScope.$emit('throwSucces', 'Deleted');
+                } else {
+                    $rootScope.$emit('throwError', response.error);
+                }
+            });
+        }
+
+        if( angular.isUndefined(id) ) {
+            var request = gapi.client.youtube.playlistItems.list({
+                playlistId: channel.activePlaylist.id,
+                part: 'id,snippet',
+                maxResults: 50
+            });
+
+            request.execute(function(response) {
+                var res = response.result.items;
+
+                $.each(res, function(i) {
+                    if( res[i].snippet.resourceId.videoId == channel.activePlaylist.videos[index].id ) {
+                        channel.activePlaylist.videos[index].resId = res[i].id;
+
+                        send(channel.activePlaylist.videos[index].resId);
+                    }
                 });
-                $rootScope.$emit('throwSucces', 'Deleted');
-            } else {
-                $rootScope.$emit('throwError', response.error);
-            }
-        });
+            });
+        } else {
+            send(channel.activePlaylist.videos[index].resId);
+        }
     };
 
     $rootScope.$on('loadVideos', $scope.getVideos);
