@@ -29,8 +29,8 @@
 
                         <div class="player-buttons col-xs-4 text-right">
 
-                            <a href="#!" data-toggle="tooltip" data-placement="top" data-title="{{ data.simplified.prevSong.title }}" class="prev"
-                               ng-click="">
+                            <a href="#!" data-toggle="tooltip" data-placement="top" data-title="Previous" class="prev"
+                               ng-click="prevVideo();">
                                 <i class="glyphicon glyphicon-fast-backward"></i>
                             </a>
 
@@ -52,7 +52,7 @@
                                 <i class="glyphicon glyphicon-stop"></i>
                             </a>
 
-                            <a href="#!" data-toggle="tooltip" data-placement="top" data-title="{{ data.nextSong.title }}" class="next">
+                            <a href="#!" data-toggle="tooltip" data-placement="top" data-title="Next" class="next" ng-click="nextVideo();">
                                 <i class="glyphicon glyphicon-fast-forward"></i>
                             </a>
 

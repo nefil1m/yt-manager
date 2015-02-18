@@ -41,13 +41,13 @@
                     </a>
                 </li>
                 <li>
-                    <a class="move-up" ng-click="move($index, $index - 1);">
+                    <a class="move-up" ng-click="move($index, ($index - 1));">
                         <i class="glyphicon glyphicon-arrow-up"></i>
                         Move up
                     </a>
                 </li>
                 <li>
-                    <a class="move-down" ng-click="move($index. $index + 1);">
+                    <a class="move-down" ng-click="move($index, ($index + 1));">
                         <i class="glyphicon glyphicon-arrow-down"></i>
                         Move down
                     </a>
@@ -55,7 +55,7 @@
                 <li>
                     <a class="move-bottom" ng-click="move($index, 'last');">
                         <i class="glyphicon glyphicon-cloud-download"></i>
-                        Move to end
+                        Make last
                     </a>
                 </li>
             </ul>
