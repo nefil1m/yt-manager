@@ -30,7 +30,8 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', '
                         video.get();
                         playlist.itemCount++;
                         playlist.videos.push(video);
-                        console.log(video);
+                        $rootScope.$emit('throwSuccess', 'Added');
+                    } else {
                         $rootScope.$emit('throwSuccess', 'Added');
                     }
                 }
@@ -126,5 +127,8 @@ app.controller('playlistCtrl', ['$scope', '$rootScope', 'channel', 'Playlist', '
         $scope.$apply(function() {
             $scope.playlists = channel.playlists;
         });
+    });
+    $scope.$on('addVideo', function(e, index) {
+        $scope.addVideo(index);
     });
 }]);

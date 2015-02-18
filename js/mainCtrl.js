@@ -80,4 +80,11 @@ app.controller('mainCtrl', ['$rootScope', '$scope', 'channel', function($rootSco
 
         return output;
     };
+
+    $scope.addVideo = function() {
+        var index = channel.playlists.indexOf(channel.activePlaylist);
+        if( index !== -1 ) {
+            $scope.$broadcast('addVideo', index);
+        }
+    };
 }]);
