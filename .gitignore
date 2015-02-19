@@ -1,6 +1,10 @@
-old
+/old
+/old/*
 .gitignore
 .gitattributes
-node_modules
-src/libs
-build
+/node_modules
+/node_modules/*
+/src/libs
+/src/libs/*
+/build
+/build/*
