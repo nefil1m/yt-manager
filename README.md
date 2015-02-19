@@ -9,7 +9,6 @@
 
 <h3>TODO's</h3>
 <ul>
-    <li>Start app with Grunt/Yeoman (haven't decided yet),</li>
     <li>Make a nice, clear and user-friendly layout,</li>
     <li>Re-think model, factories and controllers 'cause it's real mess here now,</li>
     <li>Rewrite everything again,</li>

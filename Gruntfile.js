@@ -28,6 +28,20 @@ module.exports = function(grunt) {
                         src: ['*.html'],
                         dest: 'build/templates/',
                         filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'src/libs/',
+                        src: ['**/*.min.js', '**/*.min.css', '**/*.eot', '**/*.svg', '**/*.ttf', '**/*.woff', '**/*.woff2'],
+                        dest: 'build/libs',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'src/img/',
+                        src: ['*.*'],
+                        dest: 'build/img/',
+                        filter: 'isFile'
                     }
                 ]
             }

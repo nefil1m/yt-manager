@@ -2,3 +2,5 @@ old
 .gitignore
 .gitattributes
 node_modules
+src/libs
+build
