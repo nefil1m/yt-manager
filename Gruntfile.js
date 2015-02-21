@@ -6,9 +6,26 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         uglify: {
+                files: {
+                    expand: true,
+                    cwd: 'src/js',
+                    src: ['**/*.js', '!**/*.min.js'],
+                    dest: 'src/js/min/',
+                    rename: function(dest, src) {
+                        var folder = src.substring(0, src.lastIndexOf('/'));
+                        var filename = src.substring(src.lastIndexOf('/'), src.length);
+                        filename = filename.substring(0, filename.lastIndexOf('.'));
+                        return dest + folder + filename + '.min.js';
+                    }
+                }
+        },
+        concat: {
+            options: {
+                separator: ';'
+            },
             build: {
                 files: {
-                    'build/js/scripts.js': ['src/js/**/*.js']
+                    'build/js/scripts.js': ['src/js/min/**/*.js']
                 }
             }
         },
@@ -72,8 +89,8 @@ module.exports = function(grunt) {
                 }
             },
             js: {
-                files: 'src/js/**/*.js',
-                tasks: ['uglify'],
+                files: ['src/js/**/*.js', '!**/*.min.js'],
+                tasks: ['uglify', 'concat'],
                 options: {
                     livereload: true
                 }

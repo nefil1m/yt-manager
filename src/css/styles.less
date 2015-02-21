@@ -1,5 +1,262 @@
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+@yellow: #FFCC39;
+@yellow2: darken(@yellow, 20%);
+@darkGrey: #1A1A1A;
+
 * {
     padding: 0;
     margin: 0;
     bottom: 0 none;
+}
+
+body {
+    font-family: 'Montserrat';
+    min-height: 100vh;
+    height: 2000px;
+}
+
+::-moz-selection,{
+    background: @yellow;
+    color: #fff;
+}
+
+::selection {
+    background: @yellow;
+    color: #fff;
+}
+
+a, a:link, a:visited {
+    color: @yellow;
+}
+
+a:hover, a:focus, a:active {
+    color: @yellow2;
+    text-decoration: none;
+    outline: none;
+}
+
+//--------------------------------------------------------------------------------- header
+
+#hello {
+    position: absolute;
+    right: 0; top: 0;
+    padding: 15px;
+    color: #fff;
+
+    span {
+        color: @yellow;
+    }
+}
+
+header {
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+    position: fixed;
+    top: 50px;
+
+    * {
+        color: #fff;
+    }
+
+    nav {
+        float: right;
+        background: #000;
+        padding-left: 0;
+        position: relative;
+        right: -686px;
+        transition: all 0.5s cubic-bezier(0,.25,.5,1);
+        z-index: 15000;
+
+        &.opened {
+            right: 0;
+        }
+
+        ul, li {
+            height: 100px;
+            max-height: 100px;
+        }
+
+        li {
+            display: inline-block;
+            vertical-align: top;
+            font-size: 32px;
+            padding-top: 25px;
+            margin: 0 25px;
+        }
+
+        li:first-child {
+            background: @yellow;
+            width: 100px;
+            padding-left: 30px;
+            padding-top: 32.5px;
+            margin-left: 0;
+            cursor: pointer;
+
+            &:focus, &:active {
+                background: @yellow2;
+            }
+
+            .menu-bar {
+                height: 8px;
+                width: 40px;
+                border-radius: 5px;
+                background: #fff;
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
+
+        a, a:link, a:visited {
+            color: #fff;
+        }
+
+        a:hover, a:focus {
+            outline: none;
+            color: #bbb;
+            text-decoration: none;
+        }
+    }
+}
+
+#logo {
+    background: @yellow;
+    width: 100px;
+    height: 100px;
+    float: left;
+    padding: 20px 0 0 13px;
+
+    h1 {
+        font-size: 60px;
+        line-height: 1;
+        margin: 0;
+    }
+}
+
+//--------------------------------------------------------------------------------- main section
+
+#top {
+    background: @darkGrey;
+    border-bottom: 3px solid #000;
+    width: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-align-items: flex-end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    height: 486px;
+}
+
+#player-container {
+    min-width: 864px;
+    width: 864px;
+    max-width: 864px;
+    min-height: 486px;
+    height: 486px;
+    max-height: 486px;
+    margin: auto;
+    position: relative;
+    -webkit-order: 2;
+        -ms-flex-order: 2;
+            order: 2;
+}
+
+#previous-video, #next-video {
+    width: 100%;
+    -ms-flex-item-align: stretch;
+    -webkit-align-self: stretch;
+            align-self: stretch;
+    position: relative;
+    overflow: hidden;
+
+    .box {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        text-align: center;
+        color: #fff;
+        -ms-flex-item-align: middle;
+        -webkit-align-self: middle;
+                align-self: middle;
+        cursor: pointer;
+        opacity: .3;
+        transition: all .3s;
+
+        &:focus, &:hover, &:active {
+            opacity: 1;
+
+            p {
+                color: @yellow;
+            }
+
+            .image > div {
+                left: 0;
+            }
+        }
+
+        .image {
+            width: 320px;
+            height: 180px;
+            margin: auto;
+            overflow: hidden;
+
+            > div {
+                position: relative;
+                width: 320px;
+                height: 180px;
+                background: rgba(0,0,0,.5);
+                top: -180px;
+                padding-top: 60px;
+                transition: all .3s cubic-bezier(0,.25,.5,1);
+
+                i {
+                    font-size: 60px;
+                }
+            }
+        }
+
+
+
+        p {
+            padding: 15px;
+        }
+    }
+}
+
+#previous-video {
+    -webkit-order: 1;
+        -ms-flex-order: 1;
+            order: 1;
+
+    .image > div {
+        left: 320px;
+    }
+}
+
+#next-video {
+    -webkit-order: 3;
+        -ms-flex-order: 3;
+            order: 3;
+
+    .image > div {
+        left: -320px;
+    }
+}
+
+//--------------------------------------------------------------------------------- footer
+
+footer {
+    background: @darkGrey;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 15px 0 5px 0;
+    border-top: 3px solid #000;
 }

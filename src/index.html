@@ -1,25 +1,94 @@
-<!doctype html>
-<html lang="en">
+    <!doctype html>
+<html lang="en" ng-app="YTPlaylistManager">
     <head>
         <title>YT - PlaylistManager</title>
         <meta charset="UTF-8">
+        <link rel="Shortcut icon" href="img/fav.gif">
 
         <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/styles.css">
     </head>
-    <body ng-app="YTPlaylistManager">
+    <body>
 
-        <header></header>
+        <div id="hello">
+            <p>Hello, <span>Stranger</span></p>
+        </div>
 
-        <main></main>
+        <header>
+            <div id="logo">
+                <h1>YT</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <span class="menu-bar"></span>
+                        <span class="menu-bar"></span>
+                        <span class="menu-bar"></span>
+                    </li>
+                    <li><a href="#!">playlists</a></li>
+                    <li><a href="#!">videos</a></li>
+                    <li><a href="#!">login</a></li>
+                    <li><a href="#!">settings</a></li>
+                </ul>
+            </nav>
+        </header>
 
-        <footer></footer>
+        <main>
+            <div id="top">
+                <div id="previous-video">
+                    <div class="box">
+                        <div class="image">
+                            <img src="https://i.ytimg.com/vi/-rF-_4vwiMs/mqdefault.jpg">
+                            <div>
+                                <i class="glyphicon glyphicon-fast-backward"></i>
+                            </div>
+                        </div>
+                        <p>Prev Author - Prev Song</p>
+                    </div>
+                </div>
+                <div id="player-container" ng-controller="playerCtrl">
+                    <div id="player" ng-init="init();"></div>
+                </div>
+                <div id="next-video">
+                    <div class="box">
+                        <div class="image">
+                            <img src="https://i.ytimg.com/vi/nxtIRArhVD4/mqdefault.jpg">
+                            <div>
+                                <i class="glyphicon glyphicon-fast-forward"></i>
+                            </div>
+                        </div>
+                        <p>Next Author - Next Song</p>
+                    </div>
+                </div>
+            </div>
 
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, laboriosam, cum nulla possimus fugiat praesentium voluptatum id cupiditate voluptate dolorem excepturi obcaecati voluptates a! Iure quisquam, eligendi. Aspernatur aut cupiditate animi at optio, sunt aliquid dolor tempore accusantium reiciendis assumenda. Perferendis amet consequuntur, earum ducimus sit optio eligendi. Ad, nam ea dicta. Eius, odio eum recusandae ipsam ipsum pariatur dolor quaerat optio id nostrum ducimus temporibus consequuntur libero quasi suscipit sint quia! Aspernatur obcaecati, dignissimos. Temporibus numquam ab autem, ipsam hic harum voluptatibus perspiciatis id! Ipsum voluptate, quos, expedita praesentium quisquam, possimus odio ex consectetur, unde deserunt sint eligendi nisi ad tempora. Consequatur excepturi et ex minima, animi aut dicta eum dolores, repellat, minus labore voluptas vitae, placeat totam similique adipisci ipsa! Veniam fugiat quod culpa, sint in cum temporibus reiciendis consequatur dolorem ad enim, quas ducimus magnam minus, nisi. Qui repellat, impedit. Voluptates sapiente, cumque expedita, ut in quisquam modi ipsum aliquam voluptatibus. Unde magnam, architecto sapiente, laboriosam deleniti, inventore facilis molestiae, nostrum sit accusantium error vitae aspernatur. Alias debitis odit deleniti numquam, tenetur nemo possimus! Quasi minima sit cum, amet eos aliquam tenetur! Voluptatem minima nostrum unde explicabo adipisci nam error reprehenderit, vel cumque, suscipit porro, laboriosam ut!</p>
+        </main>
+
+        <footer>
+            <p>Created By <a href="http://patrykgurgul.pl/" title="My portfolio">Patryk Gurgul</a> || View on <a href="https://github.com/patryk-g/yt-manager" title="Github repository">Github</a></p>
+        </footer>
+
+        <script src="https://www.youtube.com/iframe_api"></script>
         <script src="//localhost:35729/livereload.js"></script>
         <script src="libs/jquery/dist/jquery.min.js"></script>
         <script src="libs/angular/angular.min.js"></script>
         <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="libs/angular-bootstrap/ui-bootstrap.min.js"></script>
         <script src="js/scripts.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('nav').find('li:first-child').click(function() {
+                    $('nav').toggleClass('opened');
+
+                    var resizePlayer = function() {
+                        var player = $("#player");
+                        player.height( parseInt(player.width(), 10) * 0.5225 + "px");
+                    }
+
+                    $(window).resize(resizePlayer)
+                });
+            });
+        </script>
     </body>
 </html>
