@@ -9,12 +9,10 @@
 
 <h3>TODO's</h3>
 <ul>
-    <li>Make a nice, clear and user-friendly layout,</li>
     <li>Re-think model, factories and controllers 'cause it's real mess here now,</li>
     <li>Rewrite everything again,</li>
     <li>Fix logging system, store session,</li>
     <li>Add some effects (just to play a little with ng-animate and get smoother items loading etc),</li>
-    <li>Use $location,</li>
     <li>It would be nice to manage items with drag&amp;drop,</li>
     <li>...and maybe more, who knows!</li>
 </ul>

@@ -1,5 +1,9 @@
 app.controller('mainCtrl', ['$scope', 'channel', function($scope, channel) {
-    // this.$route = $route;
-    // this.$location = $location;
-    // this.$routeParams = $routeParams;
+
+    $scope.channel = channel;
+
+    $scope.$on('logged', function() {
+        $scope.channel.basic = channel.basic;
+        $scope.$apply();
+    });
 }]);

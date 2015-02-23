@@ -10,10 +10,12 @@
     bottom: 0 none;
 }
 
+//--------------------------------------------------------------------------------- general
+
 body {
     font-family: 'Montserrat';
     min-height: 100vh;
-    height: 2000px;
+    overflow-x: hidden;
 }
 
 ::-moz-selection,{
@@ -36,6 +38,48 @@ a:hover, a:focus, a:active {
     outline: none;
 }
 
+h1 {
+    font-size: 100px;
+}
+
+h2 {
+    font-size: 75px;
+}
+
+h3 {
+    font-size: 50px
+}
+
+h4 {
+    font-size: 35px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    &::first-letter {
+        color: @yellow;
+        font-weight: 700;
+    }
+}
+
+a.bttn {
+    background: @yellow;
+    color: #fff;
+    padding: 10px 25px;
+    margin: 10px;
+    display: inline-block;
+    cursor: pointer;
+
+    &:hover, &:focus, &:active {
+        background: @yellow2;
+    }
+
+    &.big {
+        font-size: 30px;
+        padding: 20px 50px;
+        margin: 20px;
+    }
+}
+
 //--------------------------------------------------------------------------------- header
 
 #hello {
@@ -43,6 +87,7 @@ a:hover, a:focus, a:active {
     right: 0; top: 0;
     padding: 15px;
     color: #fff;
+    z-index: 15000;
 
     span {
         color: @yellow;
@@ -62,15 +107,13 @@ header {
     }
 
     nav {
-        float: right;
         background: #000;
         padding-left: 0;
-        position: relative;
-        right: -686px;
+        position: absolute;
         transition: all 0.5s cubic-bezier(0,.25,.5,1);
 
         &.opened {
-            right: 0;
+            right: 0 !important;
         }
 
         ul, li {
@@ -125,7 +168,7 @@ header {
     width: 100px;
     height: 100px;
     float: left;
-    padding: 20px 0 0 13px;
+    text-align: center;
 
     &:hover {
         background: @yellow2;
@@ -138,6 +181,8 @@ header {
 
         a {
             color: #fff;
+            padding: 20px 0;
+            display: block;
         }
     }
 }
@@ -238,11 +283,23 @@ header {
     }
 }
 
-.view-animation {
-    animation: viewAnimation .5s;
+//--------------------------------------------------------------------------------- main content section
+.main-section {
+    max-width: 85%;
+    min-width: 1100px;
+    margin: auto;
+    min-height: 200px;
+    padding: 50px 0;
+}
 
-    &.ng-enter, &.ng-leave {
-        transition: all .5s cubic-bezier(0,.25,.5,1);
+.view-animation {
+    position: relative;
+    width: inherit;
+    transition: all .5s cubic-bezier(0,.25,.5,1);
+
+    > div {
+        width: 100%;
+        position: absolute;
     }
 
     &.ng-enter {
@@ -278,17 +335,6 @@ header {
     }
 }
 
-//--------------------------------------------------------------------------------- main content section
-.main-section {
-    max-width: 85%;
-    min-width: 1100px;
-    margin: auto;
-    min-height: 500px;
-
-    > * {
-        position: absolute;
-    }
-}
 
 //--------------------------------------------------------------------------------- footer
 
@@ -299,4 +345,23 @@ footer {
     text-align: center;
     padding: 15px 0 5px 0;
     border-top: 3px solid #000;
+    position: fixed;
+    bottom: 0;
+}
+
+//--------------------------------------------------------------------------------- pages
+//--------------------------------------------------------------------------------- welcome page
+
+#welcome {
+    text-align: center;
+    margin: 100px 0;
+    min-height: 350px;
+}
+
+//--------------------------------------------------------------------------------- login page
+
+#login {
+    text-align: center;
+    margin: 100px 0;
+    min-height: 500px;
 }
