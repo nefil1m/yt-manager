@@ -35,7 +35,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: 'src/',
-                        src: ['*.html'],
+                        src: ['**/*.html'],
                         dest: 'build/',
                         filter: 'isFile'
                     },
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
         },
         watch: {
             html: {
-                files: ['src/*.html'],
+                files: ['src/**/*.html'],
                 tasks: ['copy'],
                 options: {
                     livereload: true
