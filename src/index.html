@@ -28,13 +28,17 @@
                         <span class="menu-bar"></span>
                         <span class="menu-bar"></span>
                     </li>
-                    <li><a href="#!">playlists</a></li>
-                    <li><a href="#!">videos</a></li>
-                    <li>
-                        <a href="#/login" ng-show="channel.basic.authorized === false">login</a>
-                        <a href="#/channel" ng-show="channel.basic.authorized === true">channel</a>
-                    </li>
-                    <li><a href="#!">settings</a></li>
+                    <span ng-show="channel.basic.authorized === true">
+                        <li><a href="#/playlists">playlists</a></li>
+                        <li><a href="#/videos">videos</a></li>
+                        <li><a href="#/channel">channel</a></li>
+                        <li><a href="#/settings">settings</a></li>
+                    </span>
+                    <span ng-show="channel.basic.authorized === false">
+                        <li>
+                            <a href="#/login">login</a>
+                        </li>
+                    </span>
                 </ul>
             </nav>
         </header>
@@ -68,8 +72,12 @@
                 </div>
             </div>
 
-            <!-- <base href="index.html"> -->
+            <div id="collapse">
+                <i class="glyphicon glyphicon-chevron-up"></i>
+            </div>
+
             <div class="main-section">
+
                 <div class="view-animation" ng-view>
                     <script id="hello.html" type="text/ng-template">
                         <div id="welcome">
@@ -97,22 +105,32 @@
         <script src="js/scripts.js"></script>
         <script>
             $(document).ready(function() {
+
+                // do something with these 'uglies'
                 var navW = parseInt($('nav').width(), 10);
 
-                $('nav').css('right', -navW + 100 + 'px' );
+                $('nav').not('small').css('right', -navW + 100 + 'px' );
+                $('nav.small').css('right', -navW + 100 + 'px' );
 
-                $('nav').find('li:first-child').click(function() {
+                $('nav').find('ul > li:first-child').click(function() {
                     $('nav').toggleClass('opened');
                     navW = parseInt($('nav').width(), 10);
-                    $('nav').css('right', -navW + 100 + 'px' );
+                    $('nav').not('small').css('right', -navW + 100 + 'px' );
+                    $('nav.small').css('right', -navW + 50 + 'px' );
 
                 });
 
                 $(window).resize(resizePlayer);
+
                 var resizePlayer = function() {
                     var player = $("#player");
                     player.height( parseInt(player.width(), 10) * 0.5225 + "px");
                 }
+
+                $('#collapse').on('click', function() {
+                    $('#top, nav, #logo').toggleClass('small');
+                    $(this).find('i').toggleClass('glyphicon-chevron-up').toggleClass('glyphicon-chevron-down');
+                });
             });
         </script>
     </body>

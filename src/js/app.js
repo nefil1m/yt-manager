@@ -11,6 +11,15 @@ var app = angular.module('YTPlaylistManager', ['ngRoute', 'ngAnimate'])
                         .when('/channel', {
                             templateUrl: 'views/channel.html'
                         })
+                        .when('/playlists', {
+                            templateUrl: 'views/playlists.html'
+                        })
+                        .when('/videos', {
+                            templateUrl: 'views/videos.html'
+                        })
+                        .when('/settings', {
+                            templateUrl: 'views/settings.html'
+                        })
                         .otherwise({
                             redirectTo: '/'
                         });
