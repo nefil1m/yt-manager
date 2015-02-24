@@ -1,10 +1,10 @@
 app.controller('settingsCtrl', ['$scope', 'channel', '$cookies', '$cookieStore', function($scope, channel, $cookies, $cookieStore) {
+    var options = $cookieStore.get('options');
 
-    if( angular.isUndefined($cookies.options) ) {
+    if( angular.isUndefined(options) ) {
         $scope.options = channel.options;
     } else {
         $scope.options = $cookieStore.get('options');
-        console.log($scope.options);
     }
 
     $scope.saveOptions = function() {

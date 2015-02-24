@@ -6,7 +6,7 @@ var app = angular.module('YTPlaylistManager', ['ngRoute', 'ngAnimate', 'ui.boots
                         })
                         .when('/login', {
                             templateUrl: 'views/login.html',
-                            controller: 'loginCtrl'
+                            controller: 'loginViewCtrl'
                         })
                         .when('/channel', {
                             templateUrl: 'views/channel.html'
