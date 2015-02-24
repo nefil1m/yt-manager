@@ -1,1 +1,70 @@
-settings
+<div id="settings">
+    <h2>Settings</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Basic:</h4>
+
+            <div class="options-group">
+                <p>Max Results:</p>
+                <div class="btn-group">
+                    <label class="btn btn-yellow" ng-model="options.maxResults" btn-radio="10" uncheckable>10</label>
+                    <label class="btn btn-yellow" ng-model="options.maxResults" btn-radio="25" uncheckable>25</label>
+                    <label class="btn btn-yellow" ng-model="options.maxResults" btn-radio="50" uncheckable>50</label>
+                </div>
+            </div>
+
+            <div class="options-group">
+                <p>Remember Me:</p>
+                <div class="btn-group">
+                    <label class="btn btn-yellow" ng-model="options.rememberMe" btn-radio="true" uncheckable>Yes</label>
+                    <label class="btn btn-yellow" ng-model="options.rememberMe" btn-radio="false" uncheckable>No</label>
+                </div>
+            </div>
+
+            <div class="options-group">
+                <p>Top section:</p>
+                <div class="btn-group">
+                    <label class="btn btn-yellow" ng-model="options.topSection" btn-radio="'big'" uncheckable>Big</label>
+                    <label class="btn btn-yellow" ng-model="options.topSection" btn-radio="'small'" uncheckable>Small</label>
+                </div>
+            </div>
+
+            <div class="options-group">
+                <p>Default layout:</p>
+                <div class="btn-group">
+                    <label class="btn btn-yellow" ng-model="options.defaultLayout" btn-radio="'grid'" uncheckable>
+                        <i class="glyphicon glyphicon-th-large"></i>
+                    </label>
+                    <label class="btn btn-yellow" ng-model="options.defaultLayout" btn-radio="'list'" uncheckable>
+                        <i class="glyphicon glyphicon-th-list"></i>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <h4>Playlists:</h4>
+
+            <div class="options-group">
+                <p>Add new videos on position:</p>
+                <div class="btn-group">
+                    <label class="btn btn-yellow" ng-model="options.position" btn-radio="'first'" uncheckable>First</label>
+                    <label class="btn btn-yellow" ng-model="options.position" btn-radio="'last'" uncheckable>Last</label>
+                </div>
+            </div>
+
+            <div class="options-group">
+                <p>Autoplay:</p>
+                <div class="btn-group">
+                    <label class="btn btn-yellow" ng-model="options.autoplay" btn-radio="true" uncheckable>Yes</label>
+                    <label class="btn btn-yellow" ng-model="options.autoplay" btn-radio="false" uncheckable>No</label>
+                </div>
+            </div>
+        </div>
+        <div class="row spacer">
+            <div class="col-md-12 text-right">
+                <a ng-click="saveOptions();" class="btn btn-yellow">Save</a>
+            </div>
+        </div>
+    </div>
+</div>

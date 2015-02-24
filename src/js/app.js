@@ -1,4 +1,4 @@
-var app = angular.module('YTPlaylistManager', ['ngRoute', 'ngAnimate'])
+var app = angular.module('YTPlaylistManager', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ngCookies'])
                  .config(['$routeProvider', '$locationProvider', function($routeProvider,  $locationProvider) {
                     $routeProvider
                         .when('/', {
@@ -18,7 +18,11 @@ var app = angular.module('YTPlaylistManager', ['ngRoute', 'ngAnimate'])
                             templateUrl: 'views/videos.html'
                         })
                         .when('/settings', {
-                            templateUrl: 'views/settings.html'
+                            templateUrl: 'views/settings.html',
+                            controller: 'settingsCtrl'
+                        })
+                        .when('/compare', {
+                            templateUrl: 'views/compare.html'
                         })
                         .otherwise({
                             redirectTo: '/'

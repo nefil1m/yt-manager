@@ -1,4 +1,4 @@
-app.controller('loginCtrl', ['$rootScope', '$scope', 'channel', function($rootScope, $scope, channel) {
+app.controller('loginCtrl', ['$rootScope', '$scope', 'channel', '$location', function($rootScope, $scope, channel, $location) {
     var CLIENT_ID = '877549163404-chjiknp3ffeiatmb2mcb8dfp23u7sm8q.apps.googleusercontent.com',
         SCOPES = [ 'https://www.googleapis.com/auth/youtube' ],
         apiKey = 'AIzaSyDJIOlGzyjPFEQ5j-Q2qEJVbOJtgqmby_Y';
@@ -29,10 +29,15 @@ app.controller('loginCtrl', ['$rootScope', '$scope', 'channel', function($rootSc
                 channel.basic = {
                     authorized: true,
                     title: res.snippet.title,
-                    id: res.id
+                    id: res.id,
+                    thumbnail: res.snippet.thumbnails.default.url
                 };
 
-                $scope.$emit('logged');
+                console.log(response.result.items[0]);
+
+                $location.url('/playlists');
+
+                // $scope.$emit('logged');
             });
         });
     };

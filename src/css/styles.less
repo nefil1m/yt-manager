@@ -72,8 +72,14 @@ a.bttn {
     margin: 10px;
     display: inline-block;
     cursor: pointer;
+}
 
-    &:hover, &:focus, &:active {
+.btn-yellow {
+    background: @yellow;
+    border-radius: 0;
+    color: #333;
+
+    &.active {
         background: @yellow2;
     }
 
@@ -81,7 +87,16 @@ a.bttn {
         font-size: 30px;
         padding: 20px 50px;
         margin: 20px;
+        color: #fff;
     }
+
+    &:hover, &:focus, &:active {
+        background: @yellow2;
+    }
+}
+
+.spacer {
+    margin-bottom: 50px;
 }
 
 //--------------------------------------------------------------------------------- header
@@ -369,7 +384,6 @@ header {
     max-width: 85%;
     min-width: 1100px;
     margin: auto;
-    padding: 50px 0;
 }
 
 .view-animation {
@@ -379,7 +393,7 @@ header {
 
     > div {
         width: 100%;
-        position: absolute;
+        // position: absolute;
     }
 
     &.ng-enter {
@@ -425,8 +439,6 @@ footer {
     text-align: center;
     padding: 15px 0 5px 0;
     border-top: 3px solid #000;
-    position: fixed;
-    bottom: 0;
 }
 
 //--------------------------------------------------------------------------------- pages
@@ -444,4 +456,15 @@ footer {
     text-align: center;
     margin: 100px 0;
     min-height: 500px;
+}
+
+//--------------------------------------------------------------------------------- settings page
+
+#settings {
+    width: 1100px;
+    margin: 0 auto;
+
+    .options-group {
+        margin: 25px 0;
+    }
 }

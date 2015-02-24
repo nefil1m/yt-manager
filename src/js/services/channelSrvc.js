@@ -3,6 +3,14 @@ app.service('channel', ['$rootScope', function($rootScope) {
         basic: {
             title: 'Stranger',
             authorized: false
+        },
+        options: {
+            "maxResults": "25",
+            "position": "last",
+            "rememberMe": false,
+            "autoplay": false,
+            "topSection": "big",
+            "defaultLayout": "grid"
         }
     };
 
