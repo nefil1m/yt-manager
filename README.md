@@ -17,7 +17,13 @@
     <li>...and maybe more, who knows!</li>
 </ul>
 
-<p>So, as you can see there's a lot of work to do and I'll start immadietly on another branch (git is another thing which I need to get familiar with).</p>
-
-<p>Here's a live demo:</p>
+<p>Here's a live demo of alpha version (I'm not working on that anymore):</p>
 <a href="http://patrykgurgul.pl/yt-manager/index.html">patrykgurgul.pl/yt-manager/index.html</a>
+
+<h3>v. Beta</h3>
+
+<p>Demo:</p>
+<p><a href="http://patrykgurgul.pl/yt-manager/new/index.html">http://patrykgurgul.pl/yt-manager/new/index.html</a></p>
+
+<h4>What is done:</h4>
+<p>I made a new layout which I find more user-friendly, login system and storing settings in cookies (for example, you can turn autologin on).</p>
