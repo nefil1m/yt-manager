@@ -1,0 +1,19 @@
+<div id="#search" class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon" ng-click="search();">
+        <i class="glyphicon glyphicon-search"></i>
+      </span>
+      <input type="text" class="form-control" placeholder="Search...">
+      <span class="input-group-addon" ng-model="options.autoplayResults" btn-radio="true" uncheckable>
+          <i class="glyphicon glyphicon-circle-arrow-right"></i>
+      </span>
+      <span class="input-group-addon" ng-model="options.defaultLayout" btn-radio="'grid'">
+        <i class="glyphicon glyphicon-th-large"></i>
+      </span>
+      <span class="input-group-addon" ng-model="options.defaultLayout" btn-radio="'list'">
+        <i class="glyphicon glyphicon-th-list"></i>
+      </span>
+    </div>
+  </div>
+</div>

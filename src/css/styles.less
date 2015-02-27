@@ -5,466 +5,568 @@
 @darkGrey: #1A1A1A;
 
 .cubic-trans {
-    transition: all .3s cubic-bezier(0,.1,.35,1);
+  transition: all .3s cubic-bezier(0,.1,.35,1);
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    bottom: 0 none;
+  padding: 0;
+  margin: 0;
+  bottom: 0 none;
 }
 
 //--------------------------------------------------------------------------------- general
 
 body {
-    font-family: 'Montserrat';
-    min-height: 100vh;
-    overflow-x: hidden;
+  font-family: 'Montserrat';
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 ::-moz-selection,{
-    background: @yellow;
-    color: #fff;
+  background: @yellow;
+  color: #fff;
 }
 
 ::selection {
-    background: @yellow;
-    color: #fff;
+  background: @yellow;
+  color: #fff;
 }
 
 a, a:link, a:visited {
-    color: @yellow;
+  color: @yellow;
 }
 
 a:hover, a:focus, a:active {
-    color: @yellow2;
-    text-decoration: none;
-    outline: none;
+  color: @yellow2;
+  text-decoration: none;
+  outline: none;
 }
 
 h1 {
-    font-size: 100px;
+  font-size: 100px;
 }
 
 h2 {
-    font-size: 75px;
+  font-size: 75px;
 }
 
 h3 {
-    font-size: 50px
+  font-size: 50px
 }
 
 h4 {
-    font-size: 35px;
+  font-size: 35px;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    &::first-letter {
-        color: @yellow;
-        font-weight: 700;
-    }
+  &::first-letter {
+    color: @yellow;
+    font-weight: 700;
+  }
 }
 
 a.bttn {
-    background: @yellow;
-    color: #fff;
-    padding: 10px 25px;
-    margin: 10px;
-    display: inline-block;
-    cursor: pointer;
+  background: @yellow;
+  color: #fff;
+  padding: 10px 25px;
+  margin: 10px;
+  display: inline-block;
+  cursor: pointer;
 }
 
 .btn-yellow {
-    background: @yellow;
-    border-radius: 0;
-    color: #333;
+  background: @yellow;
+  border-radius: 0;
+  color: #333;
 
-    &.active {
-        background: @yellow2;
-    }
+  &.active {
+    background: @yellow2;
+  }
 
-    &.big {
-        font-size: 30px;
-        padding: 20px 50px;
-        margin: 20px;
-        color: #fff;
-    }
+  &.big {
+    font-size: 30px;
+    padding: 20px 50px;
+    margin: 20px;
+    color: #fff;
+  }
 
-    &:hover, &:focus, &:active {
-        background: @yellow2;
-    }
+  &:hover, &:focus, &:active {
+    background: @yellow2;
+  }
 }
 
 .spacer {
-    margin-bottom: 50px;
+  margin-bottom: 50px;
+}
+
+.input-group {
+  margin-bottom: 25px;
+  border-radius: 0 0 0 0;
+  border-top: 1px solid @yellow;
+  border-bottom: 1px solid @yellow;
+
+  .input-group-addon {
+    background: @yellow;
+    cursor: pointer;
+
+    &:hover, &.active {
+      background: @yellow2;
+    }
+  }
+
+  .input-group-addon, .form-control {
+    border-radius: 0 0 0 0;
+    border: 0;
+    color: #333;
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 8px @yellow;
+  }
 }
 
 //--------------------------------------------------------------------------------- header
 
 #hello {
-    position: absolute;
-    right: 0; top: 0;
-    padding: 15px;
-    color: #fff;
-    z-index: 15000;
+  position: absolute;
+  right: 0; top: 0;
+  padding: 15px;
+  color: #fff;
+  z-index: 15000;
 
-    span {
-        color: @yellow;
-    }
+  span {
+    color: @yellow;
+  }
 }
 
 header {
-    width: 100%;
-    height: 100px;
-    overflow: hidden;
-    position: fixed;
-    top: 50px;
-    z-index: 15000;
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  top: 50px;
+  z-index: 15000;
 
-    * {
-        color: #fff;
+  * {
+    color: #fff;
+  }
+
+  nav {
+    position: absolute;
+    right: 0;
+
+    .toggle-nav {
+      background: @yellow;
+      width: 100px;
+      height: 100px;
+      padding-left: 30px;
+      padding-top: 32.5px;
+      cursor: pointer;
+      float: right;
+
+      &:hover, &:focus, &:active {
+        background: @yellow2;
+      }
+
+      .menu-bar {
+        height: 8px;
+        width: 40px;
+        border-radius: 5px;
+        background: #fff;
+        display: block;
+        margin-bottom: 5px;
+      }
     }
 
-    nav {
+    ul {
+      position: absolute;
+      right: -250px;
+      margin: 100px 0 0 0;
+      text-align: center;
+      font-size: 30px;
+      list-style-type: none;
+      .cubic-trans;
+
+      li {
+        overflow: hidden;
         background: #000;
-        padding-left: 0;
-        position: absolute;
+        cursor: pointer;
 
-        &.opened {
-            right: 0 !important;
+        &:hover {
+          background: @yellow2;
         }
 
-        &.small {
-            ul, li {
-                height: 50px;
-            }
-
-            ul {
-                margin-bottom: 0;
-            }
-
-            li {
-                font-size: 16px;
-                padding-top: 14px;
-            }
-
-            ul > li:first-child {
-                width: 50px;
-                padding-left: 15px;
-                padding-top: 16.25px;
-
-                .menu-bar {
-                    height: 4px;
-                    width: 20px;
-                    margin-bottom: 2px;
-                }
-            }
-        }
-
-        &, * {
-            .cubic-trans;
-        }
-
-        ul, li {
-            height: 100px;
-            max-height: 100px;
-        }
-
-        li {
-            display: inline-block;
-            vertical-align: top;
-            font-size: 32px;
-            padding-top: 25px;
-            margin: 0 25px;
-        }
-
-        ul > li:first-child {
-            background: @yellow;
-            width: 100px;
-            padding-left: 30px;
-            padding-top: 32.5px;
-            margin-left: 0;
-            cursor: pointer;
-
-            &:focus, &:active, &:hover {
-                background: @yellow2;
-            }
-
-            .menu-bar {
-                height: 8px;
-                width: 40px;
-                border-radius: 5px;
-                background: #fff;
-                display: block;
-                margin-bottom: 5px;
-            }
+        a {
+          width: 250px;
+          padding: 10px 0;
+          display: block;
         }
 
         a, a:link, a:visited {
-            color: #fff;
+          color: #fff;
         }
-
-        a:hover, a:focus {
-            outline: none;
-            color: #bbb;
-            text-decoration: none;
-        }
+      }
     }
+
+    &.opened {
+      ul {
+        right: 0;
+      }
+    }
+  }
 }
 
 #logo {
-    background: @yellow;
-    width: 100px;
-    height: 100px;
-    float: left;
-    text-align: center;
+  background: @yellow;
+  width: 100px;
+  height: 100px;
+  float: left;
+  text-align: center;
 
-    &:hover {
-        background: @yellow2;
+  &:hover {
+    background: @yellow2;
+  }
+
+  *, & {
+    .cubic-trans;
+  }
+
+  h1 {
+    font-size: 60px;
+    line-height: 1;
+    margin: 0;
+
+    a {
+      color: #fff;
+      padding: 20px 0;
+      display: block;
     }
+  }
+}
 
-    *, & {
-        .cubic-trans;
-    }
-
-    &.small {
-        width: 50px;
-        height: 50px;
-
-        h1 {
-            font-size: 30px;
-
-            a {
-                padding: 10px 0;
-            }
-        }
-    }
+header.small {
+  #logo {
+    width: 50px;
+    height: 50px;
 
     h1 {
-        font-size: 60px;
-        line-height: 1;
-        margin: 0;
+      font-size: 30px;
 
-        a {
-            color: #fff;
-            padding: 20px 0;
-            display: block;
-        }
+      a {
+        padding: 10px 0;
+      }
     }
+  }
+
+  nav {
+    .toggle-nav {
+      width: 50px;
+      height: 50px;
+      padding-left: 15px;
+      padding-top: 16px;
+
+      .menu-bar {
+        height: 4px;
+        width: 20px;
+        margin-bottom: 2.5px;
+      }
+    }
+
+    ul {
+      margin: 50px 0 0 0;
+      font-size: 15px;
+    }
+  }
+
+  // nav {
+  //     ul, li {
+  //         height: 50px;
+  //     }
+
+  //     ul {
+  //         margin-bottom: 0;
+  //     }
+
+  //     li {
+  //         font-size: 16px;
+  //         padding-top: 14px;
+  //     }
+
+  //     ul > li:first-child {
+  //         width: 50px;
+  //         padding-left: 15px;
+  //         padding-top: 16.25px;
+
+  //         .menu-bar {
+  //             height: 4px;
+  //             width: 20px;
+  //             margin-bottom: 2px;
+  //         }
+  //     }
+  // }
 }
 
 //--------------------------------------------------------------------------------- main section
 //--------------------------------------------------------------------------------- top section
 
 #top {
-    background: @darkGrey;
-    border-bottom: 3px solid #000;
-    width: 100%;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-flex-direction: row;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-        -ms-flex-wrap: nowrap;
-            flex-wrap: nowrap;
-    -webkit-align-items: flex-end;
-        -ms-flex-align: end;
-            align-items: flex-end;
-    height: 486px;
-    .cubic-trans;
+  background: @darkGrey;
+  border-bottom: 3px solid #000;
+  width: 100%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+      flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-align-items: flex-end;
+    -ms-flex-align: end;
+      align-items: flex-end;
+  height: 486px;
+  .cubic-trans;
 }
 
-#top.small {
-    height: 281px;
+ #top.small {
+  height: 281px;
 
-    #player-container {
-        min-width: 500px;
-        max-width: 864px;
-        min-height: 281px;
-        max-height: 281px;
-    }
+  #player-container {
+    min-width: 500px;
+    max-width: 864px;
+    min-height: 281px;
+    max-height: 281px;
+  }
 }
 
 #player-container {
-    min-width: 500px;
-    width: 100%;
-    max-width: 864px;
-    min-height: 281px;
-    height: 100%;
-    max-height: 486px;
-    margin: auto;
-    position: relative;
-    -webkit-order: 2;
-        -ms-flex-order: 2;
-            order: 2;
+  min-width: 500px;
+  width: 100%;
+  max-width: 864px;
+  min-height: 281px;
+  height: 100%;
+  max-height: 486px;
+  margin: auto;
+  position: relative;
+  -webkit-order: 2;
+    -ms-flex-order: 2;
+      order: 2;
 }
 
 #previous-video, #next-video {
+  width: 100%;
+  -ms-flex-item-align: stretch;
+  -webkit-align-self: stretch;
+      align-self: stretch;
+  position: relative;
+  overflow: hidden;
+
+  .box {
     width: 100%;
-    -ms-flex-item-align: stretch;
-    -webkit-align-self: stretch;
-            align-self: stretch;
-    position: relative;
-    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    color: #fff;
+    -ms-flex-item-align: middle;
+    -webkit-align-self: middle;
+        align-self: middle;
+    cursor: pointer;
+    opacity: .3;
+    transition: all .3s;
 
-    .box {
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-        text-align: center;
-        color: #fff;
-        -ms-flex-item-align: middle;
-        -webkit-align-self: middle;
-                align-self: middle;
-        cursor: pointer;
-        opacity: .3;
-        transition: all .3s;
+    &:focus, &:hover, &:active {
+      opacity: 1;
 
-        &:focus, &:hover, &:active {
-            opacity: 1;
+      p {
+        color: @yellow;
+      }
 
-            p {
-                color: @yellow;
-            }
-
-            .image > div {
-                left: 0;
-            }
-        }
-
-        .image {
-            width: 320px;
-            height: 180px;
-            margin: auto;
-            overflow: hidden;
-
-            > div {
-                position: relative;
-                width: 320px;
-                height: 180px;
-                background: rgba(0,0,0,.5);
-                top: -180px;
-                padding-top: 60px;
-                .cubic-trans;
-
-                i {
-                    font-size: 60px;
-                }
-            }
-        }
-
-        p {
-            padding: 15px;
-        }
+      .image > div {
+        left: 0;
+      }
     }
+
+    .image {
+      width: 320px;
+      height: 180px;
+      margin: auto;
+      overflow: hidden;
+
+      > div {
+        position: relative;
+        width: 320px;
+        height: 180px;
+        background: rgba(0,0,0,.5);
+        top: -180px;
+        padding-top: 60px;
+        .cubic-trans;
+
+        i {
+          font-size: 60px;
+        }
+      }
+    }
+
+    p {
+      padding: 15px;
+    }
+  }
 }
 
-#collapse {
-    width: 80px;
-    height: 80px;
-    position: relative;
-    color: @yellow;
-    background: #fff;
-    font-size: 50px;
-    text-align: center;
-    padding-top: 8px;
-    top: -80px;
+//--------------------------------------------------------------------------------- main buttons
 
-    &:hover, &:focus, &:active {
-        color: @yellow2;
-        cursor: pointer;
-        background: #eee;
-    }
+#main-buttons {
+  margin: -80px 0 50px 0;
+  text-align: center;
+}
+
+//--------------------------------------------------------------------------------- collapse btn
+
+#collapse {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  color: @yellow;
+  background: #fff;
+  font-size: 50px;
+  text-align: center;
+  padding-top: 8px;
+  top: -80px;
+
+  &:hover, &:focus, &:active {
+    color: @yellow2;
+    cursor: pointer;
+    background: #eee;
+  }
 }
 
 //--------------------------------------------------------------------------------- main content section
 .main-section {
-    max-width: 85%;
-    min-width: 1100px;
-    margin: auto;
+  max-width: 85%;
+  min-width: 1100px;
+  margin: auto;
 }
 
 .view-animation {
-    position: relative;
-    width: inherit;
-    transition: all .5s cubic-bezier(0,.25,.5,1);
+  position: relative;
+  width: inherit;
+  transition: all .5s cubic-bezier(0,.25,.5,1);
 
-    > div {
-        width: 100%;
-        // position: absolute;
-    }
+  > div {
+    width: 100%;
+    // position: absolute;
+  }
 
-    &.ng-enter {
-        opacity: 0;
-    }
+  &.ng-enter {
+    opacity: 0;
+  }
 
-    &.ng-enter.ng-enter-active {
-        opacity: 1;
-    }
+  &.ng-enter.ng-enter-active {
+    opacity: 1;
+  }
 
-    &.ng-leave.ng-leave-active {
-        opacity: 0;
-    }
+  &.ng-leave.ng-leave-active {
+    opacity: 0;
+  }
 }
 
 #previous-video {
-    -webkit-order: 1;
-        -ms-flex-order: 1;
-            order: 1;
+  -webkit-order: 1;
+    -ms-flex-order: 1;
+      order: 1;
 
-    .image > div {
-        left: 320px;
-    }
+  .image > div {
+    left: 320px;
+  }
 }
 
 #next-video {
-    -webkit-order: 3;
-        -ms-flex-order: 3;
-            order: 3;
+  -webkit-order: 3;
+    -ms-flex-order: 3;
+      order: 3;
 
-    .image > div {
-        left: -320px;
-    }
+  .image > div {
+    left: -320px;
+  }
 }
 
 
 //--------------------------------------------------------------------------------- footer
 
 footer {
-    background: @darkGrey;
-    color: #fff;
-    width: 100%;
-    text-align: center;
-    padding: 15px 0 5px 0;
-    border-top: 3px solid #000;
+  background: @darkGrey;
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  padding: 15px 0 5px 0;
+  border-top: 3px solid #000;
 }
 
 //--------------------------------------------------------------------------------- pages
 //--------------------------------------------------------------------------------- welcome page
 
 #welcome {
-    text-align: center;
-    margin: 100px 0;
-    min-height: 350px;
+  text-align: center;
+  margin: 100px 0;
+  min-height: 350px;
 }
 
 //--------------------------------------------------------------------------------- login page
 
 #login {
-    text-align: center;
-    margin: 100px 0;
-    min-height: 500px;
+  text-align: center;
+  margin: 100px 0;
+  min-height: 500px;
 }
 
 //--------------------------------------------------------------------------------- settings page
 
 #settings {
-    width: 1100px;
-    margin: 0 auto;
+  width: 1100px;
+  margin: 0 auto;
 
-    .options-group {
-        margin: 25px 0;
+  .options-group {
+    margin: 25px;
+
+    p {
+      font-size: 20px;
     }
+
+    div:nth-child(2) {
+      text-align: right;
+    }
+  }
 }
+
+//--------------------------------------------------------------------------------- misc
+//--------------------------------------------------------------------------------- success-box
+
+#success-box {
+  width: 500px;
+  background: green;
+  color: #fff;
+  text-align: center;
+  font-size: 25px;
+  position: fixed;
+  top: -50px; left: 50%;
+  margin-left: -250px;
+  line-height: 50px;
+  .cubic-trans;
+
+  &.visible {
+    top: 0;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  span {
+    font-size: 35px;
+    font-weight: 700;
+    float: right;
+    margin: 0 25px;
+    cursor: pointer;
+  }
+}
+
