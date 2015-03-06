@@ -1,78 +1,69 @@
-app.controller('mainCtrl', ['$rootScope', '$scope', 'channel', '$cookieStore', '$location', function($rootScope, $scope, channel, $cookieStore, $location) {
-  var CLIENT_ID = '877549163404-chjiknp3ffeiatmb2mcb8dfp23u7sm8q.apps.googleusercontent.com',
-    SCOPES = [ 'https://www.googleapis.com/auth/youtube' ],
-    apiKey = 'AIzaSyDJIOlGzyjPFEQ5j-Q2qEJVbOJtgqmby_Y';
+app.controller('mainCtrl', ['$rootScope', '$scope', 'channel', '$cookieStore', '$location', '$config', 'OAuth',
+  function($rootScope, $scope, channel, $cookieStore, $location, $config, OAuth) {
+    $scope.channel = channel;
 
-  $scope.auth = function(){
-    gapi.client.setApiKey = apiKey;
-    $scope.checkAuth();
-  };
+    // var options = $cookieStore.get('options');
 
-  $scope.checkAuth = function() {
-    gapi.auth.authorize({
-      client_id: CLIENT_ID,
-      scope: SCOPES,
-      immediate: true
-    }, makeApiCall);
-  };
+    // if( angular.isDefined(options) ) {
+    //   channel.options = options;
+    //   if( channel.options.rememberMe ) {
+    //     window.setTimeout(function() {
+    //       OAuth.auth()
+    //         .then(function(response) {
+    //           var res = response.result.items[0];
 
-  var makeApiCall = function() {
-    gapi.client.load('youtube', 'v3', function() {
-      var request = gapi.client.youtube.channels.list({
-        mine: true,
-        part: 'id,snippet'
+    //           $rootScope.authorized = true;
+    //           channel.basic = {
+    //             authorized: true,
+    //             title: res.snippet.title,
+    //             id: res.id,
+    //             thumbnail: res.snippet.thumbnails.default.url
+    //           };
+
+    //           $scope.success('logged');
+    //           if( $location.url() === '/login') $location.url('/playlists');
+    //         }, function(response) {
+    //           $scope.error(response.error)
+    //         });
+    //     }, 500);
+    //   } else {
+    //     $location.url('/');
+    //   }
+    // }
+
+    $scope.success = function(msg) {
+      // $scope.msg = msg;
+      // // $scope.$apply();
+
+      // $('#info-box').addClass('visible');
+
+      // var tOut = setTimeout(function() {
+      //   $('#info-box').removeClass('visible');
+      // }, 7500);
+
+      // $('#info-box').find('span').on('click', function() {
+      //   clearTimeout(tOut);
+      //   $('#info-box').removeClass('visible');
+      // });
+      showInfoBox('success', msg);
+    };
+
+    $scope.error = function(msg) {
+      // console.log(msg);
+    };
+
+    var showInfoBox = function(type, info) {
+      $scope.infoMsg = info;
+
+      $('#info-box').addClass('visible ' + type);
+
+      var tOut = setTimeout(function() {
+        $('#info-box').removeClass('visible ' + type);
+      }, 7500);
+
+      $('#info-box').find('span').on('click', function() {
+        clearTimeout(tOut);
+        $('#info-box').removeClass('visible ' + type);
       });
-
-      request.execute(function(response) {
-        var res = response.result.items[0];
-
-        $rootScope.authorized = true;
-
-        channel.basic = {
-          authorized: true,
-          title: res.snippet.title,
-          id: res.id,
-          thumbnail: res.snippet.thumbnails.default.url
-        };
-
-        $scope.$apply();
-        $scope.success('logged');
-
-        if( $location.url() === '/login' ) {
-          $location.url('/playlists');
-        }
-      });
-    });
-  };
-
-  //init options
-
-  $scope.channel = channel;
-
-  var options = $cookieStore.get('options');
-
-  if( angular.isDefined(options) ) {
-    channel.options = options;
-    if( channel.options.rememberMe ) {
-      window.setTimeout($scope.auth, 1000);
-    } else {
-      $location.url('/');
     }
-  }
-
-  $scope.success = function(msg) {
-    $scope.msg = msg;
-    $scope.$apply();
-
-    $('#success-box').addClass('visible');
-
-    var tOut = setTimeout(function() {
-      $('#success-box').removeClass('visible');
-    }, 7500);
-
-    $('#success-box').find('span').on('click', function() {
-      clearTimeout(tOut);
-      $('#success-box').removeClass('visible');
-    });
-  };
-}]);
+  }]);

@@ -3,6 +3,10 @@
   <head>
     <title>YT - PlaylistManager</title>
     <meta charset="UTF-8">
+
+    <script src="https://apis.google.com/js/client:platform.js" async defer></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <link rel="Shortcut icon" href="img/fav.gif">
 
     <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
@@ -12,16 +16,16 @@
 
     <div id="hello">
       <p>Hello,
-        <a href="login" ng-hide="channel.basic.authorized">{{ channel.basic.title }}</a>
-        <a href="channel" ng-show="channel.basic.authorized">{{ channel.basic.title }}</a>
+        <a ui-sref="login" ng-hide="channel.basic.authorized">{{ channel.basic.title }}</a>
+        <a ui-sref="channel" ng-show="channel.basic.authorized">{{ channel.basic.title }}</a>
       </p>
     </div>
 
-    <header ng-class="channel.options.topSection === 'small' ? 'small' : '';">
-      <div id="logo">
+    <!-- <header ng-class="channel.options.topSection === 'small' ? 'small' : '';"> -->
+      <div id="logo" ng-class="channel.options.topSection === 'small' ? 'small' : '';">
         <h1><a href="#/">YT</a></h1>
       </div>
-      <nav>
+      <nav ng-class="channel.options.topSection === 'small' ? 'small' : '';">
         <div class="toggle-nav">
           <span class="menu-bar"></span>
           <span class="menu-bar"></span>
@@ -40,7 +44,7 @@
           <li><a ui-sref="login">login</a></li>
         </ul>
       </nav>
-    </header>
+    <!-- </header> -->
 
     <main>
       <div id="top" ng-class="channel.options.topSection === 'small' ? 'small' : '';">
@@ -100,17 +104,21 @@
         </div>
       </div>
 
-      <div class="main-section">
+        <div class="main-section">
 
-        <div class="view-animation" ui-view>
-          <script id="hello.html" type="text/ng-template">
-            <div id="welcome">
-              <h1>Hello!</h1>
-              <p>You need to log in to use this application</p>
+          <div class="view-animation-container">
+            <div ui-view>
+              <script id="hello.html" type="text/ng-template">
+                <div id="welcome">
+                  <h1>Hello!</h1>
+                  <p>You need to log in to use this application</p>
+                </div>
+              </script>
             </div>
-          </script>
+          </div>
+
         </div>
-      </div>
+
     </main>
 
     <footer>
@@ -118,12 +126,10 @@
     </footer>
 
     <!-- misc -->
-    <div id="success-box">
-      <p>{{ msg }}<span>&times;</span></p>
+    <div id="info-box">
+      <p>{{ infoMsg }}<span>&times;</span></p>
     </div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script src="https://apis.google.com/js/client:platform.js" async defer></script>
     <script src="//localhost:35729/livereload.js"></script>
     <script src="libs/jquery/dist/jquery.min.js"></script>
     <script src="libs/angular/angular.min.js"></script>
@@ -132,7 +138,19 @@
     <script src="libs/angular-animate/angular-animate.min.js"></script>
     <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="libs/angular-bootstrap/ui-bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
+    <!-- <script src="js/scripts.js"></script> -->
+    <script src="js/app.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/services/authSrvc.js"></script>
+    <script src="js/services/channelSrvc.js"></script>
+    <script src="js/services/videoSrvc.js"></script>
+    <script src="js/directives/ytItemDrtv.js"></script>
+    <script src="js/controllers/mainCtrl.js"></script>
+    <script src="js/controllers/loginCtrl.js"></script>
+    <script src="js/controllers/settingsCtrl.js"></script>
+    <script src="js/controllers/playerCtrl.js"></script>
+    <script src="js/controllers/searchCtrl.js"></script>
+    <script src="js/controllers/settingsCtrl.js"></script>
     <script>
       $(document).ready(function() {
 

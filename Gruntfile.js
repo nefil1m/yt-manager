@@ -25,7 +25,13 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'build/js/scripts.js': ['src/js/min/**/*.js']
+          'build/js/scripts.js': [
+                                  'src/js/min/app.min.js',
+                                  'src/js/min/routes.min.js',
+                                  'src/js/min/services/*.min.js',
+                                  'src/js/min/controllers/*.min.js',
+                                  'src/js/min/directives/*.min.js'
+                                  ]
         }
       }
     },
@@ -66,10 +72,15 @@ module.exports = function(grunt) {
     less: {
       src: {
         options: {
-          paths: ['src/css/']
+          paths: ['src/less/']
         },
         files: {
-          'build/css/styles.css': 'src/css/styles.less'
+          'build/css/styles.css': 'src/less/styles.less'
+        }
+      },
+      dev: {
+        files: {
+          'src/css/styles.css': 'src/less/styles.less'
         }
       }
     },
@@ -82,7 +93,7 @@ module.exports = function(grunt) {
         }
       },
       less: {
-        files: 'src/css/*.less',
+        files: 'src/less/*.less',
         tasks: ['less'],
         options: {
           livereload: true
@@ -94,10 +105,18 @@ module.exports = function(grunt) {
         options: {
           livereload: true
         }
+      },
+      dev: {
+        files: ['src/**/*.*'],
+        tasks: ['less:dev'],
+        options: {
+          livereload: true
+        }
       }
     }
   });
 
-  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('build', ['watch']);
+  grunt.registerTask('dev', ['watch:dev']);
 
 };
