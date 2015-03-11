@@ -41,6 +41,9 @@ app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider', 'Video'
                   statistics: angular.copy(res.statistics)
                 };
 
+                video.contentDetails.duration = $scope.$parent.translateDuration(video.contentDetails.duration);
+                video.statistics.viewCount = $scope.$parent.addCommas(video.statistics.viewCount);
+
                 $scope.results.push(video);
               }, function() {
                 console.log('error')
