@@ -1,41 +1,63 @@
-app.controller('searchCtrl', ['$scope', 'channel', 'Video', function($scope, channel, Video) {
-  $scope.options = {
-    autoplay: false,
-    defaultLayout: 'grid'
-  };
-
-  $scope.search = function(keywords) {
-    if( $scope.keywords != keywords || angular.isUndefined($scope.keywords) ) {
-      $scope.keywords = keywords;
-      $scope.videos = [];
-    }
-
-    var options = {
-      q: keywords,
-      part: 'snippet',
-      maxResults: channel.options.maxResults
+app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider', 'Video',
+  function($scope, channel, YTResourceProvider, Video) {
+    $scope.options = {
+      autoplay: false,
+      defaultLayout: 'grid'
     };
 
-    var request = gapi.client.youtube.search.list(options);
+    $scope.results = [];
 
-    request.execute(function(response) {
-      console.log(response);
-      if( angular.isUndefined(response.error) ) {
-        var res = response.result.items;
-        $.each(res, function(i) {
-          var video = new Video(res[i].id.videoId);
-          video.get();
+    $scope.search = function(keywords) {
+      if( $scope.keywords != keywords || angular.isUndefined($scope.keywords) ) {
+        $scope.keywords = keywords;
+        $scope.results = [];
+        $scope.nextPageToken = '';
+      }
 
+      var options = {
+        q: keywords,
+        part: 'snippet',
+        maxResults: channel.options.maxResults
+      };
+
+      if( $scope.nextPageToken != '' ) {
+        options.nextPageToken = $scope.nextPageToken;
+      }
+
+      YTResourceProvider.search(options)
+        .then(function(response) {
+          var res = response.result.items;
+          var tempResults = [];
+          $scope.nextPageToken = response.nextPageToken;
+
+          $.each(res, function(i) {
+            YTResourceProvider.getVideo(res[i].id.videoId)
+              .then(function(response) {
+                var res = response.result.items[0];
+                var video = {
+                  id: res.id,
+                  snippet: angular.copy(res.snippet),
+                  contentDetails: angular.copy(res.contentDetails),
+                  statistics: angular.copy(res.statistics)
+                };
+
+                $scope.results.push(video);
+              }, function() {
+                console.log('error')
+              });
+          });
+
+          $('[data-toggle="tooltip"]').tooltip({
+            viewport: 'body'
+          });
+        }, function(response) {
+          $scope.$parent.error(response.error);
         });
-      } else {
-        $scope.$parent.error(response.error.message);
+    };
+
+    $(document).on('keyup', function(e) {
+      if( e.which == 13 ) {
+        $scope.search($scope.keywords);
       }
     });
-  };
-
-  $(document).on('keyup', function(e) {
-    if( e.which == 13 ) {
-      $scope.search($scope.keywords);
-    }
-  });
-}]);
+  }]);

@@ -1,22 +1,23 @@
-app.controller('loginCtrl', ['$rootScope', '$scope', 'channel', '$location', 'OAuth', function($rootScope, $scope, channel, $location, OAuth) {
-  $scope.checkAuth = function() {
-    OAuth.auth()
-    .then(function(response) {
-      var res = response.result.items[0];
+app.controller('loginCtrl', ['$rootScope', '$scope', 'channel', '$location', 'YTResourceProvider',
+  function($rootScope, $scope, channel, $location, YTResourceProvider) {
+    $scope.checkAuth = function() {
+      YTResourceProvider.auth()
+      .then(function(response) {
+        var res = response.result.items[0];
 
-      $rootScope.authorized = true;
-      channel.basic = {
-        authorized: true,
-        title: res.snippet.title,
-        id: res.id,
-        thumbnail: res.snippet.thumbnails.default.url
-      };
+        $rootScope.authorized = true;
+        channel.basic = {
+          authorized: true,
+          title: res.snippet.title,
+          id: res.id,
+          thumbnail: res.snippet.thumbnails.high.url
+        };
 
-      $scope.$parent.success('logged');
+        $scope.$parent.success('success', 'logged');
 
-      if( $location.url() === '/login') $location.url('/playlists');
-    }, function(response) {
-      $scope.$parent.error(response.error);
-    });
-  };
-}]);
+        if( $location.url() === '/login') $location.url('/playlists');
+      }, function(response) {
+        $scope.$parent.error('error', response.error);
+      });
+    };
+  }]);

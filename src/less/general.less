@@ -1,0 +1,123 @@
+* {
+  padding: 0;
+  margin: 0;
+  bottom: 0 none;
+}
+
+body {
+  font-family: 'Montserrat';
+}
+
+::-moz-selection,{
+  background: @color;
+  color: #fff;
+}
+
+::-moz-selection {
+  background: @color;
+  color: #fff;
+}
+
+::selection {
+  background: @color;
+  color: #fff;
+}
+
+a, a:link, a:visited {
+  color: @color;
+}
+
+a:hover, a:focus, a:active {
+  color: @color2;
+  text-decoration: none;
+  outline: none;
+}
+
+h1 {
+  font-size: 100px;
+}
+
+h2 {
+  font-size: 75px;
+}
+
+h3 {
+  font-size: 50px
+}
+
+h4 {
+  font-size: 35px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  &::first-letter {
+    color: @color;
+    font-weight: 700;
+  }
+}
+
+a.bttn {
+  background: @color;
+  color: #fff;
+  padding: 10px 25px;
+  margin: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.btn-main-color {
+  background: @color;
+  border-radius: 0;
+  color: #fff;
+
+  &.active {
+    background: @color2;
+  }
+
+  &.big {
+    font-size: 30px;
+    padding: 20px 50px;
+    margin: 20px;
+    color: #fff;
+  }
+
+  &:hover, &:focus, &:active {
+    background: @color2;
+    color: #fff;
+  }
+}
+
+.spacer {
+  margin-bottom: 50px;
+}
+
+.input-group {
+  margin-bottom: 25px;
+  border-radius: 0 0 0 0;
+  border-top: 1px solid @color;
+  border-bottom: 1px solid @color;
+
+  .input-group-addon {
+    background: @color;
+    cursor: pointer;
+    color: #fff;
+
+    &:hover, &.active {
+      background: @color2;
+    }
+  }
+
+  .input-group-addon, .form-control {
+    border-radius: 0 0 0 0;
+    border: 0;
+
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 8px @color;
+  }
+}
+
+.text-light {
+  color: #bbb;
+}

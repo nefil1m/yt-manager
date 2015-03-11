@@ -1,0 +1,36 @@
+#info-box {
+  width: 500px;
+  color: #fff;
+  text-align: center;
+  font-size: 25px;
+  position: fixed;
+  top: -50px; left: 50%;
+  margin-left: -250px;
+  line-height: 50px;
+  .cubic-trans;
+  z-index: 15000000;
+
+  &.visible {
+    top: 0;
+  }
+
+  &.success {
+    background: green;
+  }
+
+  &.error {
+    background: red;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  span {
+    font-size: 35px;
+    font-weight: 700;
+    float: right;
+    margin: 0 25px;
+    cursor: pointer;
+  }
+}

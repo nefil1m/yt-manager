@@ -1,8 +1,5 @@
-<div>
-  <h2>Channel info</h2>
-  <ul>
-    <img ng-src="{{ channel.basic.thumbnail }}">
-    <li>Title: {{ channel.basic.title }}</li>
-    <li>ID: {{ channel.basic.id }}</li>
-  </ul>
+<div id="channel-info" class="row">
+  <img ng-src="{{ channel.basic.thumbnails.high.url }}" class="profile-image">
+  <h3>{{ channel.basic.title }}</h3>
+  <p class="text-light">{{ channel.basic.id }}</p>
 </div>

@@ -1,4 +1,5 @@
-var app = angular.module('YTPlaylistManager', ['ui.router', 'ngAnimate', 'ui.bootstrap', 'ngCookies'])
+var app = angular.module('YTPlaylistManager',
+  ['ui.router', 'ngAnimate', 'ui.bootstrap', 'ngCookies'])
 
             .constant('$config', {
               CLIENT_ID: '877549163404-chjiknp3ffeiatmb2mcb8dfp23u7sm8q.apps.googleusercontent.com',
@@ -6,8 +7,8 @@ var app = angular.module('YTPlaylistManager', ['ui.router', 'ngAnimate', 'ui.boo
               API_KEY: 'AIzaSyDJIOlGzyjPFEQ5j-Q2qEJVbOJtgqmby_Y'
             })
 
-            .run(['$rootScope', '$location', '$cookieStore', 'channel', 'OAuth',
-              function($rootScope, $location, $cookieStore, channel, OAuth) {
+            .run(['$rootScope', '$location', '$cookieStore', 'channel', 'YTResourceProvider',
+              function($rootScope, $location, $cookieStore, channel, YTResourceProvider) {
 
                 $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
                   var requireLogin = toState.data.requireLogin;
@@ -22,7 +23,7 @@ var app = angular.module('YTPlaylistManager', ['ui.router', 'ngAnimate', 'ui.boo
                   channel.options = options;
                   if( channel.options.rememberMe ) {
                     window.setTimeout(function() {
-                      OAuth.auth()
+                      YTResourceProvider.auth()
                         .then(function(response) {
                           var res = response.result.items[0];
 
@@ -31,13 +32,11 @@ var app = angular.module('YTPlaylistManager', ['ui.router', 'ngAnimate', 'ui.boo
                             authorized: true,
                             title: res.snippet.title,
                             id: res.id,
-                            thumbnail: res.snippet.thumbnails.default.url
+                            thumbnails: res.snippet.thumbnails
                           };
 
                           if( $location.url() === '/login') {
                             $location.url('/playlists');
-                          } else {
-                            $location.url($location.url()); // xD
                           }
                         }, function(response) {
                           alert('Login failed');

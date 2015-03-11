@@ -9,26 +9,28 @@
 }
 body {
   font-family: 'Montserrat';
-  min-height: 100vh;
-  overflow-x: hidden;
 }
 ::-moz-selection {
-  background: #ffcc39;
+  background: #006699;
+  color: #fff;
+}
+::-moz-selection {
+  background: #006699;
   color: #fff;
 }
 ::selection {
-  background: #ffcc39;
+  background: #006699;
   color: #fff;
 }
 a,
 a:link,
 a:visited {
-  color: #ffcc39;
+  color: #006699;
 }
 a:hover,
 a:focus,
 a:active {
-  color: #d29c00;
+  color: #004466;
   text-decoration: none;
   outline: none;
 }
@@ -50,35 +52,36 @@ h3::first-letter,
 h4::first-letter,
 h5::first-letter,
 h6::first-letter {
-  color: #ffcc39;
+  color: #006699;
   font-weight: 700;
 }
 a.bttn {
-  background: #ffcc39;
+  background: #006699;
   color: #fff;
   padding: 10px 25px;
   margin: 10px;
   display: inline-block;
   cursor: pointer;
 }
-.btn-yellow {
-  background: #ffcc39;
+.btn-main-color {
+  background: #006699;
   border-radius: 0;
-  color: #333;
+  color: #fff;
 }
-.btn-yellow.active {
-  background: #d29c00;
+.btn-main-color.active {
+  background: #004466;
 }
-.btn-yellow.big {
+.btn-main-color.big {
   font-size: 30px;
   padding: 20px 50px;
   margin: 20px;
   color: #fff;
 }
-.btn-yellow:hover,
-.btn-yellow:focus,
-.btn-yellow:active {
-  background: #d29c00;
+.btn-main-color:hover,
+.btn-main-color:focus,
+.btn-main-color:active {
+  background: #004466;
+  color: #fff;
 }
 .spacer {
   margin-bottom: 50px;
@@ -86,25 +89,64 @@ a.bttn {
 .input-group {
   margin-bottom: 25px;
   border-radius: 0 0 0 0;
-  border-top: 1px solid #ffcc39;
-  border-bottom: 1px solid #ffcc39;
+  border-top: 1px solid #006699;
+  border-bottom: 1px solid #006699;
 }
 .input-group .input-group-addon {
-  background: #ffcc39;
+  background: #006699;
   cursor: pointer;
+  color: #fff;
 }
 .input-group .input-group-addon:hover,
 .input-group .input-group-addon.active {
-  background: #d29c00;
+  background: #004466;
 }
 .input-group .input-group-addon,
 .input-group .form-control {
   border-radius: 0 0 0 0;
   border: 0;
-  color: #333;
 }
 .input-group .form-control:focus {
-  box-shadow: 0 0 8px #ffcc39;
+  box-shadow: 0 0 8px #006699;
+}
+.text-light {
+  color: #bbb;
+}
+@-webkit-keyframes downvote {
+  0%,
+  100% {
+    top: 0;
+  }
+  50% {
+    top: 5px;
+  }
+}
+@keyframes downvote {
+  0%,
+  100% {
+    top: 0;
+  }
+  50% {
+    top: 5px;
+  }
+}
+@-webkit-keyframes upvote {
+  0%,
+  100% {
+    top: 0;
+  }
+  50% {
+    top: -5px;
+  }
+}
+@keyframes upvote {
+  0%,
+  100% {
+    top: 0;
+  }
+  50% {
+    top: -5px;
+  }
 }
 #hello {
   position: absolute;
@@ -115,11 +157,11 @@ a.bttn {
   z-index: 15000;
 }
 #hello span {
-  color: #ffcc39;
+  color: #006699;
 }
 #logo,
 .toggle-nav {
-  background: #ffcc39;
+  background: #006699;
   width: 100px;
   height: 100px;
   cursor: pointer;
@@ -132,7 +174,7 @@ a.bttn {
 .toggle-nav:focus,
 #logo:active,
 .toggle-nav:active {
-  background: #d29c00;
+  background: #004466;
 }
 #logo {
   position: fixed;
@@ -212,7 +254,7 @@ nav ul li {
   cursor: pointer;
 }
 nav ul li:hover {
-  background: #d29c00;
+  background: #004466;
 }
 nav ul li a {
   width: 250px;
@@ -230,7 +272,6 @@ nav.opened ul {
 #top {
   background: #1a1a1a;
   border-bottom: 3px solid #000;
-  width: 100%;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -321,7 +362,7 @@ nav.opened ul {
 #next-video .box:hover p,
 #previous-video .box:active p,
 #next-video .box:active p {
-  color: #ffcc39;
+  color: #006699;
 }
 #previous-video .box:focus .image > div,
 #next-video .box:focus .image > div,
@@ -356,27 +397,56 @@ nav.opened ul {
 #next-video .box p {
   padding: 15px;
 }
-#main-buttons {
-  margin: -80px 0 50px 0;
-  text-align: center;
-}
 #collapse {
   width: 80px;
   height: 80px;
   position: relative;
-  color: #ffcc39;
+  color: #1a1a1a;
   background: #fff;
   font-size: 50px;
   text-align: center;
   padding-top: 8px;
   top: -80px;
+  margin-bottom: -80px;
+  transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
 }
 #collapse:hover,
 #collapse:focus,
 #collapse:active {
-  color: #d29c00;
+  color: #555;
   cursor: pointer;
-  background: #eee;
+}
+#collapse i {
+  -webkit-transform: rotate(0deg);
+  transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
+  transform: rotate(0deg);
+}
+#collapse.small {
+  width: 40px;
+  height: 40px;
+  font-size: 25px;
+  padding-top: 4px;
+  top: -40px;
+  margin-bottom: -40px;
+}
+#collapse.small i {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+#main-buttons {
+  margin: 0 0 50px 0;
+  text-align: center;
+}
+#main-buttons .btn-group .btn-main-color {
+  padding: 15px 30px;
+}
+#main-buttons .downvote:hover i {
+  -webkit-animation: downvote .5s infinite;
+  animation: downvote .5s infinite;
+}
+#main-buttons .upvote:hover i {
+  -webkit-animation: upvote .5s infinite;
+  animation: upvote .5s infinite;
 }
 .main-section {
   max-width: 85%;
@@ -386,32 +456,38 @@ nav.opened ul {
 .view-animation-container {
   position: relative;
   width: inherit;
-  transition: all 0.5s cubic-bezier(0, 0.25, 0.5, 1);
 }
 .view-animation-container [ui-view] {
   width: 100%;
+  position: absolute;
+  transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
 }
-.view-animation-container.ng-enter {
+.view-animation-container [ui-view].ng-enter {
   opacity: 0;
+  -webkit-transform: scale3d(0.5, 0.5, 0.5);
+  transform: scale3d(0.5, 0.5, 0.5);
 }
-.view-animation-container.ng-enter.ng-enter-active {
+.view-animation-container [ui-view].ng-enter.ng-enter-active {
   opacity: 1;
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
 }
-.view-animation-container.ng-leave.ng-leave-active {
+.view-animation-container [ui-view].ng-leave.ng-leave-active {
   opacity: 0;
-}
-footer {
-  background: #1a1a1a;
-  color: #fff;
-  width: 100%;
-  text-align: center;
-  padding: 15px 0 5px 0;
-  border-top: 3px solid #000;
+  -webkit-transform: scale3d(0.5, 0.5, 0.5);
+  transform: scale3d(0.5, 0.5, 0.5);
 }
 #welcome {
   text-align: center;
   margin: 100px 0;
   min-height: 350px;
+}
+#channel-info {
+  text-align: center;
+  padding-top: 50px;
+}
+#channel-info .profile-image {
+  border-radius: 50%;
 }
 #login {
   text-align: center;
@@ -421,6 +497,7 @@ footer {
 #settings {
   width: 1100px;
   margin: 0 auto;
+  height: 500px;
 }
 #settings .options-group {
   margin: 25px;
@@ -430,6 +507,84 @@ footer {
 }
 #settings .options-group div:nth-child(2) {
   text-align: right;
+}
+.yt-items-list {
+  list-style-type: none;
+}
+.yt-items-list a {
+  display: block;
+}
+.yt-items-list .yt-item {
+  min-height: 100px;
+  cursor: pointer;
+}
+.yt-items-list .yt-item .thumb {
+  min-height: 100px;
+  background-position: center center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
+}
+.yt-items-list .yt-item .thumb:hover {
+  background-size: 120%;
+}
+.yt-items-list .yt-item .thumb img {
+  position: relative;
+  max-width: 100%;
+  opacity: 0;
+}
+.yt-item {
+  margin-bottom: 10px;
+  transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
+}
+.yt-item .thumb {
+  position: relative;
+  overflow: hidden;
+}
+.yt-item .thumb p {
+  position: absolute;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  font-size: 25px;
+  padding: 10px;
+  transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
+}
+.yt-item .thumb .duration {
+  top: 0;
+  left: -300px;
+}
+.yt-item .thumb .views {
+  bottom: 0;
+  right: -300px;
+  margin-bottom: 0;
+}
+.yt-item .thumb:hover .duration {
+  left: 0;
+}
+.yt-item .thumb:hover .views {
+  right: 0;
+}
+.yt-item.ng-enter,
+.yt-item.ng-move {
+  left: 200px;
+  opacity: 0;
+}
+.yt-item.ng-enter.ng-enter-active {
+  left: 0;
+  opacity: 1;
+}
+.yt-item.ng-leave.ng-leave-active {
+  left: 200px;
+  opacity: 0;
+}
+.yt-item:nth-child(6n+7) {
+  clear: left;
+}
+.yt-item:nth-child(6n) {
+  clear: right;
+}
+.yt-item .text {
+  text-align: center;
 }
 #info-box {
   width: 500px;
@@ -442,6 +597,7 @@ footer {
   margin-left: -250px;
   line-height: 50px;
   transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
+  z-index: 15000000;
 }
 #info-box.visible {
   top: 0;

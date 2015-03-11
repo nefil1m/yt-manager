@@ -1,0 +1,135 @@
+#hello {
+  position: absolute;
+  right: 0; top: 0;
+  padding: 15px;
+  color: #fff;
+  z-index: 15000;
+
+  span {
+    color: @color;
+  }
+}
+
+#logo, .toggle-nav {
+  background: @color;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  z-index: 15000;
+  text-align: center;
+
+  &:hover, &:focus, &:active {
+    background: @color2;
+  }
+}
+
+#logo {
+  position: fixed;
+  top: 50px; left: 0;
+
+  &.small {
+    width: 50px;
+    height: 50px;
+
+    h1 {
+      font-size: 30px;
+
+      a {
+        padding: 10px 0;
+      }
+    }
+  }
+
+  *, & {
+    .cubic-trans;
+  }
+
+  h1 {
+    font-size: 60px;
+    line-height: 1;
+    margin: 0;
+
+    a {
+      color: #fff;
+      padding: 20px 0;
+      display: block;
+    }
+  }
+}
+
+nav {
+  position: fixed;
+  right: 0; top: 50px;
+  z-index: 15000;
+
+  &.small {
+    .toggle-nav {
+      width: 50px;
+      height: 50px;
+      padding-left: 15px;
+      padding-top: 16px;
+
+      .menu-bar {
+        height: 4px;
+        width: 20px;
+        margin-bottom: 2.5px;
+      }
+    }
+
+    ul {
+      margin: 50px 0 0 0;
+      font-size: 15px;
+    }
+  }
+
+  .toggle-nav {
+    padding-left: 30px;
+    padding-top: 32.5px;
+    float: right;
+
+    .menu-bar {
+      height: 8px;
+      width: 40px;
+      border-radius: 5px;
+      background: #fff;
+      display: block;
+      margin-bottom: 5px;
+    }
+  }
+
+  ul {
+    position: absolute;
+    right: -250px;
+    margin: 100px 0 0 0;
+    text-align: center;
+    font-size: 30px;
+    list-style-type: none;
+    .cubic-trans;
+
+    li {
+      overflow: hidden;
+      background: #000;
+      cursor: pointer;
+
+      &:hover {
+        background: @color2;
+      }
+
+      a {
+        width: 250px;
+        padding: 10px 0;
+        display: block;
+      }
+
+      a, a:link, a:visited {
+        color: #fff;
+      }
+    }
+  }
+
+  &.opened {
+    ul {
+      right: 0;
+    }
+  }
+}

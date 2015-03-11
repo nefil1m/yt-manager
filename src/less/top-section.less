@@ -1,0 +1,165 @@
+#top {
+  background: @darkGrey;
+  border-bottom: 3px solid #000;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+      flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-align-items: flex-end;
+    -ms-flex-align: end;
+      align-items: flex-end;
+  height: 486px;
+  .cubic-trans;
+}
+
+ #top.small {
+  height: 281px;
+
+  #player-container {
+    min-width: 500px;
+    max-width: 864px;
+    min-height: 281px;
+    max-height: 281px;
+  }
+}
+
+#player-container {
+  min-width: 500px;
+  width: 100%;
+  max-width: 864px;
+  min-height: 281px;
+  height: 100%;
+  max-height: 486px;
+  margin: auto;
+  position: relative;
+  -webkit-order: 2;
+    -ms-flex-order: 2;
+      order: 2;
+}
+
+#previous-video {
+  -webkit-order: 1;
+    -ms-flex-order: 1;
+      order: 1;
+
+  .image > div {
+    left: 320px;
+  }
+}
+
+#next-video {
+  -webkit-order: 3;
+    -ms-flex-order: 3;
+      order: 3;
+
+  .image > div {
+    left: -320px;
+  }
+}
+
+#previous-video, #next-video {
+  width: 100%;
+  -ms-flex-item-align: stretch;
+      -webkit-align-self: stretch;
+          align-self: stretch;
+  position: relative;
+  overflow: hidden;
+
+  .box {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    color: #fff;
+    -ms-flex-item-align: middle;
+        -webkit-align-self: middle;
+            align-self: middle;
+    cursor: pointer;
+    opacity: .3;
+    transition: all .3s;
+
+    &:focus, &:hover, &:active {
+      opacity: 1;
+
+      p {
+        color: @color;
+      }
+
+      .image > div {
+        left: 0;
+      }
+    }
+
+    .image {
+      width: 320px;
+      height: 180px;
+      margin: auto;
+      overflow: hidden;
+
+      > div {
+        position: relative;
+        width: 320px;
+        height: 180px;
+        background: rgba(0,0,0,.5);
+        top: -180px;
+        padding-top: 60px;
+        .cubic-trans;
+
+        i {
+          font-size: 60px;
+        }
+      }
+    }
+
+    p {
+      padding: 15px;
+    }
+  }
+}
+
+//--------------------------------------------------------------------------------- collapse btn
+
+#collapse {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  color: @darkGrey;
+  background: #fff;
+  font-size: 50px;
+  text-align: center;
+  padding-top: 8px;
+  top: -80px;
+  margin-bottom: -80px;
+  .cubic-trans;
+
+  &:hover, &:focus, &:active {
+    color: #555;
+    cursor: pointer;
+  }
+
+  i {
+    .cubic-trans;
+    -webkit-transform: rotate(0deg);
+    .cubic-trans;
+            transform: rotate(0deg);
+  }
+
+  &.small {
+    width: 40px;
+    height: 40px;
+    font-size: 25px;
+    padding-top: 4px;
+    top: -40px;
+    margin-bottom: -40px;
+
+    i {
+      -webkit-transform: rotate(180deg);
+              transform: rotate(180deg);
+    }
+  }
+}

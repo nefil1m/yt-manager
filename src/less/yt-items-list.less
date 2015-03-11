@@ -1,0 +1,97 @@
+.yt-items-list {
+  list-style-type: none;
+
+  a {
+    display: block;
+  }
+
+  .yt-item {
+    min-height: 100px;
+    cursor: pointer;
+
+    .thumb {
+      min-height: 100px;
+      background-position: center center;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      .cubic-trans;
+
+      &:hover {
+        background-size: 120%;
+      }
+
+      img {
+        position: relative;
+        max-width: 100%;
+        opacity: 0;
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------------------------- grid
+
+.yt-item {
+  margin-bottom: 10px;
+  .cubic-trans;
+
+  .thumb {
+    position: relative;
+    overflow: hidden;
+
+    p {
+      position: absolute;
+      color: #fff;
+      background: rgba(0,0,0,.7);
+      font-size: 25px;
+      padding: 10px;
+      .cubic-trans;
+    }
+
+    .duration {
+      top: 0; left: -300px;
+    }
+
+    .views {
+      bottom: 0; right: -300px;
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      .duration {
+        left: 0;
+      }
+
+      .views {
+        right: 0;
+      }
+    }
+  }
+
+  &.ng-enter, &.ng-move {
+    left: 200px;
+    opacity: 0;
+  }
+
+  &.ng-enter.ng-enter-active {
+    left: 0;
+    opacity: 1;
+  }
+
+  &.ng-leave.ng-leave-active {
+    left: 200px;
+    opacity: 0;
+  }
+
+  &:nth-child(6n+7) {
+    clear: left;
+  }
+
+  &:nth-child(6n) {
+    clear: right;
+  }
+
+  .text {
+    text-align: center;
+  }
+}

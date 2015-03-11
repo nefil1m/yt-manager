@@ -1,0 +1,10 @@
+<li class="col-xs-2 yt-item">
+  <a ng-click="">
+    <div class="thumb" style="background-image: url('{{ item.snippet.thumbnails.high.url }}');">
+      <img ng-src="{{ item.snippet.thumbnails.high.url }}" alt="">
+      <p class="duration">{{ item.contentDetails.duration }}</p>
+      <p class="views">{{ item.statistics.viewCount }}</p>
+    </div>
+    <div class="text" title="{{ item.snippet.description }}" data-toggle="tooltip" data-placement="top">{{ item.snippet.title }}</div>
+  </a>
+</li>
