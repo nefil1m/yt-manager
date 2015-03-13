@@ -25,6 +25,10 @@
     <div ng-if="options.defaultLayout === 'grid'">
       <yt-item-grid ng-repeat="item in results"></yt-item-grid>
     </div>
-  </ul>
 
+    <div ng-if="options.defaultLayout === 'list'">
+      <yt-item-list ng-repeat="item in results"></yt-item-list>
+    </div>
+
+  </ul>
 </div>

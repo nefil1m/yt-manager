@@ -5,7 +5,7 @@ app.service('channel', ['$rootScope', function($rootScope) {
       authorized: false
     },
     options: {
-      "maxResults": 25,
+      "maxResults": 24,
       "position": "last",
       "rememberMe": false,
       "autoplay": false,

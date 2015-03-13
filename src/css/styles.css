@@ -46,6 +46,9 @@ h3 {
 h4 {
   font-size: 35px;
 }
+h5 {
+  font-size: 25px;
+}
 h1::first-letter,
 h2::first-letter,
 h3::first-letter,
@@ -111,6 +114,9 @@ a.bttn {
 }
 .text-light {
   color: #bbb;
+}
+.label {
+  border-radius: 0;
 }
 @-webkit-keyframes downvote {
   0%,
@@ -515,8 +521,12 @@ nav.opened ul {
   display: block;
 }
 .yt-items-list .yt-item {
-  min-height: 100px;
   cursor: pointer;
+  margin-bottom: 10px;
+  transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
+}
+.yt-items-list .yt-item:hover .thumb {
+  background-size: 120%;
 }
 .yt-items-list .yt-item .thumb {
   min-height: 100px;
@@ -525,23 +535,44 @@ nav.opened ul {
   background-repeat: no-repeat;
   transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
 }
-.yt-items-list .yt-item .thumb:hover {
-  background-size: 120%;
+.yt-items-list .yt-item .thumb.ng-enter,
+.yt-items-list .yt-item .thumb.ng-move {
+  left: 200px;
+  opacity: 0;
+}
+.yt-items-list .yt-item .thumb.ng-enter.ng-enter-active {
+  left: 0;
+  opacity: 1;
+}
+.yt-items-list .yt-item .thumb.ng-leave.ng-leave-active {
+  left: 200px;
+  opacity: 0;
 }
 .yt-items-list .yt-item .thumb img {
   position: relative;
   max-width: 100%;
   opacity: 0;
 }
-.yt-item {
-  margin-bottom: 10px;
-  transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
+.list .yt-item .thumb {
+  width: 200px;
+  height: 136px;
+  margin-right: 15px;
 }
-.yt-item .thumb {
+.list .yt-item h5 {
+  margin-top: 10px;
+}
+.list .yt-item p {
+  max-height: 43px;
+  overflow-y: hidden;
+}
+.grid .yt-item {
+  min-height: 100px;
+}
+.grid .yt-item .thumb {
   position: relative;
   overflow: hidden;
 }
-.yt-item .thumb p {
+.grid .yt-item .thumb p {
   position: absolute;
   color: #fff;
   background: rgba(0, 0, 0, 0.7);
@@ -549,41 +580,28 @@ nav.opened ul {
   padding: 10px;
   transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
 }
-.yt-item .thumb .duration {
+.grid .yt-item .thumb .duration {
   top: 0;
   left: -300px;
 }
-.yt-item .thumb .views {
+.grid .yt-item .thumb .views {
   bottom: 0;
   right: -300px;
   margin-bottom: 0;
 }
-.yt-item .thumb:hover .duration {
+.grid .yt-item .thumb:hover .duration {
   left: 0;
 }
-.yt-item .thumb:hover .views {
+.grid .yt-item .thumb:hover .views {
   right: 0;
 }
-.yt-item.ng-enter,
-.yt-item.ng-move {
-  left: 200px;
-  opacity: 0;
-}
-.yt-item.ng-enter.ng-enter-active {
-  left: 0;
-  opacity: 1;
-}
-.yt-item.ng-leave.ng-leave-active {
-  left: 200px;
-  opacity: 0;
-}
-.yt-item:nth-child(6n+7) {
+.grid .yt-item:nth-child(6n+7) {
   clear: left;
 }
-.yt-item:nth-child(6n) {
+.grid .yt-item:nth-child(6n) {
   clear: right;
 }
-.yt-item .text {
+.grid .yt-item .text {
   text-align: center;
 }
 #info-box {

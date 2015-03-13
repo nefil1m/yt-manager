@@ -4,6 +4,7 @@
     <title>YT - PlaylistManager</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE"> <!-- temp -->
 
     <script src="https://apis.google.com/js/client:platform.js" async defer></script>
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -137,6 +138,7 @@
     <script src="libs/angular-animate/angular-animate.min.js"></script>
     <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="libs/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- // <script src="js/scripts.js"></script> -->
     <script src="js/app.js"></script>
     <script src="js/routes.js"></script>
@@ -145,26 +147,27 @@
     <script src="js/services/videoSrvc.js"></script>
     <script src="js/services/YTResourceProvider.js"></script>
     <script src="js/directives/yt-item-grid/yt-item-grid.js"></script>
+    <script src="js/directives/yt-item-list/yt-item-list.js"></script>
     <script src="js/controllers/mainCtrl.js"></script>
     <script src="js/controllers/loginCtrl.js"></script>
     <script src="js/controllers/settingsCtrl.js"></script>
     <script src="js/controllers/playerCtrl.js"></script>
     <script src="js/controllers/searchCtrl.js"></script>
     <script src="js/controllers/settingsCtrl.js"></script>
+    <script src="js/controllers/paginationCtrl.js"></script>
     <script>
-      var resizeTh = function() {
+      $(document).ready(function() {
+        var resizeTh = function() {
         var thumbs = $('.yt-items-list').find('.thumb');
         var thWidth = parseInt(thumbs.width(), 10);
-        thumbs.css('height', thWidth / 1.778);
-        console.log('resize');
-      };
+          thumbs.css('height', thWidth / 1.778);
+          console.log('resize');
+        };
 
-      var resizePlayer = function() {
-        var player = $("#player");
-        player.height( parseInt(player.width(), 10) * 0.5225 + "px");
-      }
-
-      $(document).ready(function() {
+        var resizePlayer = function() {
+          var player = $("#player");
+          player.height( parseInt(player.width(), 10) * 0.5225 + "px");
+        }
 
         $('#collapse').on('click', function() {
           $('[size-sensitive]').toggleClass('small');

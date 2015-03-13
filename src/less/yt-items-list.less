@@ -6,8 +6,15 @@
   }
 
   .yt-item {
-    min-height: 100px;
     cursor: pointer;
+    margin-bottom: 10px;
+    .cubic-trans;
+
+    &:hover {
+      .thumb {
+        background-size: 120%;
+      }
+    }
 
     .thumb {
       min-height: 100px;
@@ -16,8 +23,19 @@
       background-repeat: no-repeat;
       .cubic-trans;
 
-      &:hover {
-        background-size: 120%;
+      &.ng-enter, &.ng-move {
+        left: 200px;
+        opacity: 0;
+      }
+
+      &.ng-enter.ng-enter-active {
+        left: 0;
+        opacity: 1;
+      }
+
+      &.ng-leave.ng-leave-active {
+        left: 200px;
+        opacity: 0;
       }
 
       img {
@@ -29,11 +47,29 @@
   }
 }
 
+//--------------------------------------------------------------------------------- list
+
+.list .yt-item {
+  .thumb {
+    width: 200px;
+    height: 136px;
+    margin-right: 15px;
+  }
+
+  h5 {
+    margin-top: 10px;
+  }
+
+  p {
+    max-height: 43px;
+    overflow-y: hidden;
+  }
+}
+
 //--------------------------------------------------------------------------------- grid
 
-.yt-item {
-  margin-bottom: 10px;
-  .cubic-trans;
+.grid .yt-item {
+  min-height: 100px;
 
   .thumb {
     position: relative;
@@ -66,21 +102,6 @@
         right: 0;
       }
     }
-  }
-
-  &.ng-enter, &.ng-move {
-    left: 200px;
-    opacity: 0;
-  }
-
-  &.ng-enter.ng-enter-active {
-    left: 0;
-    opacity: 1;
-  }
-
-  &.ng-leave.ng-leave-active {
-    left: 200px;
-    opacity: 0;
   }
 
   &:nth-child(6n+7) {

@@ -2,10 +2,14 @@ app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider', 'Video'
   function($scope, channel, YTResourceProvider, Video) {
     $scope.options = {
       autoplay: false,
-      defaultLayout: 'grid'
+      defaultLayout: channel.options.defaultLayout,
+      maxResults: channel.options.maxResults
     };
 
     $scope.results = [];
+    $scope.currentResults = [];
+    $scope.currentPage = 0;
+    $scope.numPerPage = channel.options.maxResults;
 
     $scope.search = function(keywords) {
       if( $scope.keywords != keywords || angular.isUndefined($scope.keywords) ) {
@@ -20,8 +24,8 @@ app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider', 'Video'
         maxResults: channel.options.maxResults
       };
 
-      if( $scope.nextPageToken != '' ) {
-        options.nextPageToken = $scope.nextPageToken;
+      if( $scope.nextPageToken ) {
+        options.pageToken = $scope.nextPageToken;
       }
 
       YTResourceProvider.search(options)
@@ -46,9 +50,11 @@ app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider', 'Video'
 
                 $scope.results.push(video);
               }, function() {
-                console.log('error')
+                console.log('error');
               });
           });
+
+          $scope.totalItems = $scope.results.length;
 
           $('[data-toggle="tooltip"]').tooltip({
             viewport: 'body'
@@ -57,6 +63,13 @@ app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider', 'Video'
           $scope.$parent.error(response.error);
         });
     };
+
+    $scope.$watch('currentPage + numPerPage', function() {
+      var begin = (($scope.currentPage - 1) * $scope.numPerPage),
+          end = begin + $scope.numPerPage;
+
+      $scope.currentResults = $scope.results.slice(begin, end);
+    });
 
     $(document).on('keyup', function(e) {
       if( e.which == 13 ) {

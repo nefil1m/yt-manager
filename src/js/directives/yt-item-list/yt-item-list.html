@@ -1,0 +1,17 @@
+<li class="col-xs-8 col-xs-offset-2 yt-item">
+  <span ng-click="playVideo(item.id)">
+    <div class="thumb pull-left" style="background-image: url('{{ item.snippet.thumbnails.medium.url }}');"></div>
+    <h5>{{ item.snippet.title }}</h5>
+    <p>{{ item.snippet.description }}</p>
+    <span class="label label-primary">{{ item.contentDetails.duration }}</span>
+    <span class="label label-warning">{{ item.statistics.viewCount }}</span>
+    <span class="label label-success">
+      <i class="glyphicon glyphicon-thumbs-up"></i>
+      {{ item.statistics.likeCount }}
+    </span>
+    <span class="label label-danger">
+      <i class="glyphicon glyphicon-thumbs-down"></i>
+      {{ item.statistics.dislikeCount }}
+    </span>
+  </span>
+</li>
