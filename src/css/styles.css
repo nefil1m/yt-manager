@@ -118,6 +118,21 @@ a.bttn {
 .label {
   border-radius: 0;
 }
+.more a {
+  display: block;
+  padding: 15px;
+  text-size: 35px;
+  text-align: center;
+  cursor: pointer;
+  background: #006699;
+  color: #fff;
+}
+.more a:hover,
+.more a:focus,
+.more a:active {
+  background: #004466;
+  color: #fff;
+}
 @-webkit-keyframes downvote {
   0%,
   100% {
@@ -535,23 +550,27 @@ nav.opened ul {
   background-repeat: no-repeat;
   transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
 }
-.yt-items-list .yt-item .thumb.ng-enter,
-.yt-items-list .yt-item .thumb.ng-move {
-  left: 200px;
-  opacity: 0;
-}
-.yt-items-list .yt-item .thumb.ng-enter.ng-enter-active {
-  left: 0;
-  opacity: 1;
-}
-.yt-items-list .yt-item .thumb.ng-leave.ng-leave-active {
-  left: 200px;
-  opacity: 0;
-}
 .yt-items-list .yt-item .thumb img {
   position: relative;
   max-width: 100%;
   opacity: 0;
+}
+.yt-items-list .yt-item.ng-enter,
+.yt-items-list .yt-item.ng-move {
+  left: 200px;
+  opacity: 0;
+}
+.yt-items-list .yt-item.ng-enter.ng-enter-active {
+  left: 0;
+  opacity: 1;
+}
+.yt-items-list .yt-item.ng-leave.ng-leave-active {
+  left: 200px;
+  opacity: 0;
+}
+.list .yt-item span:hover h5,
+.list .yt-item span:hover p {
+  color: #666;
 }
 .list .yt-item .thumb {
   width: 200px;
@@ -560,6 +579,8 @@ nav.opened ul {
 }
 .list .yt-item h5 {
   margin-top: 10px;
+  max-height: 30px;
+  overflow-y: hidden;
 }
 .list .yt-item p {
   max-height: 43px;

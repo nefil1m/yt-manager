@@ -1,21 +1,19 @@
 app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider', 'Video',
   function($scope, channel, YTResourceProvider, Video) {
-    $scope.options = {
-      autoplay: false,
-      defaultLayout: channel.options.defaultLayout,
-      maxResults: channel.options.maxResults
-    };
+    $scope.options = channel.options;
+
+    var keywords;
 
     $scope.results = [];
     $scope.currentResults = [];
     $scope.currentPage = 0;
     $scope.numPerPage = channel.options.maxResults;
 
-    $scope.search = function(keywords) {
+    $scope.search = function() {
       if( $scope.keywords != keywords || angular.isUndefined($scope.keywords) ) {
-        $scope.keywords = keywords;
         $scope.results = [];
         $scope.nextPageToken = '';
+        keywords = $scope.keywords;
       }
 
       var options = {
@@ -64,12 +62,18 @@ app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider', 'Video'
         });
     };
 
-    $scope.$watch('currentPage + numPerPage', function() {
-      var begin = (($scope.currentPage - 1) * $scope.numPerPage),
-          end = begin + $scope.numPerPage;
+    $scope.playVideo = function(index) {
+      channel.player.loadVideoById($scope.results[index].id);
+      channel.activePlaylist = $scope.results;
+      channel.activeVideo = index;
+    };
 
-      $scope.currentResults = $scope.results.slice(begin, end);
-    });
+    // $scope.$watch('currentPage + numPerPage', function() {
+    //   var begin = (($scope.currentPage - 1) * $scope.numPerPage),
+    //       end = begin + $scope.numPerPage;
+
+    //   $scope.currentResults = $scope.results.slice(begin, end);
+    // });
 
     $(document).on('keyup', function(e) {
       if( e.which == 13 ) {

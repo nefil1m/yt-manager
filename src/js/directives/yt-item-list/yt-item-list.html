@@ -1,5 +1,5 @@
 <li class="col-xs-8 col-xs-offset-2 yt-item">
-  <span ng-click="playVideo(item.id)">
+  <span ng-click="playVideo($index)">
     <div class="thumb pull-left" style="background-image: url('{{ item.snippet.thumbnails.medium.url }}');"></div>
     <h5>{{ item.snippet.title }}</h5>
     <p>{{ item.snippet.description }}</p>

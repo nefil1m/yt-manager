@@ -7,7 +7,7 @@
           <i class="glyphicon glyphicon-search"></i>
         </span>
         <input type="text" class="form-control" placeholder="Search..." ng-model="keywords">
-        <span toggle="tooltip" title="Autoplay results" class="input-group-addon" ng-model="options.autoplayResults" btn-radio="true" uncheckable>
+        <span toggle="tooltip" title="Autoplay results" class="input-group-addon" ng-model="options.autoplay" btn-radio="true" uncheckable>
             <i class="glyphicon glyphicon-circle-arrow-right"></i>
         </span>
         <span toggle="tooltip" title="Grid layout" class="input-group-addon" ng-model="options.defaultLayout" btn-radio="'grid'">
@@ -31,4 +31,9 @@
     </div>
 
   </ul>
+
+  <div class="more col-xs-8 col-xs-offset-2">
+    <a ng-click="search();">MOAR!</a>
+  </div>
+
 </div>

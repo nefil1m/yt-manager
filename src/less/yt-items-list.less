@@ -23,26 +23,26 @@
       background-repeat: no-repeat;
       .cubic-trans;
 
-      &.ng-enter, &.ng-move {
-        left: 200px;
-        opacity: 0;
-      }
-
-      &.ng-enter.ng-enter-active {
-        left: 0;
-        opacity: 1;
-      }
-
-      &.ng-leave.ng-leave-active {
-        left: 200px;
-        opacity: 0;
-      }
-
       img {
         position: relative;
         max-width: 100%;
         opacity: 0;
       }
+    }
+
+    &.ng-enter, &.ng-move {
+      left: 200px;
+      opacity: 0;
+    }
+
+    &.ng-enter.ng-enter-active {
+      left: 0;
+      opacity: 1;
+    }
+
+    &.ng-leave.ng-leave-active {
+      left: 200px;
+      opacity: 0;
     }
   }
 }
@@ -50,6 +50,12 @@
 //--------------------------------------------------------------------------------- list
 
 .list .yt-item {
+  span:hover {
+    h5, p {
+      color: #666;
+    }
+  }
+
   .thumb {
     width: 200px;
     height: 136px;
@@ -58,6 +64,8 @@
 
   h5 {
     margin-top: 10px;
+    max-height: 30px;
+    overflow-y: hidden;
   }
 
   p {
