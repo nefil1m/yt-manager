@@ -1,1 +1,34 @@
-playlists
+<div id="playlists" ng-controller="playlistCtrl">
+
+  <div class="row spacer">
+    <div id="grid-opts" class="btn-group pull-right">
+      <button toggle="tooltip" title="Grid layout" class="btn" ng-model="options.defaultLayout" btn-radio="'grid'">
+        <i class="glyphicon glyphicon-th-large"></i>
+      </button>
+      <button toggle="tooltip" title="List layout" class="btn" ng-model="options.defaultLayout" btn-radio="'list'">
+        <i class="glyphicon glyphicon-th-list"></i>
+      </button>
+      <button toggle="tooltip" title="Add new playlist" class="btn" ng-click="addPlaylist()">
+        <i class="glyphicon glyphicon-plus"></i>
+      </button>
+    </div>
+  </div>
+
+  <ul class="row yt-items-list" ng-class="options.defaultLayout">
+
+    <div ng-if="options.defaultLayout === 'grid'">
+      <playlist-grid ng-repeat="item in playlists"></playlist-grid>
+    </div>
+
+    <div ng-if="options.defaultLayout === 'list'">
+      <playlist-list ng-repeat="item in playlists"></playlist-list>
+    </div>
+
+  </ul>
+
+  <div class="more col-xs-8 col-xs-offset-2" ng-if="pageToken">
+    <a ng-click="get()">MOAR!</a>
+  </div>
+
+</div>
+

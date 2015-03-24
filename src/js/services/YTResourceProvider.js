@@ -64,5 +64,50 @@ app.factory('YTResourceProvider', ['$q', '$config', function($q, $config) {
     return def.promise;
   };
 
+  YTResourceProvider.getPlaylists = function(options) {
+    var def = $q.defer();
+    var request = gapi.client.youtube.playlists.list(options);
+
+    request.execute(function(response) {
+      if( response.error ) {
+        def.reject(response.error);
+      } else {
+        def.resolve(response);
+      }
+    });
+
+    return def.promise;
+  };
+
+  YTResourceProvider.getPlaylistItems = function(options) {
+    var def = $q.defer();
+    var request = gapi.client.youtube.playlistItems.list(options);
+
+    request.execute(function(response) {
+      if( response.error ) {
+        def.reject(response.error);
+      } else {
+        def.resolve(response);
+      }
+    });
+
+    return def.promise;
+  };
+
+  YTResourceProvider.newPlaylist = function(options) {
+    var def = $q.defer();
+    var request = gapi.client.youtube.playlists.insert(options);
+
+    request.execute(function(response) {
+      if( response.error ) {
+        def.reject(response.error);
+      } else {
+        def.resolve(response);
+      }
+    });
+
+    return def.promise;
+  };
+
   return YTResourceProvider;
 }]);

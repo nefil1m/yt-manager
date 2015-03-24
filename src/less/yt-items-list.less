@@ -8,6 +8,7 @@
   .yt-item {
     cursor: pointer;
     margin-bottom: 10px;
+    position: relative;
     .cubic-trans;
 
     &:hover {
@@ -31,7 +32,7 @@
     }
 
     &.ng-enter, &.ng-move {
-      left: 200px;
+      left: 50px;
       opacity: 0;
     }
 
@@ -41,7 +42,7 @@
     }
 
     &.ng-leave.ng-leave-active {
-      left: 200px;
+      left: -50px;
       opacity: 0;
     }
   }
@@ -77,8 +78,6 @@
 //--------------------------------------------------------------------------------- grid
 
 .grid .yt-item {
-  min-height: 100px;
-
   .thumb {
     position: relative;
     overflow: hidden;
@@ -96,7 +95,7 @@
       top: 0; left: -300px;
     }
 
-    .views {
+    .views, .menu {
       bottom: 0; right: -300px;
       margin-bottom: 0;
     }
@@ -106,7 +105,7 @@
         left: 0;
       }
 
-      .views {
+      .views, .menu {
         right: 0;
       }
     }
@@ -122,5 +121,38 @@
 
   .text {
     text-align: center;
+  }
+}
+
+//--------------------------------------------------------------------------------- grid&playlist
+
+.grid .playlist {
+  .menu {
+
+    .dropdown-menu {
+      background: #222;
+      text-align: right;
+      width: 100%;
+      border-radius: 0;
+      margin-top: 0;
+
+      a {
+        color: @color;
+
+        &:hover, &:focus, &:active {
+          background: @color;
+          color: #eee;
+        }
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------------------------- list&playlist
+
+.list .playlist {
+  span {
+    font-size: 14px;
+    padding: 8px 12px;
   }
 }

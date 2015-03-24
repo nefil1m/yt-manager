@@ -57,7 +57,7 @@
       <div id="top" ng-class="channel.options.topSection" class="row" size-sensitive="" ng-controller="playerCtrl">
 
         <div id="previous-video" ng-click="playPreviousVideo();">
-          <div class="box">
+          <div class="box" ng-if="prevVideo">
             <div class="image">
               <img ng-src="{{ prevVideo.snippet.thumbnails.medium.url }}">
               <div>
@@ -72,11 +72,11 @@
           <div id="player" ng-init="init();"></div>
         </div>
 
-        <div id="next-video">
-          <div class="box">
+        <div id="next-video" ng-click="playNextVideo()">
+          <div class="box" ng-if="nextVideo">
             <div class="image">
               <img ng-src="{{ nextVideo.snippet.thumbnails.medium.url }}">
-              <div ng-click="playNextVideo();">
+              <div>
                 <i class="glyphicon glyphicon-fast-forward"></i>
               </div>
             </div>
@@ -92,10 +92,6 @@
 
       <div id="main-buttons" class="row">
         <div class="btn-group">
-          <button class="btn btn-main-color">
-            <i class="glyphicon glyphicon-plus"></i>
-            Add
-          </button>
           <button class="btn btn-main-color">
             <i class="glyphicon glyphicon-option-vertical"></i>
             Add to
@@ -121,7 +117,7 @@
             <script id="hello.html" type="text/ng-template">
               <div id="welcome">
                 <h1>Hello!</h1>
-                <p>You need to log in to use this application</p>
+                <p>You need to <a ui-sref="login">log in</a> to use this application</p>
               </div>
             </script>
           </div>
@@ -138,7 +134,7 @@
     <script src="libs/jquery/dist/jquery.min.js"></script>
     <script src="libs/angular/angular.js"></script>
     <script src="libs/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="libs/angular-cookies/angular-cookies.min.js"></script>
+    <script src="libs/angular-local-storage/dist/angular-local-storage.min.js"></script>
     <script src="libs/angular-animate/angular-animate.min.js"></script>
     <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="libs/angular-bootstrap/ui-bootstrap.min.js"></script>
@@ -152,13 +148,17 @@
     <script src="js/services/YTResourceProvider.js"></script>
     <script src="js/directives/yt-item-grid/yt-item-grid.js"></script>
     <script src="js/directives/yt-item-list/yt-item-list.js"></script>
+    <script src="js/directives/playlist-list/playlist-list.js"></script>
+    <script src="js/directives/playlist-grid/playlist-grid.js"></script>
     <script src="js/controllers/mainCtrl.js"></script>
     <script src="js/controllers/loginCtrl.js"></script>
     <script src="js/controllers/settingsCtrl.js"></script>
     <script src="js/controllers/playerCtrl.js"></script>
     <script src="js/controllers/searchCtrl.js"></script>
     <script src="js/controllers/settingsCtrl.js"></script>
-    <script src="js/controllers/paginationCtrl.js"></script>
+    <script src="js/controllers/playlistCtrl.js"></script>
+    <script src="js/controllers/modalCtrl.js"></script>
+    <!-- // <script src="js/controllers/paginationCtrl.js"></script> -->
     <script>
       $(document).ready(function() {
         var resizeTh = function() {

@@ -89,38 +89,13 @@ a.bttn {
 .spacer {
   margin-bottom: 50px;
 }
-.input-group {
-  margin-bottom: 25px;
-  border-radius: 0 0 0 0;
-  border-top: 1px solid #006699;
-  border-bottom: 1px solid #006699;
-}
-.input-group .input-group-addon {
-  background: #006699;
-  cursor: pointer;
-  color: #fff;
-}
-.input-group .input-group-addon:hover,
-.input-group .input-group-addon.active {
-  background: #004466;
-}
-.input-group .input-group-addon,
-.input-group .form-control {
-  border-radius: 0 0 0 0;
-  border: 0;
-}
-.input-group .form-control:focus {
-  box-shadow: 0 0 8px #006699;
-}
 .text-light {
   color: #bbb;
-}
-.label {
-  border-radius: 0;
 }
 .more a {
   display: block;
   padding: 15px;
+  margin-bottom: 50px;
   text-size: 35px;
   text-align: center;
   cursor: pointer;
@@ -132,6 +107,9 @@ a.bttn {
 .more a:active {
   background: #004466;
   color: #fff;
+}
+.red {
+  color: red;
 }
 @-webkit-keyframes downvote {
   0%,
@@ -529,6 +507,15 @@ nav.opened ul {
 #settings .options-group div:nth-child(2) {
   text-align: right;
 }
+#playlists .btn-group button.btn {
+  background: none;
+  color: #aaa;
+}
+#playlists .btn-group button.btn:hover,
+#playlists .btn-group button.btn:focus,
+#playlists .btn-group button.btn:active {
+  color: #999;
+}
 .yt-items-list {
   list-style-type: none;
 }
@@ -538,6 +525,7 @@ nav.opened ul {
 .yt-items-list .yt-item {
   cursor: pointer;
   margin-bottom: 10px;
+  position: relative;
   transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
 }
 .yt-items-list .yt-item:hover .thumb {
@@ -557,7 +545,7 @@ nav.opened ul {
 }
 .yt-items-list .yt-item.ng-enter,
 .yt-items-list .yt-item.ng-move {
-  left: 200px;
+  left: 50px;
   opacity: 0;
 }
 .yt-items-list .yt-item.ng-enter.ng-enter-active {
@@ -565,7 +553,7 @@ nav.opened ul {
   opacity: 1;
 }
 .yt-items-list .yt-item.ng-leave.ng-leave-active {
-  left: 200px;
+  left: -50px;
   opacity: 0;
 }
 .list .yt-item span:hover h5,
@@ -586,9 +574,6 @@ nav.opened ul {
   max-height: 43px;
   overflow-y: hidden;
 }
-.grid .yt-item {
-  min-height: 100px;
-}
 .grid .yt-item .thumb {
   position: relative;
   overflow: hidden;
@@ -605,7 +590,8 @@ nav.opened ul {
   top: 0;
   left: -300px;
 }
-.grid .yt-item .thumb .views {
+.grid .yt-item .thumb .views,
+.grid .yt-item .thumb .menu {
   bottom: 0;
   right: -300px;
   margin-bottom: 0;
@@ -613,7 +599,8 @@ nav.opened ul {
 .grid .yt-item .thumb:hover .duration {
   left: 0;
 }
-.grid .yt-item .thumb:hover .views {
+.grid .yt-item .thumb:hover .views,
+.grid .yt-item .thumb:hover .menu {
   right: 0;
 }
 .grid .yt-item:nth-child(6n+7) {
@@ -624,6 +611,26 @@ nav.opened ul {
 }
 .grid .yt-item .text {
   text-align: center;
+}
+.grid .playlist .menu .dropdown-menu {
+  background: #222;
+  text-align: right;
+  width: 100%;
+  border-radius: 0;
+  margin-top: 0;
+}
+.grid .playlist .menu .dropdown-menu a {
+  color: #006699;
+}
+.grid .playlist .menu .dropdown-menu a:hover,
+.grid .playlist .menu .dropdown-menu a:focus,
+.grid .playlist .menu .dropdown-menu a:active {
+  background: #006699;
+  color: #eee;
+}
+.list .playlist span {
+  font-size: 14px;
+  padding: 8px 12px;
 }
 #info-box {
   width: 500px;
@@ -656,4 +663,47 @@ nav.opened ul {
   float: right;
   margin: 0 25px;
   cursor: pointer;
+}
+.input-group {
+  margin-bottom: 25px;
+  border-radius: 0 0 0 0;
+  border-top: 1px solid #006699;
+  border-bottom: 1px solid #006699;
+}
+.input-group .input-group-addon {
+  background: #006699;
+  cursor: pointer;
+  color: #fff;
+}
+.input-group .input-group-addon:hover,
+.input-group .input-group-addon.active {
+  background: #004466;
+}
+.input-group .input-group-addon,
+.input-group .form-control {
+  border-radius: 0 0 0 0;
+  border: 0;
+}
+.input-group .form-control:focus {
+  box-shadow: 0 0 8px #006699;
+}
+.label,
+.btn,
+.form-control {
+  border-radius: 0;
+}
+.modal-header {
+  background: #006699;
+  color: #fff;
+}
+.modal-header h5::first-letter,
+.modal-header .close {
+  color: #fff;
+}
+.modal-footer {
+  background: #fff;
+}
+input.ng-invalid:not(.ng-pristine) {
+  border: 1px solid red;
+  box-shadow: 0 0 5px red;
 }

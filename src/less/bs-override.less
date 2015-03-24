@@ -1,0 +1,43 @@
+.input-group {
+  margin-bottom: 25px;
+  border-radius: 0 0 0 0;
+  border-top: 1px solid @color;
+  border-bottom: 1px solid @color;
+
+  .input-group-addon {
+    background: @color;
+    cursor: pointer;
+    color: #fff;
+
+    &:hover, &.active {
+      background: @color2;
+    }
+  }
+
+  .input-group-addon, .form-control {
+    border-radius: 0 0 0 0;
+    border: 0;
+
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 8px @color;
+  }
+}
+
+.label, .btn, .form-control {
+  border-radius: 0;
+}
+
+.modal-header {
+  background: @color;
+  color: #fff;
+
+  h5::first-letter, .close {
+    color: #fff;
+  }
+}
+
+.modal-footer {
+  background: #fff;
+}

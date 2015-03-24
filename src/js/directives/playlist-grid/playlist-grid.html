@@ -1,0 +1,26 @@
+<li class="col-xs-2 yt-item playlist">
+  <span ng-click="playPlaylist($index)">
+    <div class="thumb" style="background-image: url('{{ item.snippet.thumbnails.medium.url }}');">
+      <img ng-src="{{ item.snippet.thumbnails.medium.url }}" alt="">
+      <p class="duration">{{ item.contentDetails.itemCount }}</p>
+    </div>
+  </span>
+  <div class="menu dropdown">
+    <a class="btn btn-main-color dropdown-toggle" data-toggle="dropdown">Menu</a>
+    <ul class="dropdown-menu">
+      <li>
+        <a ng-click="playPlaylist($index)">Play</a>
+      </li>
+      <li>
+        <a>Delete</a>
+      </li>
+      <li>
+        <a>Edit Data</a>
+      </li>
+      <li>
+        <a>Open</a>
+      </li>
+    </ul>
+  </div>
+  <div class="text" title="{{ item.snippet.description }}" data-toggle="tooltip" data-placement="top" ng-click="playPlaylist($index)">{{ item.snippet.title }}</div>
+</li>
