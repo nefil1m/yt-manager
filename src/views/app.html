@@ -1,0 +1,111 @@
+<div id="hello">
+  <p>Hello,
+    <a ui-sref="login" ng-hide="channel.basic.authorized">{{ channel.basic.title }}</a>
+    <a ui-sref="channel" ng-show="channel.basic.authorized">{{ channel.basic.title }}</a>
+  </p>
+</div>
+
+<div id="logo" ng-class="channel.options.topSection" size-sensitive>
+  <h1><a href="#/">YT</a></h1>
+</div>
+
+<nav ng-class="channel.options.topSection" size-sensitive>
+  <div class="toggle-nav">
+    <span class="menu-bar"></span>
+    <span class="menu-bar"></span>
+    <span class="menu-bar"></span>
+  </div>
+  <ul ng-show="channel.basic.authorized === true">
+    <li><a ui-sref="search">search</a></li>
+    <li><a ui-sref="playlists">playlists</a></li>
+    <li><a ui-sref="compare">compare</a></li>
+    <li><a ui-sref="channel">channel</a></li>
+    <li><a ui-sref="settings">settings</a></li>
+  </ul>
+  <ul ng-show="channel.basic.authorized === false">
+    <li><a ui-sref="search">search</a></li>
+    <li><a ui-sref="login">login</a></li>
+  </ul>
+</nav>
+
+<!-- misc -->
+<div id="info-box">
+  <p>{{ infoMsg }}<span>&times;</span></p>
+</div>
+
+<div class="container-fluid">
+
+  <div id="top" ng-class="channel.options.topSection" class="row" size-sensitive="" ng-controller="playerCtrl">
+
+    <div id="previous-video" ng-click="playPreviousVideo();">
+      <div class="box" ng-if="prevVideo">
+        <div class="image">
+          <img ng-src="{{ prevVideo.snippet.thumbnails.medium.url }}">
+          <div>
+            <i class="glyphicon glyphicon-fast-backward"></i>
+          </div>
+        </div>
+        <p>{{ prevVideo.snippet.title }}</p>
+      </div>
+    </div>
+
+    <div id="player-container">
+      <div id="player" ng-init="init();"></div>
+    </div>
+
+    <div id="next-video" ng-click="playNextVideo()">
+      <div class="box" ng-if="nextVideo">
+        <div class="image">
+          <img ng-src="{{ nextVideo.snippet.thumbnails.medium.url }}">
+          <div>
+            <i class="glyphicon glyphicon-fast-forward"></i>
+          </div>
+        </div>
+        <p>{{ nextVideo.snippet.title }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="collapse" size-sensitive ng-class="channel.options.topSection">
+    <i class="glyphicon {{ channel.options.topSection === 'small' ? 'glyphicon-menu-up' : 'glyphicon-menu-down' }}"></i>
+  </div>
+
+  <div id="main-buttons" class="row">
+    <div class="btn-group">
+      <button class="btn btn-main-color">
+        <i class="glyphicon glyphicon-option-vertical"></i>
+        Add to
+      </button>
+      <button class="btn btn-main-color">
+        <i class="glyphicon glyphicon-minus"></i>
+        Remove
+      </button>
+      <button class="btn btn-main-color upvote">
+        <i class="glyphicon glyphicon-thumbs-up"></i>
+        Like
+      </button>
+      <button class="btn btn-main-color downvote">
+        <i class="glyphicon glyphicon-thumbs-down"></i>
+        Dislike
+      </button>
+    </div>
+  </div>
+
+  <div class="main-section row">
+    <div class="view-animation-container">
+      <div ui-view>
+        <script id="hello.html" type="text/ng-template">
+          <div id="welcome">
+            <h1>Hello!</h1>
+            <p>You need to <a ui-sref="login">log in</a> to use this application</p>
+          </div>
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <footer class="row">
+  <p>Created By <a href="http://patrykgurgul.pl/" title="My portfolio">Patryk Gurgul</a> || View on <a href="https://github.com/patryk-g/yt-manager" title="Github repository">Github</a></p>
+</footer> -->

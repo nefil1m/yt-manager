@@ -26,42 +26,42 @@ app.controller('mainCtrl', ['$rootScope', '$scope', 'channel',
     };
 
     $scope.translateDuration = function(dur) { // to fix : days
-        var l = dur.length;
-        var indexT = dur.indexOf('T');
-        if( indexT != -1 ) {
-            dur = dur.slice(indexT + 1, l);
-        } else {
-            dur = dur.slice(2, l);
-        }
+      var l = dur.length;
+      var indexT = dur.indexOf('T');
+      if( indexT != -1 ) {
+          dur = dur.slice(indexT + 1, l);
+      } else {
+          dur = dur.slice(2, l);
+      }
 
-        var indexH = dur.indexOf('H'),
-            h = indexH != -1 ? dur.slice(0, indexH) : '',
-            indexM = dur.indexOf('M'),
-            m = indexM != -1 ? dur.slice(indexH + 1, indexM) : '0',
-            indexS = dur.indexOf('S'),
-            s = indexS != -1 ? dur.slice(indexM + 1, indexS) : '';
+      var indexH = dur.indexOf('H'),
+          h = indexH != -1 ? dur.slice(0, indexH) : '',
+          indexM = dur.indexOf('M'),
+          m = indexM != -1 ? dur.slice(indexH + 1, indexM) : '0',
+          indexS = dur.indexOf('S'),
+          s = indexS != -1 ? dur.slice(indexM + 1, indexS) : '';
 
-        var output = '';
+      var output = '';
 
-        if( h != '' ) {
-            output += h + ':';
-            if( m.length == 1 ) {
-                m = '0' + m;
-            }
-        }
-        if( m != '' ) {
-            output += m + ':';
-            if( s.length == 1 ) {
-                s = '0' + s;
-            } else if( s.length == 0 ) {
-              s = '00';
-            }
-        }
-        if( s != '' ) {
-            output += s;
-        }
+      if( h != '' ) {
+          output += h + ':';
+          if( m.length == 1 ) {
+              m = '0' + m;
+          }
+      }
+      if( m != '' ) {
+          output += m + ':';
+          if( s.length == 1 ) {
+              s = '0' + s;
+          } else if( s.length == 0 ) {
+            s = '00';
+          }
+      }
+      if( s != '' ) {
+          output += s;
+      }
 
-        return output;
+      return output;
     };
 
     $scope.addCommas = function(number) {
@@ -84,5 +84,35 @@ app.controller('mainCtrl', ['$rootScope', '$scope', 'channel',
 
       return output;
     };
+
+    $(document).ready(function() {
+      var resizeTh = function() {
+        var thumbs = $('.yt-items-list').find('.thumb');
+        var thWidth = parseInt(thumbs.width(), 10);
+        thumbs.css('height', thWidth / 1.778);
+        console.log('resize');
+      };
+
+      var resizePlayer = function() {
+        var player = $("#player");
+        player.height( parseInt(player.width(), 10) * 0.5225 + "px");
+      }
+
+      $('#collapse').on('click', function() {
+        $('[size-sensitive]').toggleClass('small');
+      });
+
+      $(document).on('click', function() {
+        $('nav').removeClass('opened');
+      });
+
+      $('.toggle-nav').on('click', function(e) {
+        e.stopPropagation();
+        $('nav').toggleClass('opened');
+      });
+
+      $(window).resize(resizeTh);
+      $(window).resize(resizePlayer);
+    });
 
   }]);

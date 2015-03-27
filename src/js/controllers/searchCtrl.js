@@ -1,5 +1,5 @@
-app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider', 'Video',
-  function($scope, channel, YTResourceProvider, Video) {
+app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider',
+  function($scope, channel, YTResourceProvider) {
     $scope.options = channel.options;
 
     var keywords;

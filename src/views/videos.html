@@ -1,1 +1,26 @@
-videosasdad
+<div id="videos">
+
+  <div class="row spacer">
+    <div class="btn-group pull-right">
+      <button toggle="tooltip" title="Grid layout" class="btn" ng-model="options.defaultLayout" btn-radio="'grid'">
+        <i class="glyphicon glyphicon-th-large"></i>
+      </button>
+      <button toggle="tooltip" title="List layout" class="btn" ng-model="options.defaultLayout" btn-radio="'list'">
+        <i class="glyphicon glyphicon-th-list"></i>
+      </button>
+    </div>
+  </div>
+
+
+  <div class="row yt-items-list" ng-class="options.defaultLayout">
+
+    <div ng-if="options.defaultLayout === 'grid'">
+      <yt-item-grid ng-repeat="item in videos"></yt-item-grid>
+    </div>
+
+    <div ng-if="options.defaultLayout === 'list'">
+      <yt-item-list ng-repeat="item in videos"></yt-item-list>
+    </div>
+
+  </div>
+</div>

@@ -3,7 +3,21 @@
 @color: #006699;
 @color2: darken(@color, 10%);
 @darkGrey: #1A1A1A;
+@red: #BC070D;
+@green: #5CA323;
 
 .cubic-trans {
   transition: all .3s cubic-bezier(0,.1,.35,1);
+}
+
+.btn-green, .btn-red {
+  color: #fff;
+}
+
+.btn-green {
+  background: @green;
+}
+
+.btn-red {
+  background: @red;
 }

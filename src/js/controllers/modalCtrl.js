@@ -1,5 +1,5 @@
-app.controller('modalCtrl', ['$scope', '$modalInstance', 'playlist', 'YTResourceProvider', 'channel',
-  function($scope, $modalInstance, playlist, YTResourceProvider, channel) {
+app.controller('modalCtrl', ['$scope', '$modalInstance',
+  function($scope, $modalInstance) {
     $scope.newPlaylist = {};
 
     $scope.dismiss = function() {

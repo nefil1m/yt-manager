@@ -1,10 +1,10 @@
-app.controller('playlistCtrl',['$rootScope', '$scope', 'channel', 'YTResourceProvider', '$modal',
-  function($rootScope, $scope, channel, YTResourceProvider, $modal) {
+app.controller('playlistCtrl',['$rootScope', '$scope', 'channel', 'YTResourceProvider', '$modal', '$location',
+  function($rootScope, $scope, channel, YTResourceProvider, $modal, $location) {
     $scope.options = channel.options;
     $scope.playlists = channel.playlists;
 
     $scope.get = function() {
-      if( angular.isUndefined(channel.playlists) ) {
+      if( channel.basic.authorized && angular.isUndefined(channel.playlists) ) {
         var options = {
           channelId: channel.basic.id,
           maxResults: channel.options.maxResults,
@@ -31,38 +31,61 @@ app.controller('playlistCtrl',['$rootScope', '$scope', 'channel', 'YTResourcePro
       }
     };
 
-    $scope.playPlaylist = function(index) {
-      if( $scope.playlists[index].videos.lenght ) {
-        channel.player.loadVideoById($scope.playlists[index].videos[0].id);
-        channel.activePlaylist = $scope.playlists[index];
-        channel.activeVideo = index;
-      } else {
-        var options = {
-          playlistId: channel.playlists[index].id,
-          part: 'snippet',
-          maxResults: channel.options.maxResults
-        };
+    var play = function(index) {
+      channel.activePlaylist = channel.playlists[index];
+      channel.player.loadVideoById(channel.activePlaylist.videos[0].id);
+    };
 
-        if( angular.isDefined($scope.pageToken) ) {
-          options.pageToken = $scope.pageToken;
-        }
+    var getItems = function(index, callback) {
+      var options = {
+        playlistId: channel.playlists[index].id,
+        part: 'snippet',
+        maxResults: channel.options.maxResults
+      };
 
-        YTResourceProvider.getPlaylistItems(options)
-          .then(function(response) {
-            $.each(response.result.items, function(i) {
-              YTResourceProvider.getVideo(response.result.items[i].snippet.resourceId.videoId)
-                .then(function(response) {
-                  channel.activePlaylist = channel.playlists[index];
-                  channel.activePlaylist.videos.push(response.result.items[0]);
-                  channel.player.loadVideoById(channel.activePlaylist.videos[0].id);
-                  channel.activeVideo = 0;
-                }, function(response) {
-                  console.log(response.error);
-                });
-            });
-          }, function(response) {
-            console.log(response.error);
+      if( angular.isDefined($scope.pageToken) ) {
+        options.pageToken = $scope.pageToken;
+      }
+
+      YTResourceProvider.getPlaylistItems(options)
+        .then(function(response) {
+
+          $scope.pageToken = response.nextPageToken;
+
+          $.each(response.result.items, function(i) {
+
+            YTResourceProvider.getVideo(response.result.items[i].snippet.resourceId.videoId)
+              .then(function(response) {
+
+                var video = angular.copy(response.result.items[0]);
+                video.contentDetails.duration = $scope.$parent.translateDuration(video.contentDetails.duration);
+                video.statistics.viewCount = $scope.$parent.addCommas(video.statistics.viewCount);
+
+                channel.playlists[index].videos.push(video);
+
+                if( channel.playlists[index].videos.length === channel.options.maxResults && angular.isDefined(callback) ) {
+                  callback();
+                }
+              }, function(response) {
+                console.log(response.error);
+              });
+
           });
+
+        }, function(response) {
+          console.log(response.error);
+        });
+    };
+
+    $scope.playPlaylist = function(index) {
+      if( channel.playlists[index].videos.length != 0 ) {
+        channel.player.loadVideoById(channel.playlists[index].videos[0].id);
+        channel.activeVideo = index;
+        play(index);
+      } else {
+        getItems(index, function() {
+          play(index);
+        });
       }
     };
 
@@ -97,13 +120,20 @@ app.controller('playlistCtrl',['$rootScope', '$scope', 'channel', 'YTResourcePro
 
         YTResourceProvider.newPlaylist(options)
           .then(function(response) {
-            console.log(response);
             channel.playlists.unshift(response);
+            $scope.$parent.success('Created "' + response.snippet.title + '"');
           }, function(response) {
             console.log(response);
+            $scope.$parent.error("Error");
           });
       }, function(response) {
         console.log(response);
+      });
+    };
+
+    $scope.openPlaylist = function(index) {
+      getItems(index, function() {
+        $location.url('/' + index + '/videos');
       });
     };
 

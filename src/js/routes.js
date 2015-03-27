@@ -1,65 +1,97 @@
 app.config(['$stateProvider', '$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/")
+    $urlRouterProvider.otherwise("/hello")
 
-    $stateProvider
-      .state('index', {
-        url: '/',
-        templateUrl: 'hello.html',
-        data: {
-          requireLogin: false
-        }
-      })
-      .state('login', {
-        url: '/login',
-        templateUrl: 'views/login.html',
-        controller: 'loginCtrl',
-        data: {
-          requireLogin: false
-        }
-      })
-      .state('channel', {
-        url: '/channel',
-        templateUrl: 'views/channel.html',
-        data: {
-          requireLogin: true
-        }
-      })
-      .state('playlists', {
-        url: '/playlists',
-        templateUrl: 'views/playlists.html',
-        data: {
-          requireLogin: false
-        }
-      })
-      .state('videos', {
-        url: '/videos',
-        templateUrl: 'views/videos.html',
-        data: {
-          requireLogin: false
-        }
-      })
-      .state('settings', {
-        url: '/settings',
-        templateUrl: 'views/settings.html',
-        controller: 'settingsCtrl',
-        data: {
-          requireLogin: true
-        }
-      })
-      .state('compare', {
-        url: '/compare',
-        templateUrl: 'views/compare.html',
-        data: {
-          requireLogin: true
-        }
-      })
-      .state('search', {
-        url: '/search',
-        templateUrl: 'views/search.html',
-        controller: 'searchCtrl',
-        data: {
-          requireLogin: false
-        }
-      });
-}])
+    var routes = {};
+
+    routes.app = {
+      name: 'app',
+      abstract: true,
+      sticky: true,
+      templateUrl: 'views/app.html',
+      controller: 'mainCtrl',
+      data: {
+        requireLogin: true
+      }
+    };
+
+    routes.hello = {
+      name: 'hello',
+      parent: 'app',
+      url: '/hello',
+      templateUrl: 'hello.html',
+      data: {
+        requireLogin: false
+      }
+    };
+
+    routes.playlists = {
+      name: 'playlists',
+      parent: 'app',
+      url: '/playlists',
+      templateUrl: 'views/playlists.html',
+      controller: 'playlistCtrl',
+      data: {
+        requireLogin: false
+      }
+    };
+
+    routes.videos = {
+      name: 'videos',
+      parent: 'app',
+      url: '/:index/videos',
+      templateUrl: 'views/videos.html',
+      controller: 'videosCtrl',
+      data: {
+        requireLogin: false
+      }
+    };
+
+    routes.channel = {
+      name: 'channel',
+      parent: 'app',
+      url: '/channel',
+      templateUrl: 'views/channel.html',
+      data: {
+        requireLogin: true
+      }
+    };
+
+    routes.settings = {
+      name: 'settings',
+      parent: 'app',
+      url: '/settings',
+      templateUrl: 'views/settings.html',
+      controller: 'settingsCtrl',
+      data: {
+        requireLogin: true
+      }
+    };
+
+    routes.login = {
+      name: 'login',
+      parent: 'app',
+      url: '/login',
+      templateUrl: 'views/login.html',
+      controller: 'loginCtrl',
+      data: {
+        requireLogin: false
+      }
+    };
+
+    routes.search = {
+      name: 'search',
+      parent: 'app',
+      url: '/search',
+      templateUrl: 'views/search.html',
+      controller: 'searchCtrl',
+      data: {
+        requireLogin: false
+      }
+    };
+
+    $.each(routes, function(i, route) {
+      $stateProvider.state(route);
+    });
+
+}]);

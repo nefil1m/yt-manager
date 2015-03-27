@@ -1,15 +1,20 @@
-<div id="playlists" ng-controller="playlistCtrl">
+<div id="playlists" ng-init="get()">
 
   <div class="row spacer">
+
+    <div class="btn-group pull-left">
+      <button toggle="tooltip" title="Add new playlist" class="btn btn-success" ng-click="addPlaylist()">
+        <i class="glyphicon glyphicon-plus"></i>
+        Add New Playlist
+      </button>
+    </div>
+
     <div id="grid-opts" class="btn-group pull-right">
       <button toggle="tooltip" title="Grid layout" class="btn" ng-model="options.defaultLayout" btn-radio="'grid'">
         <i class="glyphicon glyphicon-th-large"></i>
       </button>
       <button toggle="tooltip" title="List layout" class="btn" ng-model="options.defaultLayout" btn-radio="'list'">
         <i class="glyphicon glyphicon-th-list"></i>
-      </button>
-      <button toggle="tooltip" title="Add new playlist" class="btn" ng-click="addPlaylist()">
-        <i class="glyphicon glyphicon-plus"></i>
       </button>
     </div>
   </div>
