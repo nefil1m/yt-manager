@@ -85,12 +85,21 @@ app.controller('mainCtrl', ['$rootScope', '$scope', 'channel',
       return output;
     };
 
+    $scope.progress = function(progress) {
+      var $bar = $('#progress .loading-bar');
+      $bar.css('opacity', 1);
+      $bar.css('width', progress + "vw");
+      console.log(progress);
+      if( progress > 99 ) {
+        $bar.css('opacity', 0);
+      }
+    };
+
     $(document).ready(function() {
       var resizeTh = function() {
         var thumbs = $('.yt-items-list').find('.thumb');
         var thWidth = parseInt(thumbs.width(), 10);
         thumbs.css('height', thWidth / 1.778);
-        console.log('resize');
       };
 
       var resizePlayer = function() {

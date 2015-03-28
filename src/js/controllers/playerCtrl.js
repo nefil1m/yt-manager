@@ -8,7 +8,7 @@ app.controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
   var stateChange = function(e) {
     if( channel.options.autoplay && e.data == 0 ) {
       channel.activeVideo++;
-      channel.player.loadVideoById(channel.activePlaylist[channel.activeVideo].id);
+      channel.player.loadVideoById(channel.activePlaylist.videos[channel.activeVideo].id);
       nextPrevVideo(channel.activeVideo);
       $scope.$apply();
     }

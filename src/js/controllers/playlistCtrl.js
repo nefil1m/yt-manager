@@ -34,6 +34,7 @@ app.controller('playlistCtrl',['$rootScope', '$scope', 'channel', 'YTResourcePro
     var play = function(index) {
       channel.activePlaylist = channel.playlists[index];
       channel.player.loadVideoById(channel.activePlaylist.videos[0].id);
+      channel.activeVideo = 0;
     };
 
     var getItems = function(index, callback) {
@@ -52,6 +53,10 @@ app.controller('playlistCtrl',['$rootScope', '$scope', 'channel', 'YTResourcePro
 
           $scope.pageToken = response.nextPageToken;
 
+          var oneHundred = response.result.items.length,
+              progress = 0,
+              step = 100 / oneHundred;
+
           $.each(response.result.items, function(i) {
 
             YTResourceProvider.getVideo(response.result.items[i].snippet.resourceId.videoId)
@@ -61,9 +66,14 @@ app.controller('playlistCtrl',['$rootScope', '$scope', 'channel', 'YTResourcePro
                 video.contentDetails.duration = $scope.$parent.translateDuration(video.contentDetails.duration);
                 video.statistics.viewCount = $scope.$parent.addCommas(video.statistics.viewCount);
 
+                progress += step;
+                $scope.$parent.progress(progress.toFixed(2));
+
                 channel.playlists[index].videos.push(video);
 
-                if( channel.playlists[index].videos.length === channel.options.maxResults && angular.isDefined(callback) ) {
+                if( (channel.playlists[index].videos.length === channel.options.maxResults ||
+                     channel.playlists[index].videos.length === channel.playlists[index].contentDetails.itemCount ) &&
+                     angular.isDefined(callback) ) {
                   callback();
                 }
               }, function(response) {
@@ -78,9 +88,8 @@ app.controller('playlistCtrl',['$rootScope', '$scope', 'channel', 'YTResourcePro
     };
 
     $scope.playPlaylist = function(index) {
-      if( channel.playlists[index].videos.length != 0 ) {
+      if( channel.playlists[index].videos.length ) {
         channel.player.loadVideoById(channel.playlists[index].videos[0].id);
-        channel.activeVideo = index;
         play(index);
       } else {
         getItems(index, function() {

@@ -127,6 +127,21 @@ a.bttn {
 .white {
   color: #fff;
 }
+#progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  width: 100%;
+  z-index: 15000;
+}
+#progress .loading-bar {
+  height: 3px;
+  background: #5ca323;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
+}
 @-webkit-keyframes downvote {
   0%,
   100% {

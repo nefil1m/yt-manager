@@ -1,5 +1,9 @@
-app.controller('videosCtrl', ['$scope', 'channel', '$stateParams',
-  function($scope, channel, $stateParams) {
+app.controller('videosCtrl', ['$scope', 'channel', '$stateParams', '$location',
+  function($scope, channel, $stateParams, $location) {
     $scope.options = channel.options;
-    $scope.videos = channel.playlists[$stateParams.index].videos;
+    if( angular.isDefined(channel.playlists) ) {
+      $scope.videos = channel.playlists[$stateParams.index].videos;
+    } else {
+      $location.url('/playlists');
+    }
   }]);
