@@ -19,7 +19,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
       name: 'hello',
       parent: 'app',
       url: '/hello',
-      templateUrl: 'hello.html',
+      templateUrl: 'views/hello.html',
       data: {
         requireLogin: false
       }

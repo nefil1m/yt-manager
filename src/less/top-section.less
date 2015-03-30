@@ -5,14 +5,14 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-      flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
   -webkit-align-items: flex-end;
-    -ms-flex-align: end;
-      align-items: flex-end;
+            -ms-flex-align: end;
+          align-items: flex-end;
   height: 486px;
   .cubic-trans;
 }
@@ -25,6 +25,10 @@
     max-width: 864px;
     min-height: 281px;
     max-height: 281px;
+
+    iframe {
+      max-height: 100%;
+    }
   }
 }
 
@@ -32,7 +36,7 @@
   min-width: 500px;
   width: 100%;
   max-width: 864px;
-  min-height: 281px;
+  // min-height: 281px;
   height: 100%;
   max-height: 486px;
   margin: auto;

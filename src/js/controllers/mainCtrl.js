@@ -89,7 +89,6 @@ app.controller('mainCtrl', ['$rootScope', '$scope', 'channel',
       var $bar = $('#progress .loading-bar');
       $bar.css('opacity', 1);
       $bar.css('width', progress + "vw");
-      console.log(progress);
       if( progress > 99 ) {
         $bar.css('opacity', 0);
       }

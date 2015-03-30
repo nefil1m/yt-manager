@@ -2,7 +2,7 @@
 
   <div class="modal-header">
     <span data-dismiss="modal" class="close">&times;</span>
-    <h5 class="modal-title">Create new playlist</h5>
+    <h5 class="modal-title">{{ title }}</h5>
   </div>
 
   <div class="modal-body">
@@ -10,7 +10,7 @@
 
       <div class="form-group">
         <label for="newPlaylistTitle">Title<span class="red">*</span></label>
-        <input type="text" class="form-control" id="newPlaylistTitle" placeholder="Title" required ng-model="newPlaylist.title" name="title">
+        <input type="text" class="form-control" id="newPlaylistTitle" placeholder="Title" required ng-model="playlist.snippet.title" name="title">
         <div ng-show="(form.$submitted || form.title.$touched) && form.title.$error.required">
           <p class="red">Title is required!</p>
         </div>
@@ -18,20 +18,20 @@
 
       <div class="form-group">
         <label for="newPlaylistDescription">Description</label>
-        <textarea type="text" class="form-control" id="newPlaylistDescription" rows="8" placeholder="Playlist description" ng-model="newPlaylist.description"></textarea>
+        <textarea type="text" class="form-control" id="newPlaylistDescription" rows="8" placeholder="Playlist description" ng-model="playlist.snippet.description"></textarea>
       </div>
 
       <div class="form-group">
         <label for="newPlaylisttags">Tags</label>
-        <input type="text" class="form-control" id="newPlaylistTags" placeholder="Comma separated values" ng-model="newPlaylist.tags">
+        <input type="text" class="form-control" id="newPlaylistTags" placeholder="Comma separated values" ng-model="playlist.snippet.tags">
       </div>
 
       <div class="form-group">
         <label for="newPlaylistPrivacy">Privacy</label>
         <div id="newPlaylistPrivacy" class="btn-group pull-right" ng-init="newPlaylist.privacy = 'public'">
-          <label class="btn btn-main-color" ng-model="newPlaylist.privacy" btn-radio="'public'">Public</label>
-          <label class="btn btn-main-color" ng-model="newPlaylist.privacy" btn-radio="unlisted">Non-Public</label>
-          <label class="btn btn-main-color" ng-model="newPlaylist.privacy" btn-radio="private">Private</label>
+          <label class="btn btn-main-color" ng-model="playlist.status.privacyStatus" btn-radio="'public'">Public</label>
+          <label class="btn btn-main-color" ng-model="playlist.status.privacyStatus" btn-radio="'unlisted'">Non-Public</label>
+          <label class="btn btn-main-color" ng-model="playlist.status.privacyStatus" btn-radio="'private'">Private</label>
         </div>
       </div>
 

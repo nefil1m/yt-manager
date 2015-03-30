@@ -109,5 +109,20 @@ app.factory('YTResourceProvider', ['$q', '$config', function($q, $config) {
     return def.promise;
   };
 
+  YTResourceProvider.editPlaylist = function(options) {
+    var def = $q.defer();
+    var request = gapi.client.youtube.playlists.update(options);
+
+    request.execute(function(response) {
+      if( response.error ) {
+        def.reject(response.error);
+      } else {
+        def.resolve(response);
+      }
+    });
+
+    return def.promise;
+  };
+
   return YTResourceProvider;
 }]);

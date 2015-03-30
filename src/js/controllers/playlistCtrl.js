@@ -1,4 +1,4 @@
-app.controller('playlistCtrl',['$rootScope', '$scope', 'channel', 'YTResourceProvider', '$modal', '$location',
+app.controller('playlistCtrl', ['$rootScope', '$scope', 'channel', 'YTResourceProvider', '$modal', '$location',
   function($rootScope, $scope, channel, YTResourceProvider, $modal, $location) {
     $scope.options = channel.options;
     $scope.playlists = channel.playlists;
@@ -99,32 +99,24 @@ app.controller('playlistCtrl',['$rootScope', '$scope', 'channel', 'YTResourcePro
     };
 
     $scope.addPlaylist = function() {
-      $scope.newPlaylist = {};
 
       var newPlaylistModal = $modal.open({
-        templateUrl: 'views/modals/newPlaylistModal.html',
+        templateUrl: 'views/modals/PlaylistModal.html',
         size: 'lg',
         controller: 'modalCtrl',
         resolve: {
-          playlist: function() {
-            return $scope.newPlaylist;
+          data: function() {
+            return {
+              title: "Create new playlist"
+            }
           }
         }
       });
 
       newPlaylistModal.result.then(function(response) {
         var options = {
-          part: 'snippet,status',
-          resource: {
-            snippet: {
-              title: response.title,
-              description: response.description,
-              tags: response.tags
-            },
-            status: {
-              privacyStatus: response.privacy
-            }
-          }
+          part: 'snippet,status,contentDetails',
+          resource: response
         };
 
         YTResourceProvider.newPlaylist(options)
@@ -134,6 +126,40 @@ app.controller('playlistCtrl',['$rootScope', '$scope', 'channel', 'YTResourcePro
           }, function(response) {
             console.log(response);
             $scope.$parent.error("Error");
+          });
+      }, function(response) {
+        console.log(response);
+      });
+    };
+
+    $scope.editPlaylist = function(index) {
+      var modal = $modal.open({
+        templateUrl: 'views/modals/PlaylistModal.html',
+        size: 'lg',
+        controller: 'modalCtrl',
+        resolve: {
+          data: function() {
+            return {
+              title: 'Edit playlist "' + channel.playlists[index].title + '"',
+              playlist: channel.playlists[index]
+            }
+          }
+        }
+      });
+
+      modal.result.then(function(response) {
+        var options = {
+          id: channel.playlists[index].id,
+          part: 'snippet,status',
+          resource: response
+        }
+        console.log(response);
+
+        YTResourceProvider.editPlaylist(options)
+          .then(function(response) {
+            console.log(response);
+          }, function(response) {
+            console.log(response);
           });
       }, function(response) {
         console.log(response);

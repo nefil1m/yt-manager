@@ -10,8 +10,7 @@ app.service('channel', ['$rootScope', function($rootScope) {
       "rememberMe": false,
       "autoplay": false,
       "topSection": "big",
-      "defaultLayout": "grid",
-      "autoplayResults": false
+      "defaultLayout": "grid"
     }
   };
 
