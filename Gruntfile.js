@@ -5,17 +5,6 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    uglify: {
-      prod: {
-        src: [
-          'src/js/*.js',
-          'src/js/directives/**/*.js',
-          'src/js/services/*.js',
-          'src/js/controllers/*.js'
-        ],
-        dest: 'build/js/scripts.js'
-      }
-    },
     copy: {
       prod: {
         files: [
@@ -100,6 +89,17 @@ module.exports = function(grunt) {
             'src/js/controllers/*.js'
           ]
         }
+      }
+    },
+    uglify: {
+      prod: {
+        src: [
+          'src/js/*.js',
+          'src/js/directives/**/*.js',
+          'src/js/services/*.js',
+          'src/js/controllers/*.js'
+        ],
+        dest: 'build/js/scripts.js'
       }
     },
     watch: {
