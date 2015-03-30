@@ -11,14 +11,16 @@
 <h3>v. Beta</h3>
 
 <p>Demo:</p>
-<p><a href="http://patrykgurgul.pl/yt-manager/new/index.html">http://patrykgurgul.pl/yt-manager/new/index.html</a></p>
+<p><a href="http://patrykgurgul.pl/yt-manager/new/">http://patrykgurgul.pl/yt-manager/new/</a></p>
 
 <h4>What is done:</h4>
 <ul>
   <li>New layout</li>
   <li>login and autologin</li>
+  <li>settings</li>
   <li>play video</li>
   <li>search (need pagination)</li>
+  <li>playlists: load, open, play, add new, edit</li>
 </ul>
 
 <p>Enjoy!</p>
