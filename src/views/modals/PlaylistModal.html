@@ -22,13 +22,13 @@
       </div>
 
       <div class="form-group">
-        <label for="newPlaylisttags">Tags</label>
+        <label for="newPlaylistTags">Tags</label>
         <input type="text" class="form-control" id="newPlaylistTags" placeholder="Comma separated values" ng-model="playlist.snippet.tags">
       </div>
 
       <div class="form-group">
         <label for="newPlaylistPrivacy">Privacy</label>
-        <div id="newPlaylistPrivacy" class="btn-group pull-right" ng-init="newPlaylist.privacy = 'public'">
+        <div id="newPlaylistPrivacy" class="btn-group pull-right" ng-init="playlist.status.privacyStatus ? playlist.status.privacyStatus : 'public'">
           <label class="btn btn-main-color" ng-model="playlist.status.privacyStatus" btn-radio="'public'">Public</label>
           <label class="btn btn-main-color" ng-model="playlist.status.privacyStatus" btn-radio="'unlisted'">Non-Public</label>
           <label class="btn btn-main-color" ng-model="playlist.status.privacyStatus" btn-radio="'private'">Private</label>

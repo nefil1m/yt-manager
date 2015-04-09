@@ -8,7 +8,7 @@ app.controller('playlistCtrl', ['$rootScope', '$scope', 'channel', 'YTResourcePr
         var options = {
           channelId: channel.basic.id,
           maxResults: channel.options.maxResults,
-          part: 'snippet,contentDetails'
+          part: 'snippet,contentDetails,status'
         };
 
         if(angular.isDefined($scope.pageToken)) {
@@ -140,23 +140,26 @@ app.controller('playlistCtrl', ['$rootScope', '$scope', 'channel', 'YTResourcePr
         resolve: {
           data: function() {
             return {
-              title: 'Edit playlist "' + channel.playlists[index].title + '"',
+              title: 'Edit playlist "' + channel.playlists[index].snippet.title + '"',
               playlist: channel.playlists[index]
             }
           }
         }
       });
 
+      console.log(channel.playlists[index]);
+
       modal.result.then(function(response) {
         var options = {
           id: channel.playlists[index].id,
           part: 'snippet,status',
-          resource: response
+          snippet: response.snippet,
+          status: response.status
         }
-        console.log(response);
 
         YTResourceProvider.editPlaylist(options)
           .then(function(response) {
+            $scope.$parent.success('Successfuly updated "' + channel.playlists[index].snippet.title + '"');
             console.log(response);
           }, function(response) {
             console.log(response);

@@ -67,8 +67,10 @@ module.exports = function(grunt) {
           'build/index.html': [
             'build/libs/jquery/**/*.min.js',
             'build/libs/angular/**/*.min.js',
+            'build/libs/angular-bootstrap/ui-bootstrap.min.js',
             'build/libs/**/*.min.js',
-            'build/js/scripts.js' ]
+            'build/js/scripts.js'
+            ]
         }
       },
       dev: {
@@ -82,6 +84,7 @@ module.exports = function(grunt) {
           'src/index.html': [
             'src/libs/jquery/**/*.min.js',
             'src/libs/angular/**/*.min.js',
+            'src/libs/angular-bootstrap/ui-bootstrap.min.js',
             'src/libs/**/*.min.js',
             'src/js/*.js',
             'src/js/services/*.js',
@@ -144,7 +147,7 @@ module.exports = function(grunt) {
   grunt.registerTask('dev', [
     'sails-linker:dev',
     'less:dev',
-    'watch:dev'
+    // 'watch:dev'
   ]);
 
 };

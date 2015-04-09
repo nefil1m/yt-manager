@@ -19,7 +19,7 @@ app.controller('modalCtrl', ['$scope', '$modalInstance', 'data',
     };
 
     $scope.create = function() {
-      $modalInstance.close($scope.playlist);
+      $modalInstance.close(data.playlist);
     };
 
   }]);

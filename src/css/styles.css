@@ -666,7 +666,8 @@ nav.opened ul {
   padding: 8px 12px;
 }
 #info-box {
-  width: 500px;
+  min-width: 500px;
+  max-width: 100vh;
   color: #fff;
   text-align: center;
   font-size: 25px;
