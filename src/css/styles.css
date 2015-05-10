@@ -677,7 +677,7 @@ nav.opened ul {
   margin-left: -250px;
   line-height: 50px;
   transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
-  z-index: 15000000;
+  z-index: 1500;
 }
 #info-box.visible {
   top: 0;

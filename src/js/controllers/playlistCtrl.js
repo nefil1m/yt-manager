@@ -21,6 +21,9 @@ app.controller('playlistCtrl', ['$rootScope', '$scope', 'channel', 'YTResourcePr
             channel.playlists = response.result.items;
             $.each(channel.playlists, function(i) {
               channel.playlists[i].videos = [];
+              if(channel.playlists[i].snippet.thumbnails.medium.url.indexOf('mqdefault') === -1) {
+                channel.playlists[i].snippet.thumbnails.medium.url = 'img/noth.png';
+              }
             });
             $scope.playlists = channel.playlists;
           }, function(response) {
@@ -99,7 +102,6 @@ app.controller('playlistCtrl', ['$rootScope', '$scope', 'channel', 'YTResourcePr
     };
 
     $scope.addPlaylist = function() {
-
       var newPlaylistModal = $modal.open({
         templateUrl: 'views/modals/PlaylistModal.html',
         size: 'lg',
@@ -147,8 +149,6 @@ app.controller('playlistCtrl', ['$rootScope', '$scope', 'channel', 'YTResourcePr
         }
       });
 
-      console.log(channel.playlists[index]);
-
       modal.result.then(function(response) {
         var options = {
           id: channel.playlists[index].id,
@@ -160,7 +160,6 @@ app.controller('playlistCtrl', ['$rootScope', '$scope', 'channel', 'YTResourcePr
         YTResourceProvider.editPlaylist(options)
           .then(function(response) {
             $scope.$parent.success('Successfuly updated "' + channel.playlists[index].snippet.title + '"');
-            console.log(response);
           }, function(response) {
             console.log(response);
           });
@@ -169,9 +168,23 @@ app.controller('playlistCtrl', ['$rootScope', '$scope', 'channel', 'YTResourcePr
       });
     };
 
+    $scope.deletePlaylist = function(index) {
+      var options = {
+        id: channel.playlists[index].id
+      };
+
+      YTResourceProvider.deletePlaylist(options)
+        .then(function(response) {
+          $scope.$parent.success('Successfuly deleted "' + channel.playlists[index].snippet.title + '"');
+          channel.playlists.splice(index, 1);
+        }, function(response) {
+          console.log(response);
+        });
+    };
+
     $scope.openPlaylist = function(index) {
       getItems(index, function() {
-        $location.url('/' + index + '/videos');
+        $location.url('/' + channel.playlists[index].id + '/videos');
       });
     };
 

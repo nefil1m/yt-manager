@@ -39,7 +39,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
     routes.videos = {
       name: 'videos',
       parent: 'app',
-      url: '/:index/videos',
+      url: '/:id/videos',
       templateUrl: 'views/videos.html',
       controller: 'videosCtrl',
       data: {

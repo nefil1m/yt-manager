@@ -95,7 +95,7 @@ app.controller('mainCtrl', ['$rootScope', '$scope', 'channel',
     };
 
     $(document).ready(function() {
-      var resizeTh = function() {
+      $rootScope.resizeTh = function() {
         var thumbs = $('.yt-items-list').find('.thumb');
         var thWidth = parseInt(thumbs.width(), 10);
         thumbs.css('height', thWidth / 1.778);
@@ -119,8 +119,8 @@ app.controller('mainCtrl', ['$rootScope', '$scope', 'channel',
         $('nav').toggleClass('opened');
       });
 
-      $(window).resize(resizeTh);
-      $(window).resize(resizePlayer);
+      $(window).resize($rootScope.resizeTh);
+      $(window).resize($rootScope.resizePlayer);
     });
 
   }]);
