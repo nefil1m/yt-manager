@@ -1,4 +1,5 @@
-app.controller('mainCtrl', ['$rootScope', '$scope', 'channel',
+angular.module('YTPlaylistManager')
+.controller('mainCtrl', ['$rootScope', '$scope', 'channel',
   function($rootScope, $scope, channel) {
     $scope.channel = channel;
 

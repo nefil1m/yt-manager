@@ -1,4 +1,4 @@
-<div id="playlists" ng-init="get()">
+<div id="playlists">
 
   <div class="row spacer">
 
@@ -22,14 +22,18 @@
   <ul class="row yt-items-list" ng-class="options.defaultLayout">
 
     <div ng-if="options.defaultLayout === 'grid'">
-      <playlist-grid ng-repeat="item in playlists"></playlist-grid>
+      <playlist-grid ng-repeat="item in filteredPlaylists"></playlist-grid>
     </div>
 
     <div ng-if="options.defaultLayout === 'list'">
-      <playlist-list ng-repeat="item in playlists"></playlist-list>
+      <playlist-list ng-repeat="item in filteredPlaylists"></playlist-list>
     </div>
 
   </ul>
+
+  <div class="row center-content">
+    <pagination items-per-page="options.maxResults" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+  </div>
 
   <div class="more col-xs-8 col-xs-offset-2" ng-if="pageToken">
     <a ng-click="get()">MOAR!</a>

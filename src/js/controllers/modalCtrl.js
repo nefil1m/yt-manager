@@ -1,4 +1,5 @@
-app.controller('modalCtrl', ['$scope', '$modalInstance', 'data',
+angular.module('YTPlaylistManager')
+.controller('modalCtrl', ['$scope', '$modalInstance', 'data',
   function($scope, $modalInstance, data) {
     if( angular.isDefined(data.playlist) ) {
       $scope.title = data.title;

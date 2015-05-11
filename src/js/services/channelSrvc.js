@@ -1,4 +1,5 @@
-app.service('channel', ['$rootScope', function($rootScope) {
+angular.module('YTPlaylistManager')
+.service('channel', ['$rootScope', function($rootScope) {
   var channel = {
     basic: {
       title: 'Stranger',

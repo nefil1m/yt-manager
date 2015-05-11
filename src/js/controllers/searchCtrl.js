@@ -1,4 +1,5 @@
-app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider',
+angular.module('YTPlaylistManager')
+.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider',
   function($scope, channel, YTResourceProvider) {
     $scope.options = channel.options;
 
@@ -6,8 +7,7 @@ app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider',
 
     $scope.results = [];
     $scope.currentResults = [];
-    $scope.currentPage = 0;
-    $scope.numPerPage = channel.options.maxResults;
+    $scope.currentPage = 1;
 
     $scope.search = function() {
       if( $scope.keywords != keywords || angular.isUndefined($scope.keywords) ) {
@@ -46,6 +46,10 @@ app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider',
                 video.contentDetails.duration = $scope.$parent.translateDuration(video.contentDetails.duration);
                 video.statistics.viewCount = $scope.$parent.addCommas(video.statistics.viewCount);
 
+                var from = $scope.options.maxResults * ($scope.currentPage - 1);
+                $scope.filteredResults = $scope.results.slice(from, from + $scope.options.maxResults);
+                $scope.totalItems = $scope.results.length;
+
                 $scope.results.push(video);
               }, function() {
                 console.log('error');
@@ -68,12 +72,10 @@ app.controller('searchCtrl', ['$scope', 'channel', 'YTResourceProvider',
       channel.activeVideo = index;
     };
 
-    // $scope.$watch('currentPage + numPerPage', function() {
-    //   var begin = (($scope.currentPage - 1) * $scope.numPerPage),
-    //       end = begin + $scope.numPerPage;
-
-    //   $scope.currentResults = $scope.results.slice(begin, end);
-    // });
+    $scope.pageChanged = function() {
+      var from = $scope.options.maxResults * ($scope.currentPage - 1);
+      $scope.filteredResults = $scope.results.slice(from, from + $scope.options.maxResults);
+    };
 
     $(document).on('keyup', function(e) {
       if( e.which == 13 ) {

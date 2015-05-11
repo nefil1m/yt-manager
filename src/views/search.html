@@ -23,14 +23,18 @@
   <ul class="row yt-items-list" ng-class="options.defaultLayout">
 
     <div ng-if="options.defaultLayout === 'grid'">
-      <yt-item-grid ng-repeat="item in results"></yt-item-grid>
+      <yt-item-grid ng-repeat="item in filteredResults"></yt-item-grid>
     </div>
 
     <div ng-if="options.defaultLayout === 'list'">
-      <yt-item-list ng-repeat="item in results"></yt-item-list>
+      <yt-item-list ng-repeat="item in filteredResults"></yt-item-list>
     </div>
 
   </ul>
+
+  <div class="row center-content">
+    <pagination items-per-page="options.maxResults" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+  </div>
 
   <div class="more col-xs-8 col-xs-offset-2">
     <a ng-click="search();">MOAR!</a>

@@ -1,4 +1,4 @@
-var app = angular.module('YTPlaylistManager',
+angular.module('YTPlaylistManager',
   ['ui.router', 'ngAnimate', 'ui.bootstrap', 'LocalStorageModule'])
 
   .constant('$config', {

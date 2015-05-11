@@ -1,4 +1,5 @@
-app.directive('ytItemList', function() {
+angular.module('YTPlaylistManager')
+.directive('ytItemList', function() {
   return {
     restrict: 'E',
     replace: true,

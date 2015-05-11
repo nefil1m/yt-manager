@@ -142,6 +142,11 @@ a.bttn {
   opacity: 0;
   transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
 }
+.center-content > * {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 @-webkit-keyframes downvote {
   0%,
   100% {
@@ -615,7 +620,7 @@ nav.opened ul {
   position: absolute;
   color: #fff;
   background: rgba(0, 0, 0, 0.7);
-  font-size: 25px;
+  font-size: 14px;
   padding: 10px;
   transition: all 0.3s cubic-bezier(0, 0.1, 0.35, 1);
 }
@@ -646,7 +651,7 @@ nav.opened ul {
   text-align: center;
 }
 .grid .playlist .menu .dropdown-menu {
-  background: #222;
+  background: #1a1a1a;
   text-align: right;
   width: 100%;
   border-radius: 0;

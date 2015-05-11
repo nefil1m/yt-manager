@@ -1,4 +1,5 @@
-app.controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
+angular.module('YTPlaylistManager')
+.controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
 
   var nextPrevVideo = function(index) {
     $scope.prevVideo = channel.activePlaylist[--index];

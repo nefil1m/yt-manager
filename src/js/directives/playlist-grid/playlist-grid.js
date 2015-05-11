@@ -1,4 +1,5 @@
-app.directive('playlistGrid', function() {
+angular.module('YTPlaylistManager')
+.directive('playlistGrid', function() {
   return {
     restrict: 'E',
     replace: true,

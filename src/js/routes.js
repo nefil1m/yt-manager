@@ -1,4 +1,5 @@
-app.config(['$stateProvider', '$urlRouterProvider',
+angular.module('YTPlaylistManager')
+.config(['$stateProvider', '$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/hello")
 

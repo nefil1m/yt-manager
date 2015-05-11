@@ -1,4 +1,5 @@
-app.controller('loginCtrl', ['$rootScope', '$scope', 'channel', '$location', 'YTResourceProvider',
+angular.module('YTPlaylistManager')
+.controller('loginCtrl', ['$rootScope', '$scope', 'channel', '$location', 'YTResourceProvider',
   function($rootScope, $scope, channel, $location, YTResourceProvider) {
     $scope.checkAuth = function() {
       YTResourceProvider.auth()
@@ -14,6 +15,7 @@ app.controller('loginCtrl', ['$rootScope', '$scope', 'channel', '$location', 'YT
         };
 
         $scope.$parent.success('success', 'logged');
+        $rootScope.$emit('logged');
 
         if( $location.url() === '/login') $location.url('/playlists');
       }, function(response) {

@@ -1,7 +1,8 @@
-app.controller('playlistCtrl', ['$rootScope', '$scope', 'channel', 'YTResourceProvider', '$modal', '$location',
+angular.module('YTPlaylistManager')
+.controller('playlistCtrl', ['$rootScope', '$scope', 'channel', 'YTResourceProvider', '$modal', '$location',
   function($rootScope, $scope, channel, YTResourceProvider, $modal, $location) {
     $scope.options = channel.options;
-    $scope.playlists = channel.playlists;
+    $scope.currentPage = 1;
 
     $scope.get = function() {
       if( channel.basic.authorized && angular.isUndefined(channel.playlists) ) {
@@ -25,12 +26,16 @@ app.controller('playlistCtrl', ['$rootScope', '$scope', 'channel', 'YTResourcePr
                 channel.playlists[i].snippet.thumbnails.medium.url = 'img/noth.png';
               }
             });
-            $scope.playlists = channel.playlists;
+            var from = $scope.options.maxResults * ($scope.currentPage - 1);
+            $scope.filteredPlaylists = channel.playlists.slice(from, from + $scope.options.maxResults);
+            $scope.totalItems = channel.playlists.length;
           }, function(response) {
             console.log(response.error);
           });
       } else {
-        $scope.playlists = channel.playlists;
+        var from = $scope.options.maxResults * ($scope.currentPage - 1);
+        $scope.filteredPlaylists = channel.playlists.slice(from, from + $scope.options.maxResults);
+        $scope.totalItems = channel.playlists.length;
       }
     };
 
@@ -187,6 +192,10 @@ app.controller('playlistCtrl', ['$rootScope', '$scope', 'channel', 'YTResourcePr
         $location.url('/' + channel.playlists[index].id + '/videos');
       });
     };
+
+    $scope.pageChanged = function() {
+      $scope.filteredPlaylists = channel.playlists.slice(currentPage * $scope.options.maxResults, currentPage * $scope.options.maxResults + $scope.options.maxResults);
+    }
 
     $rootScope.$on('logged', $scope.get);
   }]);

@@ -1,4 +1,5 @@
-app.factory('YTResourceProvider', ['$q', '$config', function($q, $config) {
+angular.module('YTPlaylistManager')
+.factory('YTResourceProvider', ['$q', '$config', function($q, $config) {
   var YTResourceProvider = {};
 
   YTResourceProvider.auth = function() {

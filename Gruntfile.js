@@ -128,7 +128,7 @@ module.exports = function(grunt) {
         }
       },
       dev: {
-        files: ['src/**/*.*'],
+        files: ['src/js/**/*.*', 'src/less/**/*.*', 'src/views/**/*.*'],
         tasks: ['sails-linker:dev', 'less:dev'],
         options: {
           livereload: true
@@ -147,7 +147,7 @@ module.exports = function(grunt) {
   grunt.registerTask('dev', [
     'sails-linker:dev',
     'less:dev',
-    // 'watch:dev'
+    'watch:dev'
   ]);
 
 };

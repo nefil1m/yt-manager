@@ -1,4 +1,5 @@
-app.controller('settingsCtrl', ['$scope', 'channel', 'localStorageService',
+angular.module('YTPlaylistManager')
+.controller('settingsCtrl', ['$scope', 'channel', 'localStorageService',
   function($scope, channel, localStorageService) {
     var options = localStorageService.get('options');
     $scope.options = {};
