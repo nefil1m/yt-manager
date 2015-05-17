@@ -26,14 +26,19 @@ angular.module('YTPlaylistManager')
         options.pageToken = $scope.nextPageToken;
       }
 
-      YTResourceProvider.search(options)
+      YTResourceProvider.sendRequest(options, 'search.list')
         .then(function(response) {
           var res = response.result.items;
           var tempResults = [];
           $scope.nextPageToken = response.nextPageToken;
 
           $.each(res, function(i) {
-            YTResourceProvider.getVideo(res[i].id.videoId)
+            var options = {
+              id: res[i].id.videoId,
+              part: 'snippet,contentDetails,statistics'
+            };
+
+            YTResourceProvider.sendRequest(options, 'videos.list')
               .then(function(response) {
                 var res = response.result.items[0];
                 var video = {

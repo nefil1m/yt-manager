@@ -31,16 +31,13 @@ angular.module('YTPlaylistManager')
     return def.promise;
   };
 
-  YTResourceProvider.getVideo = function(id) {
+  YTResourceProvider.sendRequest = function(options, requestType) {
     var def = $q.defer();
-
-    var request = gapi.client.youtube.videos.list({
-      id: id,
-      part: 'snippet,contentDetails,statistics'
-    });
+    var args = requestType.split('.');
+    var request = gapi.client.youtube[args[0]][args[1]](options);
 
     request.execute(function(response) {
-      if( response.error ) {
+      if(response.error) {
         def.reject(response.error);
       } else {
         def.resolve(response);
@@ -49,95 +46,6 @@ angular.module('YTPlaylistManager')
 
     return def.promise;
   };
-
-  YTResourceProvider.search = function(options) {
-    var def = $q.defer();
-    var request = gapi.client.youtube.search.list(options);
-
-    request.execute(function(response) {
-      if( response.error ) {
-        def.reject(response.error);
-      } else {
-        def.resolve(response);
-      }
-    });
-
-    return def.promise;
-  };
-
-  YTResourceProvider.getPlaylists = function(options) {
-    var def = $q.defer();
-    var request = gapi.client.youtube.playlists.list(options);
-
-    request.execute(function(response) {
-      if( response.error ) {
-        def.reject(response.error);
-      } else {
-        def.resolve(response);
-      }
-    });
-
-    return def.promise;
-  };
-
-  YTResourceProvider.getPlaylistItems = function(options) {
-    var def = $q.defer();
-    var request = gapi.client.youtube.playlistItems.list(options);
-
-    request.execute(function(response) {
-      if( response.error ) {
-        def.reject(response.error);
-      } else {
-        def.resolve(response);
-      }
-    });
-
-    return def.promise;
-  };
-
-  YTResourceProvider.newPlaylist = function(options) {
-    var def = $q.defer();
-    var request = gapi.client.youtube.playlists.insert(options);
-
-    request.execute(function(response) {
-      if( response.error ) {
-        def.reject(response.error);
-      } else {
-        def.resolve(response);
-      }
-    });
-
-    return def.promise;
-  };
-
-  YTResourceProvider.editPlaylist = function(options) {
-    var def = $q.defer();
-    var request = gapi.client.youtube.playlists.update(options);
-
-    request.execute(function(response) {
-      if( response.error ) {
-        def.reject(response.error);
-      } else {
-        def.resolve(response);
-      }
-    });
-
-    return def.promise;
-  };
-  YTResourceProvider.deletePlaylist = function(options) {
-    var def = $q.defer();
-    var request = gapi.client.youtube.playlists.delete(options);
-
-    request.execute(function(response) {
-      if( response.error ) {
-        def.reject(response.error);
-      } else {
-        def.resolve(response);
-      }
-    });
-
-    return def.promise;
-  }
 
   return YTResourceProvider;
 }]);

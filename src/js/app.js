@@ -22,7 +22,7 @@ angular.module('YTPlaylistManager',
       if( options !== null ) {
         channel.options = options;
         if( channel.options.rememberMe ) {
-          window.setTimeout(function() {
+          $(window).load(function() {
             YTResourceProvider.auth()
               .then(function(response) {
                 var res = response.result.items[0];
@@ -43,7 +43,7 @@ angular.module('YTPlaylistManager',
               }, function(response) {
                 alert('Login failed');
               });
-          }, 500);
+            });
         } else {
           $location.url('/');
         }

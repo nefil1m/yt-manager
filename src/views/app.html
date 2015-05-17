@@ -25,6 +25,7 @@
     <li><a ui-sref="compare">compare</a></li>
     <li><a ui-sref="channel">channel</a></li>
     <li><a ui-sref="settings">settings</a></li>
+    <li><a on-click="logout()">logout</a></li>
   </ul>
   <ul ng-show="channel.basic.authorized === false">
     <li><a ui-sref="search">search</a></li>

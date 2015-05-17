@@ -5,6 +5,60 @@
       <p class="duration">{{ item.contentDetails.duration }}</p>
       <p class="views">{{ item.statistics.viewCount }}</p>
     </div>
-    <div class="text" title="{{ item.snippet.description }}" data-toggle="tooltip" data-placement="top">{{ item.snippet.title }}</div>
   </span>
+    <div class="menu dropdown">
+      <a class="btn btn-main-color dropdown-toggle" data-toggle="dropdown">Menu</a>
+      <ul class="dropdown-menu">
+        <li>
+          <a ng-click="playVideo($index)">
+            Play
+            <i class="glyphicon glyphicon-play"></i>
+          </a>
+        </li>
+        <li>
+          <a ng-click="deleteVideo($index)">
+            Delete
+            <i class="glyphicon glyphicon-trash"></i>
+          </a>
+        </li>
+        <li>
+          <a ng-click="moveFirst($index)">
+            Move First
+            <i class="glyphicon glyphicon-arrow-left"></i>
+          </a>
+        </li>
+        <li>
+          <a ng-click="moveUp($index)">
+            Move Up
+            <i class="glyphicon glyphicon-arrow-up"></i>
+          </a>
+        </li>
+        <li>
+          <a ng-click="moveDown($index)">
+            Move down
+            <i class="glyphicon glyphicon-arrow-down"></i>
+          </a>
+        </li>
+        <li>
+          <a ng-click="moveLast($index)">
+            Move last
+            <i class="glyphicon glyphicon-arrow-right"></i>
+          </a>
+        </li>
+        <li>
+          <a ng-click="likeVideo($index)">
+            Like
+            <i class="glyphicon glyphicon-thumbs-up"></i>
+          </a>
+        </li>
+        <li>
+          <a ng-click="dislikeVideo($index)">
+            Dislike
+            <i class="glyphicon glyphicon-thumbs-down"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="text" title="{{ item.snippet.description }}" data-toggle="tooltip" data-placement="top">{{ item.snippet.title }}</div>
+
 </li>

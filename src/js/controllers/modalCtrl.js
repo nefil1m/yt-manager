@@ -2,10 +2,8 @@ angular.module('YTPlaylistManager')
 .controller('modalCtrl', ['$scope', '$modalInstance', 'data',
   function($scope, $modalInstance, data) {
     if( angular.isDefined(data.playlist) ) {
-      $scope.title = data.title;
       $scope.playlist = data.playlist;
     } else {
-      $scope.title = data.title;
       $scope.playlist = {
         snippet: {},
         status: {},
@@ -15,12 +13,15 @@ angular.module('YTPlaylistManager')
       };
     }
 
+    $scope.title = data.title;
+    $scope.buttonText = data.buttonText;
+
     $scope.dismiss = function() {
       $modalInstance.dismiss('dismissed');
     };
 
     $scope.create = function() {
-      $modalInstance.close(data.playlist);
+      $modalInstance.close($scope.playlist);
     };
 
   }]);

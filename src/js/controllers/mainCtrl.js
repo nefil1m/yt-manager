@@ -124,4 +124,8 @@ angular.module('YTPlaylistManager')
       $(window).resize($rootScope.resizePlayer);
     });
 
+    $scope.logout = function() {
+      gapi.auth.signOut();
+    };
+
   }]);

@@ -650,19 +650,24 @@ nav.opened ul {
 .grid .yt-item .text {
   text-align: center;
 }
-.grid .playlist .menu .dropdown-menu {
+.grid .playlist .menu .dropdown-menu,
+.grid .yt-item .menu .dropdown-menu {
   background: #1a1a1a;
   text-align: right;
   width: 100%;
   border-radius: 0;
   margin-top: 0;
 }
-.grid .playlist .menu .dropdown-menu a {
+.grid .playlist .menu .dropdown-menu a,
+.grid .yt-item .menu .dropdown-menu a {
   color: #006699;
 }
 .grid .playlist .menu .dropdown-menu a:hover,
+.grid .yt-item .menu .dropdown-menu a:hover,
 .grid .playlist .menu .dropdown-menu a:focus,
-.grid .playlist .menu .dropdown-menu a:active {
+.grid .yt-item .menu .dropdown-menu a:focus,
+.grid .playlist .menu .dropdown-menu a:active,
+.grid .yt-item .menu .dropdown-menu a:active {
   background: #006699;
   color: #eee;
 }
