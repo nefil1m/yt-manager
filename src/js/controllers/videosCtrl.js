@@ -19,7 +19,7 @@ angular.module('YTPlaylistManager')
 
     $scope.deleteVideo = function(index) {
       var options = {
-        id: $rootScope.openedPlaylist.videos[index].id
+        id: $rootScope.openedPlaylist.videos[index].playlistItemId
       };
 
       YTResourceProvider.sendRequest(options, 'playlistItems.delete')
@@ -31,39 +31,60 @@ angular.module('YTPlaylistManager')
         });
     };
 
-    var moveAtPosition = function(pos, video) {
+    var moveAtPosition = function(data) {
         var options = {
-        id: video.playlistItemId,
+        id: data.video.playlistItemId,
         part: 'snippet',
         snippet: {
           playlistId: $rootScope.openedPlaylist.id,
-          resourceId: video.id,
-          position: pos
+          resourceId: {
+            kind: 'youtube#video',
+            videoId: data.video.id
+          },
+          position: data.desiredPosition
         }
       };
 
       YTResourceProvider.sendRequest(options, 'playlistItems.update')
         .then(function(response) {
-          console.log(response)
+          var video = $rootScope.openedPlaylist.videos.splice(data.itemIndex, 1);
+          $rootScope.openedPlaylist.videos.splice(data.desiredPosition, 0, data.video);
         }, function(response) {
           console.log(response)
         });
     };
 
     $scope.moveFirst = function(index) {
-      moveAtPosition(1, $rootScope.openedPlaylist.videos[index]);
+      moveAtPosition({
+        desiredPosition: 0,
+        itemIndex: index,
+        video: $rootScope.openedPlaylist.videos[index]
+      });
     };
 
     $scope.moveUp = function(index) {
-
+      moveAtPosition({
+        desiredPosition: index - 1,
+        itemIndex: index,
+        video: $rootScope.openedPlaylist.videos[index]
+      });
     };
 
     $scope.moveDown = function(index) {
-
+      moveAtPosition({
+        desiredPosition: index + 1,
+        itemIndex: index,
+        video: $rootScope.openedPlaylist.videos[index]
+      });
     };
 
     $scope.moveLast = function(index) {
-
+      console.log($rootScope.openedPlaylist)
+      moveAtPosition({
+        desiredPosition: $rootScope.openedPlaylist.contentDetails.itemCount - 1,
+        itemIndex: index,
+        video: $rootScope.openedPlaylist.videos[index]
+      });
     };
 
     $scope.likeVideo = function(index) {

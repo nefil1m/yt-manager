@@ -64,7 +64,7 @@ angular.module('YTPlaylistManager')
         YTResourceProvider.sendRequest(options, 'videos.list')
           .then(function(response) {
             var video = angular.copy(response.result.items[0]);
-            video.playlistItemId = response.result.items[0].id;
+            video.playlistItemId = itemsCollection[i].id;
             video.contentDetails.duration = $scope.$parent.translateDuration(video.contentDetails.duration);
             video.statistics.viewCount = $scope.$parent.addCommas(video.statistics.viewCount);
 

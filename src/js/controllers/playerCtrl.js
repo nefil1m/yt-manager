@@ -2,8 +2,8 @@ angular.module('YTPlaylistManager')
 .controller('playerCtrl', ['$scope', 'channel', function($scope, channel) {
 
   var nextPrevVideo = function(index) {
-    $scope.prevVideo = channel.activePlaylist[--index];
-    $scope.nextVideo = channel.activePlaylist[index + 2];
+    $scope.prevVideo = channel.activePlaylist.videos[--index];
+    $scope.nextVideo = channel.activePlaylist.videos[index + 2];
   };
 
   var stateChange = function(e) {
@@ -21,29 +21,25 @@ angular.module('YTPlaylistManager')
 
   $scope.playPreviousVideo = function() {
     channel.activeVideo--;
-    channel.player.loadVideoById(channel.activePlaylist[channel.activeVideo].id);
+    channel.player.loadVideoById(channel.activePlaylist.videos[channel.activeVideo].id);
     nextPrevVideo(channel.activeVideo);
   };
 
   $scope.playNextVideo = function() {
     channel.activeVideo++;
-    channel.player.loadVideoById(channel.activePlaylist[channel.activeVideo].id);
+    channel.player.loadVideoById(channel.activePlaylist.videos[channel.activeVideo].id);
     nextPrevVideo(channel.activeVideo);
   };
 
   $scope.init = function() {
-    // $(window).load(function() {
-      // setTimeout(function() {
-        channel.player = new YT.Player('player', {
-          height: '100%',
-          width: '100%',
-          videoId: 'o3mP3mJDL2k',
-          events: {
-            'onStateChange': stateChange
-          }
-        });
-      // }, 1);
-    // });
+    channel.player = new YT.Player('player', {
+      height: '100%',
+      width: '100%',
+      videoId: 'o3mP3mJDL2k',
+      events: {
+        'onStateChange': stateChange
+      }
+    });
   };
 
 }]);
