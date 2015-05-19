@@ -79,6 +79,17 @@ angular.module('YTPlaylistManager')
               callback();
             }
 
+            var getRatingOptions = {
+              id: video.id
+            };
+
+            YTResourceProvider.sendRequest(options, 'videos.getRating')
+              .then(function(response) {
+                video.rating = response.result.items[0].rating;
+              }, function(response) {
+                console.log(response);
+              });
+
             getItemsRecursively(itemsCollection, i + 1, playlist, callback);
           }, function(response) {
             getItemsRecursively(itemsCollection, i, playlist, callback);

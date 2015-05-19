@@ -48,13 +48,13 @@
         <li>
           <a ng-click="likeVideo($index)">
             Like
-            <i class="glyphicon glyphicon-thumbs-up"></i>
+            <i class="glyphicon glyphicon-thumbs-up" ng-class="{green: item.rating == 'like'}"></i>
           </a>
         </li>
         <li>
           <a ng-click="dislikeVideo($index)">
             Dislike
-            <i class="glyphicon glyphicon-thumbs-down"></i>
+            <i class="glyphicon glyphicon-thumbs-down" ng-class="{red: item.rating == 'dislike'}"></i>
           </a>
         </li>
       </ul>

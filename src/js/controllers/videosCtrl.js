@@ -79,7 +79,6 @@ angular.module('YTPlaylistManager')
     };
 
     $scope.moveLast = function(index) {
-      console.log($rootScope.openedPlaylist)
       moveAtPosition({
         desiredPosition: $rootScope.openedPlaylist.contentDetails.itemCount - 1,
         itemIndex: index,
@@ -87,11 +86,27 @@ angular.module('YTPlaylistManager')
       });
     };
 
-    $scope.likeVideo = function(index) {
+    var rateVideo = function(rating, video) {
+      var options = {
+        id: video.id,
+        rating: rating
+      };
 
+      YTResourceProvider.sendRequest(options, 'videos.rate')
+        .then(function(response) {
+          video.rating = rating;
+        }, function(response) {
+          console.log(response);
+        });
+    };
+
+    $scope.likeVideo = function(index) {
+      var rating = $rootScope.openedPlaylist.videos[index].rating !== 'like' ? 'like' : 'none' ;
+      rateVideo(rating, $rootScope.openedPlaylist.videos[index]);
     };
 
     $scope.dislikeVideo = function(index) {
-
+      var rating = $rootScope.openedPlaylist.videos[index].rating !== 'dislike' ? 'dislike' : 'none';
+      rateVideo(rating, $rootScope.openedPlaylist.videos[index]);
     };
   }]);
