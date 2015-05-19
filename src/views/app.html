@@ -78,10 +78,17 @@
 
   <div id="main-buttons" class="row">
     <div class="btn-group">
-      <button class="btn btn-main-color">
-        <i class="glyphicon glyphicon-option-vertical"></i>
-        Add to
-      </button>
+
+      <div class="dropdown">
+        <button class="btn btn-main-color dropdown-toggle" data-toggle="dropdown">
+          <i class="glyphicon glyphicon-option-vertical"></i>
+          Add to
+        </button>
+        <ul class="dropdown-menu">
+          <li role="presentation"><a role="menuitem" ng-repeat="playlist in channel.playlists" ng-click="addVideo(playlist)">{{playlist.snippet.title}}</a></li>
+        </ul>
+      </div>
+
       <button class="btn btn-main-color upvote">
         <i class="glyphicon glyphicon-thumbs-up"></i>
         Like

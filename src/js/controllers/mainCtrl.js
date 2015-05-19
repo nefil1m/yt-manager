@@ -1,6 +1,6 @@
 angular.module('YTPlaylistManager')
-.controller('mainCtrl', ['$rootScope', '$scope', 'channel',
-  function($rootScope, $scope, channel) {
+.controller('mainCtrl', ['$rootScope', '$scope', 'channel', 'YTResourceProvider',
+  function($rootScope, $scope, channel, YTResourceProvider) {
     $scope.channel = channel;
 
     function showInfoBox(type, info) {
@@ -126,6 +126,27 @@ angular.module('YTPlaylistManager')
 
     $scope.logout = function() {
       gapi.auth.signOut();
+    };
+
+    $scope.addVideo = function(playlist) {
+      var options = {
+        part: 'snippet',
+        snippet: {
+          playlistId: playlist.id,
+          resourceId: {
+            kind: 'youtube#video',
+            videoId: channel.activePlaylist.videos[channel.activeVideo].id
+          }
+        }
+      }
+
+      YTResourceProvider.sendRequest(options, 'playlistItems.insert')
+      .then(function(response) {
+        $scope.success('Added video');
+      }, function(response) {
+        console.log(response);
+        $scope.error('Cannot add video');
+      });
     };
 
   }]);

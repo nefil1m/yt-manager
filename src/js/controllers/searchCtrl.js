@@ -73,7 +73,9 @@ angular.module('YTPlaylistManager')
 
     $scope.playVideo = function(index) {
       channel.player.loadVideoById($scope.results[index].id);
-      channel.activePlaylist = $scope.results;
+      channel.activePlaylist = {
+        videos: $scope.results
+      };
       channel.activeVideo = index;
     };
 

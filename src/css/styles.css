@@ -485,6 +485,12 @@ nav.opened ul {
   -webkit-animation: upvote .5s infinite;
   animation: upvote .5s infinite;
 }
+#main-buttons .dropdown {
+  display: inline-block;
+}
+#main-buttons .dropdown li:hover {
+  cursor: pointer;
+}
 .main-section {
   max-width: 85%;
   min-width: 1100px;
