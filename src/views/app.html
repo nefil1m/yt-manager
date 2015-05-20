@@ -89,12 +89,12 @@
         </ul>
       </div>
 
-      <button class="btn btn-main-color upvote">
-        <i class="glyphicon glyphicon-thumbs-up"></i>
+      <button class="btn btn-main-color upvote" ng-click="rateVideo('like')">
+        <i class="glyphicon glyphicon-thumbs-up" ng-class="{green: video.rating == 'like'}"></i>
         Like
       </button>
-      <button class="btn btn-main-color downvote">
-        <i class="glyphicon glyphicon-thumbs-down"></i>
+      <button class="btn btn-main-color downvote" ng-click="rateVideo('dislike')">
+        <i class="glyphicon glyphicon-thumbs-down" ng-class="{red: video.rating == 'dislike'}"></i>
         Dislike
       </button>
     </div>

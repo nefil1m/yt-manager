@@ -55,6 +55,13 @@ angular.module('YTPlaylistManager')
                 $scope.filteredResults = $scope.results.slice(from, from + $scope.options.maxResults);
                 $scope.totalItems = $scope.results.length;
 
+                YTResourceProvider.sendRequest({id: video.id}, 'videos.getRating')
+                  .then(function(response) {
+                    video.rating = response.result.items[0].rating;
+                  }, function(response) {
+                    console.log(response);
+                  });
+
                 $scope.results.push(video);
               }, function() {
                 console.log('error');
@@ -62,10 +69,6 @@ angular.module('YTPlaylistManager')
           });
 
           $scope.totalItems = $scope.results.length;
-
-          $('[data-toggle="tooltip"]').tooltip({
-            viewport: 'body'
-          });
         }, function(response) {
           $scope.$parent.error(response.error);
         });

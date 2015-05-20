@@ -149,4 +149,26 @@ angular.module('YTPlaylistManager')
       });
     };
 
+    $scope.rateVideo = function(rating) {
+      var video = channel.activePlaylist.videos[channel.activeVideo];
+      var options = {
+        id: video.id
+      }
+
+      console.log(video);
+
+      options.rating = video.rating === rating ? 'none' : rating;
+
+      YTResourceProvider.sendRequest(options, 'videos.rate')
+        .then(function(response) {
+          video.rating = rating;
+        }, function(response) {
+          console.log(response);
+        });
+    };
+
+    $scope.$watch(function() { return channel.activeVideo }, function() {
+      $scope.video = channel.activePlaylist.videos[channel.activeVideo];
+    });
+
   }]);
