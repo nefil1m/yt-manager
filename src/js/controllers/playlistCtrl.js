@@ -63,35 +63,37 @@ angular.module('YTPlaylistManager')
 
         YTResourceProvider.sendRequest(options, 'videos.list')
           .then(function(response) {
-            var video = angular.copy(response.result.items[0]);
-            video.playlistItemId = itemsCollection[i].id;
-            video.contentDetails.duration = $scope.$parent.translateDuration(video.contentDetails.duration);
-            video.statistics.viewCount = $scope.$parent.addCommas(video.statistics.viewCount);
+            if(response.result.items.length) {
+              var video = angular.copy(response.result.items[0]);
+              video.playlistItemId = itemsCollection[i].id;
+              video.contentDetails.duration = $scope.$parent.translateDuration(video.contentDetails.duration);
+              video.statistics.viewCount = $scope.$parent.addCommas(video.statistics.viewCount);
+
+              playlist.videos.push(video);
+
+              if( (playlist.videos.length === channel.options.maxResults ||
+                   playlist.videos.length === playlist.contentDetails.itemCount ) &&
+                   angular.isDefined(callback) ) {
+                callback();
+              }
+
+              var getRatingOptions = {
+                id: video.id
+              };
+
+              YTResourceProvider.sendRequest(options, 'videos.getRating')
+                .then(function(response) {
+                  video.rating = response.result.items[0].rating;
+                }, function(response) {
+                  console.log(response);
+                });
+            }
 
             progress += step;
             $scope.$parent.progress(progress.toFixed(2));
-
-            playlist.videos.push(video);
-
-            if( (playlist.videos.length === channel.options.maxResults ||
-                 playlist.videos.length === playlist.contentDetails.itemCount ) &&
-                 angular.isDefined(callback) ) {
-              callback();
-            }
-
-            var getRatingOptions = {
-              id: video.id
-            };
-
-            YTResourceProvider.sendRequest(options, 'videos.getRating')
-              .then(function(response) {
-                video.rating = response.result.items[0].rating;
-              }, function(response) {
-                console.log(response);
-              });
-
             getItemsRecursively(itemsCollection, i + 1, playlist, callback);
           }, function(response) {
+            console.log(response);
             getItemsRecursively(itemsCollection, i, playlist, callback);
             progress = 0;
           });
@@ -225,7 +227,17 @@ angular.module('YTPlaylistManager')
 
     $scope.pageChanged = function() {
       $scope.filteredPlaylists = channel.playlists.slice(currentPage * $scope.options.maxResults, currentPage * $scope.options.maxResults + $scope.options.maxResults);
-    }
+    };
+
+    $scope.setPlaylist = function(which) {
+      getItems($scope['playlist' + which]);
+
+      if(which === 1) {
+        $scope.playlistLeft = channel.playlists[$scope['playlist' + which]];
+      } else {
+        $scope.playlistRight = channel.playlists[$scope['playlist' + which]];
+      }
+    };
 
     $rootScope.$on('logged', $scope.get);
   }]);

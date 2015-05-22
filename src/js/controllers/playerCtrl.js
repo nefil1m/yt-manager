@@ -32,13 +32,15 @@ angular.module('YTPlaylistManager')
   };
 
   $scope.init = function() {
-    channel.player = new YT.Player('player', {
-      height: '100%',
-      width: '100%',
-      videoId: 'o3mP3mJDL2k',
-      events: {
-        'onStateChange': stateChange
-      }
+    $(window).load(function() {
+      channel.player = new YT.Player('player', {
+        height: '100%',
+        width: '100%',
+        videoId: 'o3mP3mJDL2k',
+        events: {
+          'onStateChange': stateChange
+        }
+      });
     });
   };
 

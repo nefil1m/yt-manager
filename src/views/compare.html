@@ -1,1 +1,30 @@
-compare
+<div id="compare" ng-init="init()">
+  <div class="row spacer">
+
+    <div class="col-xs-6">
+
+      <select class="form-control" ng-change="setPlaylist(1)" ng-model="playlist1">
+        <option ng-repeat="playlist in filteredPlaylists" ng-value="$index">
+          {{playlist.snippet.title}}
+        </option>
+      </select>
+
+      <div class="yt-items-list row no-description">
+        <yt-item-list ng-repeat="item in playlistLeft.videos"></yt-item-list>
+      </div>
+
+    </div>
+
+    <div class="col-xs-6">
+
+      <select class="form-control" ng-change="setPlaylist(2)" ng-model="playlist2">
+        <option ng-value="$index" ng-repeat="playlist in filteredPlaylists">{{playlist.snippet.title}}</option>
+      </select>
+
+      <div class="yt-items-list row no-description">
+        <yt-item-list ng-repeat="item in playlistRight.videos"></yt-item-list>
+      </div>
+
+    </div>
+  </div>
+</div>

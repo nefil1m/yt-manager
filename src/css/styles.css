@@ -563,6 +563,9 @@ nav.opened ul {
 .yt-items-list {
   list-style-type: none;
 }
+.yt-items-list.no-description p {
+  display: none;
+}
 .yt-items-list a {
   display: block;
 }

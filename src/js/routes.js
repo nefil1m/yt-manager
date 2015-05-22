@@ -91,6 +91,17 @@ angular.module('YTPlaylistManager')
       }
     };
 
+    routes.compare = {
+      name: 'compare',
+      parent: 'app',
+      url: '/compare',
+      templateUrl: 'views/compare.html',
+      controller: 'playlistCtrl',
+      data: {
+        requireLogin: false
+      }
+    };
+
     $.each(routes, function(i, route) {
       $stateProvider.state(route);
     });

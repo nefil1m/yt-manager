@@ -45,21 +45,21 @@ angular.module('YTPlaylistManager')
       var output = '';
 
       if( h != '' ) {
-          output += h + ':';
-          if( m.length == 1 ) {
-              m = '0' + m;
-          }
+        output += h + ':';
+        if( m.length == 1 ) {
+          m = '0' + m;
+        }
       }
       if( m != '' ) {
-          output += m + ':';
-          if( s.length == 1 ) {
-              s = '0' + s;
-          } else if( s.length == 0 ) {
-            s = '00';
-          }
+        output += m + ':';
+        if( s.length == 1 ) {
+          s = '0' + s;
+        } else if( s.length == 0 ) {
+          s = '00';
+        }
       }
       if( s != '' ) {
-          output += s;
+        output += s;
       }
 
       return output;
@@ -168,7 +168,8 @@ angular.module('YTPlaylistManager')
     };
 
     $scope.$watch(function() { return channel.activeVideo }, function() {
-      $scope.video = channel.activePlaylist.videos[channel.activeVideo];
+      if(angular.isDefined(channel.activePlaylist)) {
+        $scope.video = channel.activePlaylist.videos[channel.activeVideo];
+      }
     });
-
   }]);
