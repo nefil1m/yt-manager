@@ -4,8 +4,6 @@
 .gitattributes
 /node_modules
 /node_modules/*
-/src/libs
-/src/libs/*
 /src/min/
 /src/min/*
 /build

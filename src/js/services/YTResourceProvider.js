@@ -10,7 +10,7 @@ angular.module('YTPlaylistManager')
     gapi.auth.authorize({
       client_id: $config.CLIENT_ID,
       scope: $config.SCOPE,
-      immediate: true
+      immediate: false
     }, function() {
       gapi.client.load('youtube', 'v3', function() {
         var request = gapi.client.youtube.channels.list({

@@ -65,10 +65,13 @@ module.exports = function(grunt) {
         },
         files: {
           'build/index.html': [
-            'build/libs/jquery/**/*.min.js',
-            'build/libs/angular/**/*.min.js',
-            'build/libs/angular-bootstrap/ui-bootstrap.min.js',
-            'build/libs/**/*.min.js',
+            'build/libs/angular.min.js',
+            'build/libs/angular-animate.min.js',
+            'build/libs/angular-local-storage.min.js',
+            'build/libs/ui-bootstrap.min.js',
+            'build/libs/ui-bootstrap-tpls.min.js',
+            'build/libs/angular-ui-router.js',
+            'build/libs/jquery.min.js',
             'build/js/scripts.js'
             ]
         }
@@ -82,10 +85,13 @@ module.exports = function(grunt) {
         },
         files: {
           'src/index.html': [
-            'src/libs/jquery/**/*.min.js',
-            'src/libs/angular/**/*.min.js',
-            'src/libs/angular-bootstrap/ui-bootstrap.min.js',
-            'src/libs/**/*.min.js',
+            'src/libs/angular.min.js',
+            'src/libs/angular-animate.min.js',
+            'src/libs/angular-local-storage.min.js',
+            'src/libs/ui-bootstrap.min.js',
+            'src/libs/ui-bootstrap-tpls.min.js',
+            'src/libs/angular-ui-router.js',
+            'src/libs/jquery.min.js',
             'src/js/*.js',
             'src/js/services/*.js',
             'src/js/directives/**/*.js',

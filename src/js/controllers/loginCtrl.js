@@ -5,7 +5,7 @@ angular.module('YTPlaylistManager')
       YTResourceProvider.auth()
       .then(function(response) {
         var res = response.result.items[0];
-
+console.log('auth')
         $rootScope.authorized = true;
         channel.basic = {
           authorized: true,

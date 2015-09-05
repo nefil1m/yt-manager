@@ -24,5 +24,13 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-sails-linker": "^0.10.1",
     "load-grunt-tasks": "^3.1.0"
+  },
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-bootstrap": "~0.12.2",
+    "jquery": "~2.1.4",
+    "ui-router": "0.0.1",
+    "angular-animate": "~1.4.5",
+    "angular-local-storage": "~0.2.2"
   }
 }
